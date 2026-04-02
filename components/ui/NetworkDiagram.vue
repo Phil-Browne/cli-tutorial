@@ -1,7 +1,7 @@
 <template>
   <div class="my-6">
     <ClientOnly>
-      <div class="p-8 flex justify-center">
+      <div class="p-8 flex justify-center rounded-xl bg-slate-100">
         <div ref="diagramRef" class="mermaid-diagram" v-html="renderedSvg" />
       </div>
       <template #fallback>
@@ -28,21 +28,21 @@ onMounted(async () => {
       startOnLoad: false,
       theme: 'base',
       themeVariables: {
-        primaryColor: '#374151',
-        primaryTextColor: '#f3f4f6',
-        primaryBorderColor: '#9B5DBB',
-        lineColor: '#7dd3fc',
-        secondaryColor: '#4c1d95',
-        tertiaryColor: '#374151',
+        primaryColor: '#ede9fe',
+        primaryTextColor: '#1e1b4b',
+        primaryBorderColor: '#6B2D8B',
+        lineColor: '#6B2D8B',
+        secondaryColor: '#f0fdfa',
+        tertiaryColor: '#f3f4f6',
         background: 'transparent',
-        mainBkg: '#374151',
-        nodeBorder: '#9B5DBB',
-        nodeTextColor: '#f3f4f6',
-        clusterBkg: '#1f2937',
+        mainBkg: '#ede9fe',
+        nodeBorder: '#6B2D8B',
+        nodeTextColor: '#1e1b4b',
+        clusterBkg: '#f8fafc',
         clusterBorder: '#6B2D8B',
-        titleColor: '#f3f4f6',
-        edgeLabelBackground: '#1f2937',
-        labelTextColor: '#e5e7eb',
+        titleColor: '#1e1b4b',
+        edgeLabelBackground: '#ffffff',
+        labelTextColor: '#374151',
         fontSize: '15px',
         fontFamily: 'Inter, system-ui, sans-serif',
       },
@@ -77,17 +77,17 @@ onMounted(async () => {
 }
 
 .mermaid-diagram :deep(.edgeLabel) {
-  color: #d1d5db;
-  background: #1f2937;
+  color: #374151;
+  background: #ffffff;
   padding: 2px 6px;
   border-radius: 4px;
 }
 
 .mermaid-diagram :deep(text) {
-  fill: #f3f4f6 !important;
+  fill: #1e1b4b !important;
 }
 
 .mermaid-diagram :deep(.label) {
-  color: #f3f4f6;
+  color: #1e1b4b;
 }
 </style>
