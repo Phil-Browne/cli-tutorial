@@ -141,7 +141,7 @@
             GitHub
           </a>
           <a
-            href="https://www.megaport.com/documentation/"
+            href="https://docs.megaport.com/"
             target="_blank"
             rel="noopener noreferrer"
             class="hover:text-gray-300 transition-colors"
