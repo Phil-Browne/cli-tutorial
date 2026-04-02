@@ -87,17 +87,22 @@ const { data: allPages } = await useAsyncData('all-pages', () =>
     .catch(() => null)
 )
 
+// Filter to only leaf pages (exclude section index pages which have single-segment paths)
+const navPages = computed(() =>
+  (allPages.value ?? []).filter(p => (p._path?.split('/').filter(Boolean).length ?? 0) > 1)
+)
+
 const currentIndex = computed(() =>
-  (allPages.value ?? []).findIndex(item => item._path === route.path)
+  navPages.value.findIndex(item => item._path === route.path)
 )
 
 const prev = computed(() => {
-  const item = (allPages.value ?? [])[currentIndex.value - 1]
+  const item = navPages.value[currentIndex.value - 1]
   return item ? { title: item.title, path: item._path } : undefined
 })
 
 const next = computed(() => {
-  const item = (allPages.value ?? [])[currentIndex.value + 1]
+  const item = navPages.value[currentIndex.value + 1]
   return item ? { title: item.title, path: item._path } : undefined
 })
 </script>
