@@ -1,6 +1,6 @@
 <template>
-  <div class="my-6 overflow-x-auto">
-    <div class="flex items-stretch gap-0 min-w-max px-2 py-4">
+  <div class="my-6 overflow-x-auto not-prose">
+    <div class="flex items-stretch gap-0 px-2 py-4 justify-center flex-wrap sm:flex-nowrap">
       <template v-for="(step, i) in steps" :key="i">
         <!-- Arrow between steps -->
         <div v-if="i > 0" class="flex items-center px-1 text-gray-500">
