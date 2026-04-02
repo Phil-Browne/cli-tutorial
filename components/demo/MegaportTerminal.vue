@@ -688,6 +688,7 @@ defineExpose({
   fitAddon,
   execute: executeCommand,
   setAuth,
+  isReady,
 });
 </script>
 

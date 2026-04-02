@@ -7,7 +7,7 @@
           <h3 class="auth-title">Connect to Megaport API</h3>
         </div>
         <p class="auth-subtitle">
-          Enter your API credentials to start the live CLI session. Credentials are stored in memory only and cleared when you close this tab.
+          Enter your API credentials to start the live CLI session. Credentials are saved for this browser tab and cleared when you close it.
         </p>
 
         <form class="auth-form" @submit.prevent="connect">
@@ -54,7 +54,7 @@
         </form>
 
         <p class="security-note">
-          🔐 Credentials are never written to disk or localStorage. They exist only in this browser tab's memory.
+          🔐 Credentials are stored in sessionStorage for this tab only and cleared when you close it.
           Get your keys at <a href="https://portal.megaport.com" target="_blank" class="portal-link">portal.megaport.com</a> → My Account → API & Credentials.
         </p>
       </div>
@@ -87,7 +87,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, watch } from 'vue'
+
+const SESSION_KEY = 'megaport_demo_session'
 
 const accessKey = ref('')
 const secretKey = ref('')
@@ -96,7 +98,7 @@ const authed = ref(false)
 const connecting = ref(false)
 const error = ref('')
 
-const termRef = ref<{ setAuth: (a: string, s: string, e: string) => void } | null>(null)
+const termRef = ref<{ setAuth: (a: string, s: string, e: string) => void; isReady: boolean } | null>(null)
 const terminalReady = ref(false)
 const { track } = useAnalytics()
 
@@ -128,8 +130,27 @@ onMounted(() => {
     vvResizeHandler = updateTerminalHeight
     window.visualViewport.addEventListener('resize', vvResizeHandler)
   }
-  // Also handle orientation changes
   window.addEventListener('resize', updateTerminalHeight)
+
+  // Restore saved session — pre-fill credentials from sessionStorage
+  try {
+    const saved = sessionStorage.getItem(SESSION_KEY)
+    if (saved) {
+      const parsed = JSON.parse(saved)
+      accessKey.value = parsed.accessKey ?? ''
+      secretKey.value = parsed.secretKey ?? ''
+      environment.value = parsed.environment ?? 'staging'
+    }
+  } catch {
+    sessionStorage.removeItem(SESSION_KEY)
+  }
+})
+
+// Auto-connect when WASM becomes ready and we have saved credentials
+watch(() => termRef.value?.isReady, (ready) => {
+  if (ready && accessKey.value && secretKey.value && !authed.value) {
+    connect()
+  }
 })
 
 onBeforeUnmount(() => {
@@ -148,6 +169,12 @@ async function connect() {
   try {
     authed.value = true
     track('Demo Terminal Open', { environment: environment.value })
+    // Persist credentials for the tab session (cleared on tab close)
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify({
+      accessKey: accessKey.value,
+      secretKey: secretKey.value,
+      environment: environment.value,
+    }))
     await nextTick()
     // Small delay to let the terminal finish mounting
     await new Promise(resolve => setTimeout(resolve, 200))
@@ -163,6 +190,7 @@ async function connect() {
 }
 
 function disconnect() {
+  sessionStorage.removeItem(SESSION_KEY)
   authed.value = false
   terminalReady.value = false
   accessKey.value = ''
