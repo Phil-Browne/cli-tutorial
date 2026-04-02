@@ -72,7 +72,7 @@ const { data: childPages } = await useAsyncData(`children-${route.path}`, () => 
   return queryContent()
     .where({ _path: { $contains: route.path }, _partial: { $ne: true } })
     .where({ _path: { $ne: route.path } })
-    .sort({ _path: 1 })
+    .sort({ _file: 1 })
     .find()
     .catch(() => null)
 })
