@@ -38,6 +38,11 @@ html {
   @apply bg-gray-800 text-violet-300 rounded px-1.5 py-0.5 text-sm font-mono;
 }
 
+.prose code::before,
+.prose code::after {
+  content: '' !important;
+}
+
 .prose blockquote {
   @apply border-l-4 border-violet-500 pl-4 italic text-gray-400;
 }
