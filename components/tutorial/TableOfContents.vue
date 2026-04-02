@@ -33,7 +33,9 @@ interface TocLink {
 }
 
 // Get TOC from @nuxt/content
-const { data: page } = useAsyncData(() => queryContent(useRoute().path).findOne())
+const { data: page } = useAsyncData(() =>
+  queryContent().where({ _path: useRoute().path, _partial: { $ne: true } }).findOne()
+)
 
 const links = computed(() => {
   const toc = page.value?.body?.toc?.links ?? []

@@ -9,6 +9,9 @@ Hands-on guides for real-world Megaport CLI workflows.
 
 ## Available Tutorials
 
-- [Create a Port](/tutorials/create-port)
-- [Create a VXC](/tutorials/create-vxc)
-- [Cloud Connectivity](/tutorials/cloud-connectivity)
+- [Port Lifecycle](/tutorials/port-lifecycle)
+- [Connect to AWS](/tutorials/connect-aws)
+- [Connect to Azure](/tutorials/connect-azure)
+- [MCR Routing](/tutorials/mcr-routing)
+- [Multi-Cloud](/tutorials/multi-cloud)
+- [Automation](/tutorials/automation)

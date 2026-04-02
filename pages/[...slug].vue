@@ -56,9 +56,12 @@
 <script setup lang="ts">
 const route = useRoute()
 
-// Fetch the current page content
+// Fetch the current page content — exact path, skip partials (_dir.yml etc.)
 const { data: page } = await useAsyncData(`content-${route.path}`, () =>
-  queryContent(route.path).findOne().catch(() => null)
+  queryContent()
+    .where({ _path: route.path, _partial: { $ne: true } })
+    .findOne()
+    .catch(() => null)
 )
 
 // Fetch child pages when on a section index (single path segment, e.g. /tutorials)
@@ -67,7 +70,7 @@ const isSectionIndex = computed(() => route.path.split('/').filter(Boolean).leng
 const { data: childPages } = await useAsyncData(`children-${route.path}`, () => {
   if (!isSectionIndex.value) return Promise.resolve(null)
   return queryContent()
-    .where({ _path: { $contains: route.path } })
+    .where({ _path: { $contains: route.path }, _partial: { $ne: true } })
     .where({ _path: { $ne: route.path } })
     .sort({ _path: 1 })
     .find()
