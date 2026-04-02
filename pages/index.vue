@@ -233,8 +233,8 @@ const quickStart = [
   {
     num: 1,
     label: 'Install',
-    command: 'brew install megaport/tap/megaport-cli',
-    description: 'macOS / Linux via Homebrew',
+    command: 'go install github.com/megaport/megaport-cli@latest',
+    description: 'Requires Go 1.21+',
   },
   {
     num: 2,
