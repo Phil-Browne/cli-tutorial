@@ -43,7 +43,7 @@ onMounted(async () => {
         titleColor: '#1e1b4b',
         edgeLabelBackground: '#ffffff',
         labelTextColor: '#374151',
-        fontSize: '15px',
+        fontSize: '20px',
         fontFamily: 'Inter, system-ui, sans-serif',
       },
     })
