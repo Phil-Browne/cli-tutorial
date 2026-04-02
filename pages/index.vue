@@ -138,7 +138,48 @@
           <h2 class="text-3xl font-bold text-white mb-3">How It Works</h2>
           <p class="text-gray-400">The CLI talks directly to the Megaport API — in your terminal or your browser.</p>
         </div>
-        <NetworkDiagram :definition="architectureDiagram" />
+        <!-- Inline architecture diagram -->
+        <div class="flex items-center justify-center gap-4 md:gap-6 flex-wrap md:flex-nowrap py-8">
+          <!-- You -->
+          <div class="flex flex-col items-center gap-2">
+            <div class="w-16 h-16 rounded-full bg-gray-800 border-2 border-gray-600 flex items-center justify-center text-2xl">👤</div>
+            <span class="text-sm text-gray-300 font-medium">You</span>
+          </div>
+
+          <!-- Arrow -->
+          <div class="text-gray-600 text-2xl hidden md:block">→</div>
+
+          <!-- CLI / WASM -->
+          <div class="flex flex-col gap-3">
+            <div class="px-5 py-3 rounded-lg bg-gray-800 border border-gray-700 text-center">
+              <p class="text-sm font-semibold text-white">CLI</p>
+              <p class="text-xs text-gray-400">Terminal</p>
+            </div>
+            <div class="px-5 py-3 rounded-lg bg-gray-800 border border-gray-700 text-center">
+              <p class="text-sm font-semibold text-white">WASM</p>
+              <p class="text-xs text-gray-400">Browser</p>
+            </div>
+          </div>
+
+          <!-- Arrow -->
+          <div class="text-gray-600 text-2xl hidden md:block">→</div>
+
+          <!-- Megaport API -->
+          <div class="px-6 py-4 rounded-xl border-2 text-center" style="background-color: #6B2D8B; border-color: #9B5DBB;">
+            <p class="text-sm font-bold text-white">Megaport API</p>
+          </div>
+
+          <!-- Arrow -->
+          <div class="text-gray-600 text-2xl hidden md:block">→</div>
+
+          <!-- Resources -->
+          <div class="grid grid-cols-2 gap-2">
+            <div v-for="r in ['Ports', 'VXCs', 'MCR', 'MVE', 'IX', 'Locations']" :key="r"
+              class="px-3 py-1.5 rounded-md bg-gray-800 border border-teal-800 text-xs font-medium text-teal-300 text-center">
+              {{ r }}
+            </div>
+          </div>
+        </div>
       </section>
 
       <!-- ── Resource types ── -->
@@ -258,24 +299,4 @@ const quickStart = [
 
 const resourceTypes = ['Port', 'VXC', 'MCR', 'MVE', 'IX', 'Location', 'Partner', 'Service Key', 'User']
 
-const architectureDiagram = `flowchart LR
-  A["👤 You"] --> B["CLI\n(Terminal)"]
-  A --> C["WASM\n(Browser)"]
-  B --> D["Megaport API"]
-  C --> D
-  D --> E["🔌 Ports"]
-  D --> F["🔗 VXCs"]
-  D --> G["🌐 MCR"]
-  D --> H["📡 MVE"]
-  D --> I["🌍 IX"]
-
-  style A fill:#1f2937,stroke:#6B2D8B,color:#e2e8f0
-  style B fill:#1f2937,stroke:#6B2D8B,color:#e2e8f0
-  style C fill:#1f2937,stroke:#6B2D8B,color:#e2e8f0
-  style D fill:#6B2D8B,stroke:#9B5DBB,color:#ffffff
-  style E fill:#1f2937,stroke:#00BCD4,color:#e2e8f0
-  style F fill:#1f2937,stroke:#00BCD4,color:#e2e8f0
-  style G fill:#1f2937,stroke:#00BCD4,color:#e2e8f0
-  style H fill:#1f2937,stroke:#00BCD4,color:#e2e8f0
-  style I fill:#1f2937,stroke:#00BCD4,color:#e2e8f0`
 </script>

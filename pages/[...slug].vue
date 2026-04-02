@@ -77,32 +77,27 @@ const { data: childPages } = await useAsyncData(`children-${route.path}`, () => 
     .catch(() => null)
 })
 
-// Fetch full navigation to derive prev/next
-const { data: navigation } = await useAsyncData('nav', () =>
-  fetchContentNavigation()
+// Fetch all pages for prev/next navigation (ordered by file path to respect numeric prefixes)
+const { data: allPages } = await useAsyncData('all-pages', () =>
+  queryContent()
+    .where({ _partial: { $ne: true } })
+    .only(['title', '_path', '_file'])
+    .sort({ _file: 1 })
+    .find()
+    .catch(() => null)
 )
 
-// Flatten nav tree to ordered list of { title, _path } items
-function flattenNav(items: any[]): { title: string; _path: string }[] {
-  return items.flatMap(item => [
-    ...(item._path ? [{ title: item.title, _path: item._path }] : []),
-    ...(item.children ? flattenNav(item.children) : []),
-  ])
-}
-
-const flatNav = computed(() => flattenNav(navigation.value ?? []))
-
 const currentIndex = computed(() =>
-  flatNav.value.findIndex(item => item._path === route.path)
+  (allPages.value ?? []).findIndex(item => item._path === route.path)
 )
 
 const prev = computed(() => {
-  const item = flatNav.value[currentIndex.value - 1]
+  const item = (allPages.value ?? [])[currentIndex.value - 1]
   return item ? { title: item.title, path: item._path } : undefined
 })
 
 const next = computed(() => {
-  const item = flatNav.value[currentIndex.value + 1]
+  const item = (allPages.value ?? [])[currentIndex.value + 1]
   return item ? { title: item.title, path: item._path } : undefined
 })
 </script>
