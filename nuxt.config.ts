@@ -8,6 +8,11 @@ export default defineNuxtConfig({
 
   modules: ['@nuxt/content', '@nuxt/ui'],
 
+  // Register components by filename only — no directory prefix (e.g. SidebarNav, not UiSidebarNav)
+  components: [
+    { path: '~/components', pathPrefix: false },
+  ],
+
   css: ['~/assets/css/main.css'],
 
   nitro: {

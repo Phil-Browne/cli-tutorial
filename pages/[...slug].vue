@@ -15,7 +15,7 @@
       <!-- Main article -->
       <article class="flex-1 min-w-0">
         <!-- Tutorial header from frontmatter -->
-        <TutorialTutorialHeader
+        <TutorialHeader
           :title="page.title"
           :description="page.description"
           :duration="page.duration"
@@ -44,11 +44,11 @@
         </div>
 
         <!-- Prev / Next navigation -->
-        <TutorialTutorialNav :prev="prev" :next="next" />
+        <TutorialNav :prev="prev" :next="next" />
       </article>
 
       <!-- Sticky table of contents (xl+) -->
-      <TutorialTableOfContents />
+      <TableOfContents />
     </div>
   </div>
 </template>
