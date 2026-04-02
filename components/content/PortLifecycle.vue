@@ -1,69 +1,88 @@
 <template>
-  <div class="my-8 max-w-md mx-auto">
-    <!-- Main vertical flow -->
-    <div class="flex flex-col items-center">
-      <!-- ports buy -->
-      <div class="text-xs text-gray-500 mb-2 font-mono">ports buy</div>
-      <div class="w-0.5 h-4 bg-gray-600" />
+  <div class="my-6 rounded-xl border border-gray-800 bg-gray-900/40 p-6 max-w-xl mx-auto">
+    <div class="grid grid-cols-[1fr_auto_1fr] gap-y-1 items-center">
+      <!-- Row 1: ports buy label -->
+      <div />
+      <div class="text-xs text-gray-500 font-mono text-center py-1">ports buy</div>
+      <div />
 
-      <!-- CONFIGURED -->
-      <div class="state-node border-violet-500 bg-violet-500/15 text-violet-300">CONFIGURED</div>
-      <div class="w-0.5 h-3 bg-gray-600" />
-      <div class="text-[11px] text-gray-500">fabric provisioning</div>
-      <div class="w-0.5 h-3 bg-gray-600" />
-
-      <!-- LIVE -->
-      <div class="state-node border-emerald-500 bg-emerald-500/15 text-emerald-300">LIVE</div>
-      <div class="w-0.5 h-3 bg-gray-600" />
-      <div class="text-[11px] text-gray-500">ports delete</div>
-      <div class="w-0.5 h-3 bg-gray-600" />
-
-      <!-- DECOMMISSIONING -->
-      <div class="state-node border-amber-500 bg-amber-500/15 text-amber-300">DECOMMISSIONING</div>
-      <div class="w-0.5 h-3 bg-gray-600" />
-      <div class="text-[11px] text-gray-500">billing period ends</div>
-      <div class="w-0.5 h-3 bg-gray-600" />
-
-      <!-- DECOMMISSIONED -->
-      <div class="state-node border-red-500 bg-red-500/15 text-red-300">DECOMMISSIONED</div>
-    </div>
-
-    <!-- Branch paths -->
-    <div class="mt-6 flex flex-col gap-2">
-      <div class="branch-row">
-        <span class="branch-from border-violet-500/40 text-violet-400">CONFIGURED</span>
-        <span class="text-gray-600">→</span>
-        <span class="branch-to text-gray-400">CANCELLED</span>
-        <span class="branch-label">delete before going live</span>
+      <!-- Row 2: CONFIGURED + CANCELLED branch -->
+      <div class="flex items-center justify-end gap-2">
+        <span class="text-[10px] text-gray-500">delete before live</span>
+        <span class="text-gray-600">←</span>
       </div>
-      <div class="branch-row">
-        <span class="branch-from border-amber-500/40 text-amber-400">DECOMMISSIONING</span>
+      <div class="state border-violet-500 bg-violet-500/15 text-violet-300">CONFIGURED</div>
+      <div class="flex items-center gap-2">
         <span class="text-gray-600">→</span>
-        <span class="branch-from border-violet-500/40 text-violet-400">CONFIGURED</span>
-        <span class="branch-label">restore within window</span>
+        <div class="state-sm border-gray-600 text-gray-400">CANCELLED</div>
       </div>
+
+      <!-- connector -->
+      <div /><div class="connector" /><div />
+
+      <!-- Row 3: label -->
+      <div />
+      <div class="text-[10px] text-gray-500 text-center">fabric provisioning</div>
+      <div />
+
+      <!-- connector -->
+      <div /><div class="connector" /><div />
+
+      <!-- Row 4: LIVE -->
+      <div />
+      <div class="state border-emerald-500 bg-emerald-500/15 text-emerald-300">LIVE</div>
+      <div />
+
+      <!-- connector -->
+      <div /><div class="connector" /><div />
+
+      <!-- Row 5: label -->
+      <div />
+      <div class="text-[10px] text-gray-500 text-center">ports delete</div>
+      <div />
+
+      <!-- connector -->
+      <div /><div class="connector" /><div />
+
+      <!-- Row 6: DECOMMISSIONING + restore branch -->
+      <div />
+      <div class="state border-amber-500 bg-amber-500/15 text-amber-300">DECOMMISSIONING</div>
+      <div class="flex items-center gap-2">
+        <span class="text-gray-600">→</span>
+        <span class="text-[10px] text-gray-500">restore</span>
+        <span class="text-gray-600">→</span>
+        <span class="text-[10px] text-violet-400 font-semibold">CONFIGURED</span>
+      </div>
+
+      <!-- connector -->
+      <div /><div class="connector" /><div />
+
+      <!-- Row 7: label -->
+      <div />
+      <div class="text-[10px] text-gray-500 text-center">billing period ends</div>
+      <div />
+
+      <!-- connector -->
+      <div /><div class="connector" /><div />
+
+      <!-- Row 8: DECOMMISSIONED -->
+      <div />
+      <div class="state border-red-500 bg-red-500/15 text-red-300">DECOMMISSIONED</div>
+      <div />
     </div>
   </div>
 </template>
 
 <style scoped>
-.state-node {
-  @apply px-6 py-2.5 rounded-lg border-2 font-semibold text-sm text-center tracking-wide;
+.state {
+  @apply px-5 py-2 rounded-lg border-2 font-semibold text-sm text-center;
 }
 
-.branch-row {
-  @apply flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-900/60 border border-gray-800 text-xs;
+.state-sm {
+  @apply px-3 py-1 rounded-md border text-xs font-medium text-center;
 }
 
-.branch-from {
-  @apply px-2 py-0.5 rounded border font-semibold text-xs;
-}
-
-.branch-to {
-  @apply px-2 py-0.5 rounded border border-gray-600 font-semibold text-xs;
-}
-
-.branch-label {
-  @apply text-gray-500 ml-auto;
+.connector {
+  @apply w-0.5 h-2 bg-gray-700 mx-auto;
 }
 </style>
