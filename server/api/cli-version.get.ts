@@ -1,19 +1,16 @@
-import { defineCachedEventHandler } from '#imports'
-
-export default defineCachedEventHandler(async () => {
+export default defineEventHandler(async () => {
   try {
-    const res = await fetch('https://api.github.com/repos/megaport/megaport-cli/releases/latest', {
+    const res = await fetch('https://api.github.com/repos/megaport/megaport-cli/tags?per_page=1', {
       headers: { 'Accept': 'application/vnd.github+json' },
     })
     if (res.ok) {
-      const data = await res.json()
-      return { version: data.tag_name ?? 'latest' }
+      const tags = await res.json()
+      if (tags.length > 0) {
+        return { version: tags[0].name }
+      }
     }
   } catch {
     // fallback
   }
   return { version: 'latest' }
-}, {
-  maxAge: 3600, // cache for 1 hour
-  swr: true,
 })
