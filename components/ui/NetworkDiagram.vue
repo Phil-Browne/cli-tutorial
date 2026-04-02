@@ -1,18 +1,12 @@
 <template>
-  <div class="my-6 rounded-xl border border-gray-800 overflow-hidden">
-    <div class="flex items-center gap-2 px-4 py-2 bg-gray-800/60 border-b border-gray-700 text-xs text-gray-400">
-      <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
-      </svg>
-      Network Diagram
-    </div>
+  <div class="my-6">
     <ClientOnly>
-      <div class="p-6 bg-gray-950 flex justify-center">
+      <div class="p-8 flex justify-center">
         <div ref="diagramRef" class="mermaid-diagram" v-html="renderedSvg" />
       </div>
       <template #fallback>
-        <div class="p-6 bg-gray-950">
-          <pre class="text-xs text-gray-400 font-mono whitespace-pre-wrap">{{ definition }}</pre>
+        <div class="p-8 flex justify-center">
+          <div class="skeleton w-full h-48 rounded-lg" />
         </div>
       </template>
     </ClientOnly>
