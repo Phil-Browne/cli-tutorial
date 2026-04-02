@@ -26,21 +26,25 @@ onMounted(async () => {
     const mermaid = (await import('mermaid')).default
     mermaid.initialize({
       startOnLoad: false,
-      theme: 'dark',
+      theme: 'base',
       themeVariables: {
-        primaryColor: '#6B2D8B',
-        primaryTextColor: '#ffffff',
+        primaryColor: '#374151',
+        primaryTextColor: '#f3f4f6',
         primaryBorderColor: '#9B5DBB',
-        lineColor: '#5ED4E6',
-        secondaryColor: '#1A1A2E',
-        tertiaryColor: '#2A2A4E',
-        background: '#030712',
-        mainBkg: '#1f2937',
-        nodeBorder: '#6B2D8B',
+        lineColor: '#7dd3fc',
+        secondaryColor: '#4c1d95',
+        tertiaryColor: '#374151',
+        background: 'transparent',
+        mainBkg: '#374151',
+        nodeBorder: '#9B5DBB',
+        nodeTextColor: '#f3f4f6',
         clusterBkg: '#1f2937',
-        titleColor: '#e2e8f0',
+        clusterBorder: '#6B2D8B',
+        titleColor: '#f3f4f6',
         edgeLabelBackground: '#1f2937',
-        fontSize: '16px',
+        labelTextColor: '#e5e7eb',
+        fontSize: '15px',
+        fontFamily: 'Inter, system-ui, sans-serif',
       },
     })
 
@@ -62,12 +66,28 @@ onMounted(async () => {
 }
 
 .mermaid-diagram :deep(.node rect),
-.mermaid-diagram :deep(.node polygon) {
+.mermaid-diagram :deep(.node polygon),
+.mermaid-diagram :deep(.node circle) {
   rx: 8;
   ry: 8;
 }
 
 .mermaid-diagram :deep(.edgePath path) {
   stroke-width: 2px;
+}
+
+.mermaid-diagram :deep(.edgeLabel) {
+  color: #d1d5db;
+  background: #1f2937;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.mermaid-diagram :deep(text) {
+  fill: #f3f4f6 !important;
+}
+
+.mermaid-diagram :deep(.label) {
+  color: #f3f4f6;
 }
 </style>
