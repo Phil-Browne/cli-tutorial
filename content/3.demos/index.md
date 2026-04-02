@@ -7,5 +7,5 @@ description: Try the Megaport CLI live in your browser
 
 The Megaport CLI is compiled to WebAssembly and runs entirely in your browser. No installation required — try it right now.
 
-::terminal-demo
+::demo-terminal
 ::

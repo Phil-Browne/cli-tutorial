@@ -10,7 +10,7 @@ export default defineNuxtConfig({
 
   // Register components by filename only — no directory prefix (e.g. SidebarNav, not UiSidebarNav)
   components: [
-    { path: '~/components', pathPrefix: false },
+    { path: '~/components', pathPrefix: false, global: true },
   ],
 
   css: ['~/assets/css/main.css'],
