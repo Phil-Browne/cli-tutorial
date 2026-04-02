@@ -1,7 +1,7 @@
 <template>
   <div class="my-6">
     <ClientOnly>
-      <div class="p-8 flex justify-center rounded-xl bg-slate-100">
+      <div class="py-4 px-6 flex justify-center rounded-xl bg-slate-100 max-w-2xl mx-auto">
         <div ref="diagramRef" class="mermaid-diagram" v-html="renderedSvg" />
       </div>
       <template #fallback>
@@ -60,8 +60,7 @@ onMounted(async () => {
 
 <style scoped>
 .mermaid-diagram :deep(svg) {
-  width: 100%;
-  min-height: 300px;
+  max-width: 100%;
   height: auto;
 }
 
