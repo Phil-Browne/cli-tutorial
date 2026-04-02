@@ -73,14 +73,14 @@
           <button class="disconnect-btn" @click="disconnect">Disconnect</button>
         </div>
         <!-- Loading skeleton shown while terminal initialises -->
-        <div v-if="authed && !terminalReady" class="terminal-skeleton">
+        <div v-if="authed && !terminalReady" class="terminal-skeleton" :style="terminalAreaStyle">
           <div class="skeleton skeleton-line w-1/3" />
           <div class="skeleton skeleton-line w-1/2" />
           <div class="skeleton skeleton-line w-2/5" />
           <div class="skeleton skeleton-line w-3/5" />
           <div class="skeleton skeleton-line w-1/4" />
         </div>
-        <div v-show="terminalReady" class="terminal-area">
+        <div v-show="terminalReady" class="terminal-area" :style="terminalAreaStyle">
           <DemoMegaportTerminal ref="termRef" />
         </div>
       </div>
@@ -101,6 +101,45 @@ const error = ref('')
 const termRef = ref<{ setAuth: (a: string, s: string, e: string) => void } | null>(null)
 const terminalReady = ref(false)
 const { track } = useAnalytics()
+
+// ── Mobile keyboard fix ──────────────────────────────────────────────────
+// The Visual Viewport API gives the height of the visible area above the
+// virtual keyboard. We bind this to the terminal height so xterm shrinks
+// when the keyboard opens instead of being hidden behind it.
+const DESKTOP_HEIGHT = 480
+const terminalAreaStyle = ref<{ height: string }>({ height: `${DESKTOP_HEIGHT}px` })
+let vvResizeHandler: (() => void) | null = null
+
+function isMobile() {
+  return typeof window !== 'undefined' && window.innerWidth < 768
+}
+
+function updateTerminalHeight() {
+  const vv = window.visualViewport
+  if (!vv || !isMobile()) {
+    terminalAreaStyle.value = { height: `${DESKTOP_HEIGHT}px` }
+    return
+  }
+  // 48px for status bar + 4px breathing room
+  const available = Math.max(200, Math.floor(vv.height - 52))
+  terminalAreaStyle.value = { height: `${available}px` }
+}
+
+onMounted(() => {
+  if (window.visualViewport) {
+    vvResizeHandler = updateTerminalHeight
+    window.visualViewport.addEventListener('resize', vvResizeHandler)
+  }
+  // Also handle orientation changes
+  window.addEventListener('resize', updateTerminalHeight)
+})
+
+onBeforeUnmount(() => {
+  if (vvResizeHandler) {
+    window.visualViewport?.removeEventListener('resize', vvResizeHandler)
+  }
+  window.removeEventListener('resize', updateTerminalHeight)
+})
 
 async function connect() {
   if (!accessKey.value || !secretKey.value) return
@@ -328,7 +367,6 @@ function disconnect() {
 }
 
 .terminal-skeleton {
-  height: 480px;
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -340,6 +378,8 @@ function disconnect() {
 }
 
 .terminal-area {
+  /* Height is set dynamically via :style to support mobile virtual keyboard */
   height: 480px;
+  transition: height 0.15s ease;
 }
 </style>

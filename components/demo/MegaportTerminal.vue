@@ -261,12 +261,16 @@ const initTerminal = async () => {
     handleInput(data);
   });
 
-  // Handle resize with debounce to prevent excessive re-calculations
+  // Handle resize with debounce — covers window resize and virtual keyboard
   const handleResize = debounce(() => {
     fitAddon?.fit();
+    // Keep the prompt/input line visible after keyboard-triggered resize
+    terminal?.scrollToBottom();
   }, TERMINAL_CONFIG.RESIZE_DEBOUNCE_DELAY);
 
   window.addEventListener('resize', handleResize);
+  // Visual Viewport API fires when the virtual keyboard opens/closes on mobile
+  window.visualViewport?.addEventListener('resize', handleResize);
 };
 
 /**
