@@ -103,6 +103,11 @@ const prev = computed(() => {
 })
 
 const next = computed(() => {
+  // On section index pages, link to the first child in this section
+  if (currentIndex.value < 0 && isSectionIndex.value) {
+    const firstChild = navPages.value.find(p => p._path?.startsWith(route.path + '/'))
+    return firstChild ? { title: firstChild.title, path: firstChild._path } : undefined
+  }
   if (currentIndex.value < 0) return undefined
   const item = navPages.value[currentIndex.value + 1]
   return item ? { title: item.title, path: item._path } : undefined
