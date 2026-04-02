@@ -27,6 +27,22 @@
         <!-- Markdown content -->
         <ContentRenderer :value="page" class="prose dark:prose-invert" />
 
+        <!-- Child page cards for section index pages -->
+        <div v-if="childPages && childPages.length > 0" class="mt-10">
+          <h2 class="text-lg font-semibold text-white mb-4">In this section</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <NuxtLink
+              v-for="child in childPages"
+              :key="child._path"
+              :to="child._path"
+              class="group block rounded-lg border border-gray-800 bg-gray-900 p-4 hover:border-violet-500 hover:bg-gray-800/60 transition-colors"
+            >
+              <p class="font-medium text-white group-hover:text-violet-400 transition-colors">{{ child.title }}</p>
+              <p v-if="child.description" class="mt-1 text-sm text-gray-400 line-clamp-2">{{ child.description }}</p>
+            </NuxtLink>
+          </div>
+        </div>
+
         <!-- Prev / Next navigation -->
         <TutorialTutorialNav :prev="prev" :next="next" />
       </article>
@@ -44,6 +60,19 @@ const route = useRoute()
 const { data: page } = await useAsyncData(`content-${route.path}`, () =>
   queryContent(route.path).findOne().catch(() => null)
 )
+
+// Fetch child pages when on a section index (single path segment, e.g. /tutorials)
+const isSectionIndex = computed(() => route.path.split('/').filter(Boolean).length === 1)
+
+const { data: childPages } = await useAsyncData(`children-${route.path}`, () => {
+  if (!isSectionIndex.value) return Promise.resolve(null)
+  return queryContent()
+    .where({ _path: { $contains: route.path } })
+    .where({ _path: { $ne: route.path } })
+    .sort({ _path: 1 })
+    .find()
+    .catch(() => null)
+})
 
 // Fetch full navigation to derive prev/next
 const { data: navigation } = await useAsyncData('nav', () =>
