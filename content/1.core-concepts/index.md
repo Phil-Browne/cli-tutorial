@@ -9,7 +9,7 @@ Learn about the fundamental resources you'll manage with the Megaport CLI.
 
 ## Resources
 
-- **Ports** — Physical connections to the Megaport fabric
-- **VXCs** — Virtual Cross Connects linking two endpoints
-- **MCR** — Megaport Cloud Router for layer 3 routing
-- **MVE** — Managed Virtual Edge for SD-WAN connectivity
+- [**Ports**](/core-concepts/resource-types#port) — Physical connections to the Megaport fabric
+- [**VXCs**](/core-concepts/resource-types#vxc) — Virtual Cross Connects linking two endpoints
+- [**MCR**](/core-concepts/resource-types#mcr) — Megaport Cloud Router for layer 3 routing
+- [**MVE**](/core-concepts/resource-types#mve) — Managed Virtual Edge for SD-WAN connectivity
