@@ -114,9 +114,9 @@
           <p class="text-gray-400">Three steps from zero to managing your first resource.</p>
         </div>
 
-        <StepProgress :current="1" :total="3" :steps="['Install', 'Authenticate', 'Create Resources']" />
+        <StepProgress :current="1" :total="4" :steps="['Install Go', 'Install CLI', 'Authenticate', 'Create Resources']" />
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
           <div v-for="step in quickStart" :key="step.label" class="space-y-3">
             <div class="flex items-center gap-2">
               <span
@@ -232,18 +232,24 @@ const features = [
 const quickStart = [
   {
     num: 1,
-    label: 'Install',
-    command: 'go install github.com/megaport/megaport-cli@latest',
-    description: 'Requires Go — get it at go.dev/dl',
+    label: 'Install Go',
+    command: 'https://go.dev/dl',
+    description: 'Download and install Go 1.21+',
   },
   {
     num: 2,
+    label: 'Install CLI',
+    command: 'go install github.com/megaport/megaport-cli@latest',
+    description: 'Installs the megaport-cli binary',
+  },
+  {
+    num: 3,
     label: 'Authenticate',
     command: 'megaport config create-profile --name default',
     description: 'Enter your API key and secret',
   },
   {
-    num: 3,
+    num: 4,
     label: 'Create Resources',
     command: 'megaport port list --output table',
     description: 'List all your ports',
