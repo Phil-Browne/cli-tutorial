@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
 
   nitro: {
-    preset: 'vercel-static',
+    preset: 'vercel',
     // COOP/COEP headers required for Go WASM SharedArrayBuffer support
     routeRules: {
       '/**': {
