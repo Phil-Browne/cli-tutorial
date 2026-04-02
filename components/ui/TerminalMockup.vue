@@ -9,7 +9,7 @@
     </div>
 
     <!-- Terminal content -->
-    <div class="p-5 text-left leading-relaxed h-80 overflow-hidden">
+    <div class="p-5 text-left leading-relaxed h-[28rem] overflow-hidden">
       <!-- Session 1: port list -->
       <div :class="['transition-opacity duration-500', phase >= 0 ? 'opacity-100' : 'opacity-0']">
         <div class="flex items-center gap-2">
