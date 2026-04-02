@@ -97,11 +97,13 @@ const currentIndex = computed(() =>
 )
 
 const prev = computed(() => {
+  if (currentIndex.value < 0) return undefined
   const item = navPages.value[currentIndex.value - 1]
   return item ? { title: item.title, path: item._path } : undefined
 })
 
 const next = computed(() => {
+  if (currentIndex.value < 0) return undefined
   const item = navPages.value[currentIndex.value + 1]
   return item ? { title: item.title, path: item._path } : undefined
 })
