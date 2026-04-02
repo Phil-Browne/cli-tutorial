@@ -111,7 +111,7 @@
       <section class="section-reveal">
         <div class="text-center mb-10">
           <h2 class="text-3xl font-bold text-white mb-3">Up and Running in Minutes</h2>
-          <p class="text-gray-400">Three steps from zero to managing your first resource.</p>
+          <p class="text-gray-400">Four steps from zero to managing your first resource.</p>
         </div>
 
         <StepProgress :current="1" :total="4" :steps="['Install Go', 'Install CLI', 'Authenticate', 'Create Resources']" />
