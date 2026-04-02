@@ -7,10 +7,10 @@ const version = ref('latest')
 
 onMounted(async () => {
   try {
-    const res = await fetch('https://api.github.com/repos/megaport/megaport-cli/releases/latest')
+    const res = await fetch('/api/cli-version')
     if (res.ok) {
       const data = await res.json()
-      version.value = data.tag_name ?? 'latest'
+      version.value = data.version ?? 'latest'
     }
   } catch {
     // keep "latest" as fallback
