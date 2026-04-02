@@ -106,7 +106,7 @@ const { track } = useAnalytics()
 // The Visual Viewport API gives the height of the visible area above the
 // virtual keyboard. We bind this to the terminal height so xterm shrinks
 // when the keyboard opens instead of being hidden behind it.
-const DESKTOP_HEIGHT = 480
+const DESKTOP_HEIGHT = 600
 const terminalAreaStyle = ref<{ height: string }>({ height: `${DESKTOP_HEIGHT}px` })
 let vvResizeHandler: (() => void) | null = null
 
