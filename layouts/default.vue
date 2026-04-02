@@ -184,8 +184,36 @@ const headerLinks = [
   { to: '/reference', label: 'Reference' },
 ]
 
-// Auto-generate navigation from content/ directory structure
-const { data: navigation } = useLazyAsyncData('navigation', () =>
-  fetchContentNavigation().catch(() => null)
-)
+// Build navigation tree from content queries (more reliable than fetchContentNavigation with ssr:false)
+const { data: navigation } = useLazyAsyncData('navigation', async () => {
+  const allPages = await queryContent()
+    .where({ _partial: { $ne: true } })
+    .only(['title', 'description', '_path', '_file'])
+    .sort({ _file: 1 })
+    .find()
+
+  // Group pages into sections by top-level path segment
+  const sections: Record<string, { title: string; _path: string; children: { title: string; _path: string }[] }> = {}
+
+  for (const page of allPages) {
+    const parts = page._path?.split('/').filter(Boolean) ?? []
+    if (parts.length === 0) continue
+
+    const sectionPath = `/${parts[0]}`
+
+    if (!sections[sectionPath]) {
+      sections[sectionPath] = { title: '', _path: sectionPath, children: [] }
+    }
+
+    if (parts.length === 1) {
+      // Section index page — use its title as the section header
+      sections[sectionPath].title = page.title ?? parts[0]
+    } else {
+      // Child page
+      sections[sectionPath].children.push({ title: page.title ?? parts[parts.length - 1], _path: page._path! })
+    }
+  }
+
+  return Object.values(sections)
+})
 </script>
