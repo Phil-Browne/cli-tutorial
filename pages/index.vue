@@ -116,8 +116,8 @@
 
         <StepProgress :current="1" :total="4" :steps="['Install Go', 'Install CLI', 'Authenticate', 'Create Resources']" />
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
-          <div v-for="step in quickStart" :key="step.label" class="space-y-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8 items-stretch">
+          <div v-for="step in quickStart" :key="step.label" class="flex flex-col gap-3">
             <div class="flex items-center gap-2">
               <span
                 class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
@@ -127,7 +127,9 @@
               </span>
               <span class="font-semibold text-white text-sm">{{ step.label }}</span>
             </div>
-            <CommandExample :command="step.command" :description="step.description" />
+            <div class="flex-1 flex flex-col">
+              <CommandExample :command="step.command" :description="step.description" class="flex-1" />
+            </div>
           </div>
         </div>
       </section>

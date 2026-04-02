@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-xl border border-gray-700 overflow-hidden my-4 font-mono text-sm">
+  <div class="rounded-xl border border-gray-700 overflow-hidden my-4 font-mono text-sm flex flex-col">
     <!-- Command bar -->
     <div class="flex items-center justify-between gap-3 px-4 py-3 bg-gray-900">
       <div class="flex items-center gap-2 flex-1 min-w-0">
