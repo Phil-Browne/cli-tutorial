@@ -1,6 +1,5 @@
 <template>
-  <ClientOnly>
-    <div class="demo-terminal-wrapper">
+  <div class="demo-terminal-wrapper">
       <!-- Auth form -->
       <div v-if="!authed" class="auth-panel">
         <div class="auth-header">
@@ -85,7 +84,6 @@
         </div>
       </div>
     </div>
-  </ClientOnly>
 </template>
 
 <script setup lang="ts">

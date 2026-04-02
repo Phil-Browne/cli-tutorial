@@ -185,7 +185,7 @@ const headerLinks = [
 ]
 
 // Auto-generate navigation from content/ directory structure
-const { data: navigation } = await useAsyncData('navigation', () =>
-  fetchContentNavigation()
+const { data: navigation } = useLazyAsyncData('navigation', () =>
+  fetchContentNavigation().catch(() => null)
 )
 </script>
