@@ -191,7 +191,9 @@
           <p class="text-gray-400">Complete CLI coverage across the entire Megaport platform.</p>
         </div>
         <div class="flex flex-wrap gap-3 justify-center">
-          <ResourceBadge v-for="r in resourceTypes" :key="r" :type="r" />
+          <NuxtLink v-for="r in resourceTypes" :key="r.type" :to="r.href" class="hover:opacity-80 transition-opacity">
+            <ResourceBadge :type="r.type" />
+          </NuxtLink>
         </div>
       </section>
     </div>
@@ -299,6 +301,16 @@ const quickStart = [
   },
 ]
 
-const resourceTypes = ['Port', 'VXC', 'MCR', 'MVE', 'IX', 'Location', 'Partner', 'Service Key', 'User']
+const resourceTypes = [
+  { type: 'Port', href: '/core-concepts/resource-types#port' },
+  { type: 'VXC', href: '/core-concepts/resource-types#vxc' },
+  { type: 'MCR', href: '/core-concepts/resource-types#mcr' },
+  { type: 'MVE', href: '/core-concepts/resource-types#mve' },
+  { type: 'IX', href: '/core-concepts/resource-types#ix' },
+  { type: 'Location', href: '/core-concepts/resource-types#location' },
+  { type: 'Partner', href: '/core-concepts/resource-types#partner' },
+  { type: 'Service Key', href: '/core-concepts/resource-types#service-key' },
+  { type: 'User', href: '/reference/command-reference#users' },
+]
 
 </script>
