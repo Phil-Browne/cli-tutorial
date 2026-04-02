@@ -1,7 +1,7 @@
 <template>
-  <div class="my-6">
+  <div>
     <ClientOnly>
-      <div class="py-4 px-6 flex justify-center rounded-xl bg-slate-100 max-w-2xl mx-auto">
+      <div class="py-2 px-4 flex justify-center rounded-lg bg-slate-100 max-w-2xl mx-auto">
         <div ref="diagramRef" class="mermaid-diagram" v-html="renderedSvg" />
       </div>
       <template #fallback>
@@ -50,7 +50,15 @@ onMounted(async () => {
 
     const id = `mermaid-${Math.random().toString(36).slice(2)}`
     const { svg } = await mermaid.render(id, props.definition)
-    renderedSvg.value = svg
+    // Trim Mermaid's default padding by tightening the viewBox
+    renderedSvg.value = svg.replace(
+      /viewBox="([^"]*)" style="[^"]*"/,
+      (_, vb) => {
+        const [x, y, w, h] = vb.split(' ').map(Number)
+        const pad = 8
+        return `viewBox="${x + pad} ${y + pad} ${w - pad * 2} ${h - pad * 2}" style="max-width:100%;height:auto"`
+      }
+    )
   } catch (err) {
     console.error('Mermaid render error:', err)
     renderedSvg.value = `<pre class="text-xs text-gray-400">${props.definition}</pre>`
