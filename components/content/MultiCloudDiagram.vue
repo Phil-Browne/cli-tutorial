@@ -4,14 +4,14 @@
       <!-- MCR hub in center -->
       <div class="flex flex-col items-center gap-4">
         <!-- On-prem leg -->
-        <div class="flex items-center gap-3">
-          <div class="node border-teal-500 bg-teal-500/10 text-teal-200">
-            <span class="text-lg">🔌</span>
-            <span class="text-xs font-bold">Port</span>
-            <span class="text-[10px] opacity-70">NextDC S1 · ASN 65001</span>
-          </div>
+        <div class="node border-teal-500 bg-teal-500/10 text-teal-200">
+          <span class="text-lg">🔌</span>
+          <span class="text-xs font-bold">Port</span>
+          <span class="text-[10px] opacity-70">NextDC S1 · ASN 65001</span>
+        </div>
+        <div class="flex items-center justify-center gap-1">
+          <span class="text-gray-500">↓</span>
           <span class="text-[10px] text-gray-500">VXC 2G</span>
-          <span class="text-gray-500">→</span>
         </div>
 
         <!-- MCR Hub -->
