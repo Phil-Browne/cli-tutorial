@@ -1,0 +1,74 @@
+<template>
+  <nav
+    v-if="links.length"
+    class="hidden xl:block sticky top-20 w-56 shrink-0 ml-8"
+  >
+    <p class="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">On this page</p>
+    <ul class="space-y-1 border-l border-gray-800">
+      <li v-for="link in links" :key="link.id">
+        <a
+          :href="`#${link.id}`"
+          class="block pl-3 py-1 text-sm transition-colors border-l-2 -ml-px"
+          :class="[
+            link.depth === 3 ? 'pl-5 text-xs' : '',
+            activeId === link.id
+              ? 'border-violet-500 text-violet-400 font-medium'
+              : 'border-transparent text-gray-500 hover:text-gray-300 hover:border-gray-600',
+          ]"
+          @click.prevent="scrollTo(link.id)"
+        >
+          {{ link.text }}
+        </a>
+      </li>
+    </ul>
+  </nav>
+</template>
+
+<script setup lang="ts">
+interface TocLink {
+  id: string
+  text: string
+  depth: number
+  children?: TocLink[]
+}
+
+// Get TOC from @nuxt/content
+const { data: page } = useAsyncData(() => queryContent(useRoute().path).findOne())
+
+const links = computed(() => {
+  const toc = page.value?.body?.toc?.links ?? []
+  // Flatten h2 + h3
+  return toc.flatMap((link: TocLink) => [
+    link,
+    ...(link.children?.map(c => ({ ...c, depth: 3 })) ?? []),
+  ])
+})
+
+const activeId = ref('')
+
+function scrollTo(id: string) {
+  const el = document.getElementById(id)
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
+// IntersectionObserver to track active heading
+let observer: IntersectionObserver | null = null
+
+onMounted(() => {
+  observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          activeId.value = entry.target.id
+        }
+      }
+    },
+    { rootMargin: '-80px 0px -60% 0px', threshold: 0 }
+  )
+
+  // Observe all headings
+  document.querySelectorAll('h2[id], h3[id]').forEach(el => observer?.observe(el))
+})
+
+onUnmounted(() => observer?.disconnect())
+</script>

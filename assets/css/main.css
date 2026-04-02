@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-megaport-purple: #6B2D8B;
+  --color-megaport-navy: #1A1A2E;
+  --color-megaport-teal: #00BCD4;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── Prose (Nuxt Content) overrides ── */
+.prose {
+  @apply text-gray-200 max-w-none;
+}
+
+.dark .prose {
+  @apply text-gray-200;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  @apply text-white font-semibold scroll-mt-20;
+}
+
+.prose a {
+  @apply text-violet-400 no-underline hover:underline;
+}
+
+.prose pre {
+  @apply rounded-xl bg-gray-900 border border-gray-800;
+}
+
+.prose code:not(pre code) {
+  @apply bg-gray-800 text-violet-300 rounded px-1.5 py-0.5 text-sm font-mono;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-violet-500 pl-4 italic text-gray-400;
+}
+
+.prose table {
+  @apply w-full border-collapse;
+}
+
+.prose thead th {
+  @apply bg-gray-800 text-gray-200 font-semibold px-4 py-2 text-left border border-gray-700;
+}
+
+.prose tbody td {
+  @apply px-4 py-2 border border-gray-700 text-gray-300;
+}
+
+.prose tbody tr:nth-child(even) {
+  @apply bg-gray-900/50;
+}
+
+/* ── Utility classes ── */
+.megaport-gradient {
+  background: linear-gradient(135deg, #6B2D8B 0%, #00BCD4 100%);
+}
+
+.megaport-gradient-text {
+  background: linear-gradient(135deg, #9B5DBB 0%, #4DD0E1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Page transitions ── */
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+/* ── Scroll-reveal ── */
+.section-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.section-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Loading skeleton ── */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #1f2937 25%, #374151 50%, #1f2937 75%);
+  background-size: 200% auto;
+  animation: shimmer 1.5s linear infinite;
+  border-radius: 4px;
+}
+
+/* ── Focus rings ── */
+:focus-visible {
+  outline: 2px solid #7c3aed;
+  outline-offset: 2px;
+}
+
+/* ── Responsive tables ── */
+.prose table {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
