@@ -124,6 +124,7 @@ let activePrompt: { id: string; resolve: (value: string) => void } | null =
 let promptInputBuffer = '';
 let isInInteractiveCommand = false; // Track if we're in an interactive command session
 let resizeTimeoutId: NodeJS.Timeout | null = null; // For debouncing resize
+let resizeObserver: ResizeObserver | null = null;
 
 /**
  * Debounce utility function
@@ -250,6 +251,12 @@ const initTerminal = async () => {
   // Open terminal
   terminal.open(terminalRef.value);
   fitAddon.fit();
+
+  // Refit when the container transitions from hidden to visible (v-show on ancestor)
+  resizeObserver = new ResizeObserver(() => {
+    fitAddon?.fit();
+  });
+  resizeObserver.observe(terminalRef.value);
 
   // Display welcome message
   terminal.write(props.welcomeMessage);
@@ -670,6 +677,7 @@ onBeforeUnmount(() => {
     clearTimeout(resizeTimeoutId);
   }
 
+  resizeObserver?.disconnect();
   fitAddon?.dispose();
   terminal?.dispose();
 });
