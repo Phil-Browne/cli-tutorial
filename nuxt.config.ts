@@ -36,6 +36,9 @@ export default defineNuxtConfig({
   },
 
   content: {
+    navigation: {
+      fields: ['description', 'icon'],
+    },
     highlight: {
       theme: 'github-dark',
       langs: ['go', 'bash', 'json', 'yaml', 'typescript', 'vue'],
