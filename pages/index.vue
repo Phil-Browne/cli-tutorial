@@ -47,7 +47,7 @@
 
           <!-- Right: animated terminal -->
           <div class="hidden lg:block">
-            <UiTerminalMockup />
+            <TerminalMockup />
           </div>
         </div>
       </div>
@@ -114,7 +114,7 @@
           <p class="text-gray-400">Three steps from zero to managing your first resource.</p>
         </div>
 
-        <UiStepProgress :current="1" :total="3" :steps="['Install', 'Authenticate', 'Create Resources']" />
+        <StepProgress :current="1" :total="3" :steps="['Install', 'Authenticate', 'Create Resources']" />
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
           <div v-for="step in quickStart" :key="step.label" class="space-y-3">
@@ -127,7 +127,7 @@
               </span>
               <span class="font-semibold text-white text-sm">{{ step.label }}</span>
             </div>
-            <UiCommandExample :command="step.command" :description="step.description" />
+            <CommandExample :command="step.command" :description="step.description" />
           </div>
         </div>
       </section>
@@ -138,7 +138,7 @@
           <h2 class="text-3xl font-bold text-white mb-3">How It Works</h2>
           <p class="text-gray-400">The CLI talks directly to the Megaport API — in your terminal or your browser.</p>
         </div>
-        <UiNetworkDiagram :definition="architectureDiagram" />
+        <NetworkDiagram :definition="architectureDiagram" />
       </section>
 
       <!-- ── Resource types ── -->
@@ -148,7 +148,7 @@
           <p class="text-gray-400">Complete CLI coverage across the entire Megaport platform.</p>
         </div>
         <div class="flex flex-wrap gap-3 justify-center">
-          <UiResourceBadge v-for="r in resourceTypes" :key="r" :type="r" />
+          <ResourceBadge v-for="r in resourceTypes" :key="r" :type="r" />
         </div>
       </section>
     </div>

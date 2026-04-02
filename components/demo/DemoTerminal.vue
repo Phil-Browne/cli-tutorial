@@ -80,7 +80,7 @@
           <div class="skeleton skeleton-line w-1/4" />
         </div>
         <div v-show="terminalReady" class="terminal-area" :style="terminalAreaStyle">
-          <DemoMegaportTerminal ref="termRef" />
+          <MegaportTerminal ref="termRef" />
         </div>
       </div>
     </div>
