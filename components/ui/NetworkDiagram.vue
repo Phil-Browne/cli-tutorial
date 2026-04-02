@@ -31,7 +31,7 @@ onMounted(async () => {
         primaryColor: '#6B2D8B',
         primaryTextColor: '#ffffff',
         primaryBorderColor: '#9B5DBB',
-        lineColor: '#00BCD4',
+        lineColor: '#5ED4E6',
         secondaryColor: '#1A1A2E',
         tertiaryColor: '#2A2A4E',
         background: '#030712',
@@ -40,6 +40,7 @@ onMounted(async () => {
         clusterBkg: '#1f2937',
         titleColor: '#e2e8f0',
         edgeLabelBackground: '#1f2937',
+        fontSize: '16px',
       },
     })
 
@@ -55,7 +56,18 @@ onMounted(async () => {
 
 <style scoped>
 .mermaid-diagram :deep(svg) {
-  max-width: 100%;
+  width: 100%;
+  min-height: 300px;
   height: auto;
+}
+
+.mermaid-diagram :deep(.node rect),
+.mermaid-diagram :deep(.node polygon) {
+  rx: 8;
+  ry: 8;
+}
+
+.mermaid-diagram :deep(.edgePath path) {
+  stroke-width: 2px;
 }
 </style>
