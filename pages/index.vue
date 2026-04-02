@@ -234,7 +234,7 @@ const quickStart = [
     num: 1,
     label: 'Install',
     command: 'go install github.com/megaport/megaport-cli@latest',
-    description: 'Requires Go 1.21+',
+    description: 'Install Go first from go.dev/dl',
   },
   {
     num: 2,
