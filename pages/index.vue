@@ -278,24 +278,17 @@
             Up and Running in Minutes
           </h2>
           <p class="text-gray-400">
-            Four steps from zero to managing your first resource.
+            Three steps from zero to managing your first resource.
           </p>
         </div>
 
         <StepProgress
           :current="1"
-          :total="4"
-          :steps="[
-            'Install',
-            'Install CLI',
-            'Authenticate',
-            'Create Resources',
-          ]"
+          :total="3"
+          :steps="['Install CLI', 'Authenticate', 'Create Resources']"
         />
 
-        <div
-          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8 items-stretch"
-        >
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8 items-stretch">
           <!-- Step 1: Tabbed install -->
           <div class="flex flex-col gap-3">
             <div class="flex items-center gap-2">
@@ -305,7 +298,7 @@
               >
                 1
               </span>
-              <span class="font-semibold text-white text-sm">Install</span>
+              <span class="font-semibold text-white text-sm">Install CLI</span>
             </div>
             <div
               class="flex-1 flex flex-col rounded-xl border border-gray-700 overflow-hidden"
@@ -1218,22 +1211,16 @@ async function copyInstallCommand() {
   }, 2000);
 }
 
-// ── Quick Start: Steps 2–4 ──
+// ── Quick Start: Steps 2–3 ──
 const quickStartSteps = [
   {
     num: 2,
-    label: 'Install CLI',
-    command: 'go install github.com/megaport/megaport-cli@latest',
-    description: 'Installs the megaport-cli binary',
-  },
-  {
-    num: 3,
     label: 'Authenticate',
     command: 'megaport-cli config create-profile default',
     description: 'Enter your API key and secret',
   },
   {
-    num: 4,
+    num: 3,
     label: 'Create Resources',
     command: 'megaport-cli ports list --output table',
     description: 'List all your ports',
