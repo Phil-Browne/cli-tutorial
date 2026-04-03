@@ -54,7 +54,7 @@
         <div class="flex items-center gap-2">
           <span class="text-green-400">$</span>
           <span class="text-gray-100"
-            >megaport-cli locations list --country AU</span
+            >megaport-cli locations list --country Australia</span
           >
           <span
             class="cursor"
@@ -69,9 +69,9 @@
         ><span class="text-cyan-400">┌─────┬───────────────────────┬─────────┐
 │ ID  │ Name                  │ Country │
 ├─────┼───────────────────────┼─────────┤</span>
-│ <span class="text-violet-300">3</span>   │ NextDC S1 Sydney      │ <span class="text-yellow-300">AU</span>      │
-│ <span class="text-violet-300">6</span>   │ Equinix SY3 Sydney    │ <span class="text-yellow-300">AU</span>      │
-│ <span class="text-violet-300">137</span> │ NextDC M2 Melbourne   │ <span class="text-yellow-300">AU</span>      │
+│ <span class="text-violet-300">3</span>   │ NextDC S1 Sydney      │ <span class="text-yellow-300">Australia</span> │
+│ <span class="text-violet-300">6</span>   │ Equinix SY3 Sydney    │ <span class="text-yellow-300">Australia</span> │
+│ <span class="text-violet-300">137</span> │ NextDC M2 Melbourne   │ <span class="text-yellow-300">Australia</span> │
 <span class="text-cyan-400">└─────┴───────────────────────┴─────────┘</span></pre>
         <div class="mt-2 flex items-center gap-2">
           <span class="text-green-400">$</span>
