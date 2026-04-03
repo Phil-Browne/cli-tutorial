@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --color-megaport-purple: #6B2D8B;
-  --color-megaport-navy: #1A1A2E;
-  --color-megaport-teal: #00BCD4;
+  --color-megaport-purple: #6b2d8b;
+  --color-megaport-navy: #1a1a2e;
+  --color-megaport-teal: #00bcd4;
 }
 
 /* Smooth scrolling */
@@ -22,8 +22,16 @@ html {
   @apply text-gray-200;
 }
 
-.prose h1, .prose h2, .prose h3, .prose h4 {
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
   @apply text-white font-semibold scroll-mt-16;
+}
+
+.prose strong,
+.prose b {
+  @apply text-white font-semibold;
 }
 
 .prose a {
@@ -32,7 +40,9 @@ html {
 
 .prose pre {
   @apply rounded-xl bg-gray-900 border border-gray-800;
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family:
+    'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    monospace;
 }
 
 .prose code:not(pre code) {
@@ -60,17 +70,21 @@ html {
   @apply px-4 py-2 border border-gray-700 text-gray-300;
 }
 
+.prose tbody td strong {
+  @apply text-white;
+}
+
 .prose tbody tr:nth-child(even) {
   @apply bg-gray-900/50;
 }
 
 /* ── Utility classes ── */
 .megaport-gradient {
-  background: linear-gradient(135deg, #6B2D8B 0%, #00BCD4 100%);
+  background: linear-gradient(135deg, #6b2d8b 0%, #00bcd4 100%);
 }
 
 .megaport-gradient-text {
-  background: linear-gradient(135deg, #9B5DBB 0%, #4DD0E1 100%);
+  background: linear-gradient(135deg, #9b5dbb 0%, #4dd0e1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -79,7 +93,9 @@ html {
 /* ── Page transitions ── */
 .page-enter-active,
 .page-leave-active {
-  transition: opacity 0.18s ease, transform 0.18s ease;
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
 }
 .page-enter-from,
 .page-leave-to {
@@ -91,7 +107,9 @@ html {
 .section-reveal {
   opacity: 0;
   transform: translateY(16px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
 }
 .section-visible {
   opacity: 1;
@@ -100,8 +118,12 @@ html {
 
 /* ── Loading skeleton ── */
 @keyframes shimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position: 200% center; }
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
 }
 .skeleton {
   background: linear-gradient(90deg, #1f2937 25%, #374151 50%, #1f2937 75%);
@@ -127,7 +149,9 @@ html {
 
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
