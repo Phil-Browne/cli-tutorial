@@ -32,7 +32,10 @@
         </NuxtLink>
 
         <!-- Center nav -->
-        <nav class="hidden md:flex items-center gap-1">
+        <nav
+          class="hidden md:flex items-center gap-1"
+          aria-label="Main navigation"
+        >
           <NuxtLink
             v-for="link in filteredHeaderLinks"
             :key="link.to"
@@ -44,8 +47,29 @@
           </NuxtLink>
         </nav>
 
-        <!-- Right: search + dark mode toggle -->
+        <!-- Right: mobile menu + search -->
         <div class="flex items-center gap-2">
+          <!-- Mobile hamburger -->
+          <button
+            class="md:hidden p-1.5 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
+            aria-label="Open navigation menu"
+            @click="mobileMenuOpen = !mobileMenuOpen"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
           <!-- Search button -->
           <button
             class="flex items-center gap-1.5 p-1.5 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
@@ -74,7 +98,8 @@
             </span>
           </button>
 
-          <!-- Light/Dark mode toggle -->
+          <!-- Dark mode toggle (non-functional — site is dark-only, placeholder for future light theme) -->
+          <!--
           <button
             class="p-1.5 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
             :aria-label="
@@ -84,7 +109,6 @@
             "
             @click="toggleColorMode"
           >
-            <!-- Sun icon (shown in dark mode) -->
             <svg
               v-if="colorMode.value === 'dark'"
               class="w-4 h-4"
@@ -100,7 +124,6 @@
                 d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
               />
             </svg>
-            <!-- Moon icon (shown in light mode) -->
             <svg
               v-else
               class="w-4 h-4"
@@ -117,9 +140,30 @@
               />
             </svg>
           </button>
+          -->
         </div>
       </div>
     </header>
+
+    <!-- Mobile nav dropdown -->
+    <Transition name="slide-down">
+      <nav
+        v-if="mobileMenuOpen"
+        class="md:hidden border-b border-gray-800 bg-gray-950 px-4 py-3 space-y-1"
+        aria-label="Mobile navigation"
+      >
+        <NuxtLink
+          v-for="link in filteredHeaderLinks"
+          :key="link.to"
+          :to="link.to"
+          class="block px-3 py-2 rounded-md text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
+          active-class="text-white bg-gray-800"
+          @click="mobileMenuOpen = false"
+        >
+          {{ link.label }}
+        </NuxtLink>
+      </nav>
+    </Transition>
 
     <!-- ── Full-width content ── -->
     <main id="main-content" class="flex-1">
@@ -296,14 +340,21 @@
 <script setup lang="ts">
 const colorMode = useColorMode();
 const searchOpen = ref(false);
+const mobileMenuOpen = ref(false);
+
+function handleKeydown(e: KeyboardEvent) {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
+    searchOpen.value = true;
+  }
+}
 
 onMounted(() => {
-  window.addEventListener('keydown', (e) => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-      e.preventDefault();
-      searchOpen.value = true;
-    }
-  });
+  window.addEventListener('keydown', handleKeydown);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown);
 });
 
 function toggleColorMode() {
