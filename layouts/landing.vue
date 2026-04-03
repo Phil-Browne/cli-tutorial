@@ -47,7 +47,7 @@
           </NuxtLink>
         </nav>
 
-        <!-- Right: mobile menu + search -->
+        <!-- Right: mobile menu + search + CTA -->
         <div class="flex items-center gap-2">
           <!-- Mobile hamburger -->
           <button
@@ -97,6 +97,16 @@
               <span>⌘K</span>
             </span>
           </button>
+
+          <!-- Try Live Demo CTA (matches other layouts) -->
+          <NuxtLink
+            to="/demos"
+            class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium text-white transition-colors"
+            style="background-color: #6b2d8b"
+          >
+            <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+            Try Live Demo
+          </NuxtLink>
 
           <!-- Dark mode toggle (non-functional — site is dark-only, placeholder for future light theme) -->
           <!--
