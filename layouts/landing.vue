@@ -181,7 +181,11 @@
         >
           <!-- Brand -->
           <div>
-            <div class="flex items-center gap-2.5 mb-4">
+            <NuxtLink
+              to="/"
+              class="flex items-center gap-2.5 mb-4 group w-fit"
+              aria-label="Go to Megaport CLI landing page"
+            >
               <div
                 class="w-7 h-7 rounded-md flex items-center justify-center shrink-0"
                 style="background-color: #6b2d8b"
@@ -190,8 +194,11 @@
                   >M</span
                 >
               </div>
-              <span class="font-semibold text-white text-sm">Megaport CLI</span>
-            </div>
+              <span
+                class="font-semibold text-white text-sm group-hover:text-violet-400 transition-colors"
+                >Megaport CLI</span
+              >
+            </NuxtLink>
             <p class="text-sm text-gray-500 leading-relaxed">
               The complete guide to managing network infrastructure from your
               terminal or browser.
