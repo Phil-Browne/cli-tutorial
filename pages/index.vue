@@ -438,59 +438,75 @@
         <!-- SVG Architecture Flow Diagram -->
         <div class="flex justify-center py-8">
           <svg
-            viewBox="0 0 920 260"
+            viewBox="0 0 920 240"
             class="w-full max-w-4xl hidden md:block"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             role="img"
             aria-label="Architecture diagram: User connects via CLI or WASM to the Megaport API, which manages Ports, VXCs, MCR, MVE, IX, and Locations"
           >
-            <!-- User node -->
+            <defs>
+              <marker
+                id="arrow"
+                viewBox="0 0 10 6"
+                refX="10"
+                refY="3"
+                markerWidth="8"
+                markerHeight="6"
+                orient="auto-start-reverse"
+              >
+                <path d="M0 0 L10 3 L0 6 Z" fill="#6b7280" />
+              </marker>
+              <filter id="apiGlow">
+                <feDropShadow
+                  dx="0"
+                  dy="0"
+                  stdDeviation="6"
+                  flood-color="#6B2D8B"
+                  flood-opacity="0.4"
+                />
+              </filter>
+            </defs>
+
+            <!-- ── User node ── -->
             <rect
-              x="0"
-              y="80"
-              width="120"
+              x="10"
+              y="70"
+              width="110"
               height="100"
               rx="16"
-              fill="#1f2937"
+              fill="#111827"
               stroke="#374151"
               stroke-width="1.5"
             />
+            <!-- Person icon -->
             <circle
-              cx="60"
-              cy="110"
-              r="16"
-              fill="#374151"
+              cx="65"
+              cy="100"
+              r="12"
+              fill="#1f2937"
               stroke="#6b7280"
-              stroke-width="1"
+              stroke-width="1.2"
             />
-            <path
-              d="M52 106 L56 110 L68 98"
-              stroke="#9ca3af"
-              stroke-width="2"
-              stroke-linecap="round"
-              fill="none"
-            />
-            <!-- User icon (simplified person) -->
             <circle
-              cx="60"
-              cy="106"
-              r="6"
+              cx="65"
+              cy="96"
+              r="5"
               fill="none"
               stroke="#9ca3af"
-              stroke-width="1.5"
+              stroke-width="1.3"
             />
             <path
-              d="M48 122 Q60 130 72 122"
+              d="M54 112 a11 8 0 0 1 22 0"
               fill="none"
               stroke="#9ca3af"
-              stroke-width="1.5"
+              stroke-width="1.3"
             />
             <text
-              x="60"
-              y="150"
+              x="65"
+              y="140"
               text-anchor="middle"
-              fill="#d1d5db"
+              fill="#e5e7eb"
               font-size="13"
               font-weight="600"
               font-family="system-ui"
@@ -498,8 +514,8 @@
               You
             </text>
             <text
-              x="60"
-              y="166"
+              x="65"
+              y="155"
               text-anchor="middle"
               fill="#6b7280"
               font-size="10"
@@ -508,58 +524,71 @@
               Developer
             </text>
 
-            <!-- Arrow 1 -->
-            <line
-              x1="128"
-              y1="130"
-              x2="218"
-              y2="105"
+            <!-- ── Arrows: User → CLI / WASM ── -->
+            <path
+              d="M120 105 C160 105, 180 88, 225 88"
               stroke="#4b5563"
               stroke-width="1.5"
+              marker-end="url(#arrow)"
             />
-            <polygon points="218,105 208,100 210,110" fill="#4b5563" />
-            <line
-              x1="128"
-              y1="130"
-              x2="218"
-              y2="155"
+            <path
+              d="M120 135 C160 135, 180 152, 225 152"
               stroke="#4b5563"
               stroke-width="1.5"
+              marker-end="url(#arrow)"
             />
-            <polygon points="218,155 208,150 210,160" fill="#4b5563" />
+            <text
+              x="170"
+              y="88"
+              text-anchor="middle"
+              fill="#6b7280"
+              font-size="9"
+              font-family="system-ui"
+            >
+              Terminal
+            </text>
+            <text
+              x="170"
+              y="162"
+              text-anchor="middle"
+              fill="#6b7280"
+              font-size="9"
+              font-family="system-ui"
+            >
+              Browser
+            </text>
 
-            <!-- CLI node -->
+            <!-- ── CLI node ── -->
             <rect
-              x="226"
-              y="60"
+              x="232"
+              y="58"
               width="140"
-              height="68"
+              height="60"
               rx="12"
-              fill="#1f2937"
+              fill="#111827"
               stroke="#374151"
               stroke-width="1.5"
             />
-            <!-- Terminal icon -->
             <rect
-              x="248"
+              x="252"
               y="76"
-              width="20"
-              height="16"
-              rx="3"
+              width="16"
+              height="12"
+              rx="2"
               fill="none"
               stroke="#9ca3af"
               stroke-width="1.2"
             />
             <path
-              d="M252 82 L256 86 L252 90"
+              d="M255 80 L259 84 L255 88"
               stroke="#9ca3af"
               stroke-width="1.2"
               stroke-linecap="round"
               fill="none"
             />
             <text
-              x="276"
-              y="88"
+              x="278"
+              y="87"
               fill="#e5e7eb"
               font-size="13"
               font-weight="600"
@@ -568,8 +597,8 @@
               CLI
             </text>
             <text
-              x="296"
-              y="108"
+              x="302"
+              y="104"
               text-anchor="middle"
               fill="#6b7280"
               font-size="10"
@@ -578,46 +607,45 @@
               Local Terminal
             </text>
 
-            <!-- WASM node -->
+            <!-- ── WASM node ── -->
             <rect
-              x="226"
-              y="142"
+              x="232"
+              y="130"
               width="140"
-              height="68"
+              height="60"
               rx="12"
-              fill="#1f2937"
+              fill="#111827"
               stroke="#374151"
               stroke-width="1.5"
             />
-            <!-- Globe icon -->
             <circle
-              cx="258"
-              cy="168"
-              r="10"
+              cx="260"
+              cy="154"
+              r="8"
               fill="none"
               stroke="#9ca3af"
               stroke-width="1.2"
             />
             <ellipse
-              cx="258"
-              cy="168"
-              rx="5"
-              ry="10"
+              cx="260"
+              cy="154"
+              rx="4"
+              ry="8"
               fill="none"
               stroke="#9ca3af"
               stroke-width="0.8"
             />
             <line
-              x1="248"
-              y1="168"
+              x1="252"
+              y1="154"
               x2="268"
-              y2="168"
+              y2="154"
               stroke="#9ca3af"
               stroke-width="0.8"
             />
             <text
-              x="276"
-              y="172"
+              x="278"
+              y="158"
               fill="#e5e7eb"
               font-size="13"
               font-weight="600"
@@ -626,8 +654,8 @@
               WASM
             </text>
             <text
-              x="296"
-              y="192"
+              x="302"
+              y="176"
               text-anchor="middle"
               fill="#6b7280"
               font-size="10"
@@ -636,40 +664,45 @@
               In-Browser
             </text>
 
-            <!-- Arrow 2 -->
-            <line
-              x1="374"
-              y1="94"
-              x2="470"
-              y2="122"
+            <!-- ── Arrows: CLI/WASM → API ── -->
+            <path
+              d="M372 88 C420 88, 430 120, 478 120"
               stroke="#4b5563"
               stroke-width="1.5"
+              marker-end="url(#arrow)"
             />
-            <polygon points="470,122 460,117 462,127" fill="#4b5563" />
-            <line
-              x1="374"
-              y1="176"
-              x2="470"
-              y2="140"
+            <path
+              d="M372 160 C420 160, 430 128, 478 128"
               stroke="#4b5563"
               stroke-width="1.5"
+              marker-end="url(#arrow)"
             />
-            <polygon points="470,140 460,135 462,145" fill="#4b5563" />
+            <text
+              x="425"
+              y="82"
+              text-anchor="middle"
+              fill="#6b7280"
+              font-size="9"
+              font-family="system-ui"
+            >
+              HTTPS
+            </text>
 
-            <!-- API node (highlighted) -->
+            <!-- ── Megaport API node (hero) ── -->
             <rect
-              x="478"
-              y="90"
-              width="160"
-              height="80"
+              x="484"
+              y="82"
+              width="170"
+              height="76"
               rx="16"
               fill="#6B2D8B"
               stroke="#9B5DBB"
               stroke-width="2"
+              filter="url(#apiGlow)"
             />
             <text
-              x="558"
-              y="126"
+              x="569"
+              y="116"
               text-anchor="middle"
               fill="white"
               font-size="15"
@@ -679,41 +712,48 @@
               Megaport API
             </text>
             <text
-              x="558"
-              y="148"
+              x="569"
+              y="136"
               text-anchor="middle"
-              fill="rgba(255,255,255,0.6)"
+              fill="rgba(255,255,255,0.55)"
               font-size="10"
               font-family="system-ui"
             >
               api.megaport.com
             </text>
 
-            <!-- Arrow 3 -->
-            <line
-              x1="646"
-              y1="130"
-              x2="710"
-              y2="130"
+            <!-- ── Arrow: API → Resources ── -->
+            <path
+              d="M654 120 L708 120"
               stroke="#4b5563"
               stroke-width="1.5"
+              marker-end="url(#arrow)"
             />
-            <polygon points="710,130 700,125 700,135" fill="#4b5563" />
+            <text
+              x="682"
+              y="112"
+              text-anchor="middle"
+              fill="#6b7280"
+              font-size="9"
+              font-family="system-ui"
+            >
+              REST
+            </text>
 
-            <!-- Resources grid -->
+            <!-- ── Resources group ── -->
             <rect
               x="718"
-              y="40"
+              y="34"
               width="192"
-              height="180"
+              height="192"
               rx="12"
-              fill="#0f172a"
+              fill="#0d1520"
               stroke="#134e4a"
               stroke-width="1"
             />
             <text
               x="814"
-              y="62"
+              y="57"
               text-anchor="middle"
               fill="#5eead4"
               font-size="11"
@@ -723,20 +763,20 @@
               Resources
             </text>
 
-            <!-- Resource badges -->
+            <!-- Row 1 -->
             <rect
               x="730"
-              y="74"
-              width="80"
-              height="28"
+              y="68"
+              width="82"
+              height="30"
               rx="6"
-              fill="#1f2937"
+              fill="#111827"
               stroke="#134e4a"
               stroke-width="1"
             />
             <text
-              x="770"
-              y="93"
+              x="771"
+              y="88"
               text-anchor="middle"
               fill="#5eead4"
               font-size="11"
@@ -745,20 +785,19 @@
             >
               Ports
             </text>
-
             <rect
-              x="818"
-              y="74"
-              width="80"
-              height="28"
+              x="820"
+              y="68"
+              width="82"
+              height="30"
               rx="6"
-              fill="#1f2937"
+              fill="#111827"
               stroke="#134e4a"
               stroke-width="1"
             />
             <text
-              x="858"
-              y="93"
+              x="861"
+              y="88"
               text-anchor="middle"
               fill="#5eead4"
               font-size="11"
@@ -767,20 +806,20 @@
             >
               VXCs
             </text>
-
+            <!-- Row 2 -->
             <rect
               x="730"
-              y="110"
-              width="80"
-              height="28"
+              y="106"
+              width="82"
+              height="30"
               rx="6"
-              fill="#1f2937"
+              fill="#111827"
               stroke="#134e4a"
               stroke-width="1"
             />
             <text
-              x="770"
-              y="129"
+              x="771"
+              y="126"
               text-anchor="middle"
               fill="#5eead4"
               font-size="11"
@@ -789,20 +828,19 @@
             >
               MCR
             </text>
-
             <rect
-              x="818"
-              y="110"
-              width="80"
-              height="28"
+              x="820"
+              y="106"
+              width="82"
+              height="30"
               rx="6"
-              fill="#1f2937"
+              fill="#111827"
               stroke="#134e4a"
               stroke-width="1"
             />
             <text
-              x="858"
-              y="129"
+              x="861"
+              y="126"
               text-anchor="middle"
               fill="#5eead4"
               font-size="11"
@@ -811,20 +849,20 @@
             >
               MVE
             </text>
-
+            <!-- Row 3 -->
             <rect
               x="730"
-              y="146"
-              width="80"
-              height="28"
+              y="144"
+              width="82"
+              height="30"
               rx="6"
-              fill="#1f2937"
+              fill="#111827"
               stroke="#134e4a"
               stroke-width="1"
             />
             <text
-              x="770"
-              y="165"
+              x="771"
+              y="164"
               text-anchor="middle"
               fill="#5eead4"
               font-size="11"
@@ -833,20 +871,19 @@
             >
               IX
             </text>
-
             <rect
-              x="818"
-              y="146"
-              width="80"
-              height="28"
+              x="820"
+              y="144"
+              width="82"
+              height="30"
               rx="6"
-              fill="#1f2937"
+              fill="#111827"
               stroke="#134e4a"
               stroke-width="1"
             />
             <text
-              x="858"
-              y="165"
+              x="861"
+              y="164"
               text-anchor="middle"
               fill="#5eead4"
               font-size="11"
@@ -854,48 +891,6 @@
               font-family="system-ui"
             >
               Locations
-            </text>
-
-            <!-- Arrow labels -->
-            <text
-              x="171"
-              y="98"
-              text-anchor="middle"
-              fill="#6b7280"
-              font-size="9"
-              font-family="system-ui"
-            >
-              Terminal
-            </text>
-            <text
-              x="171"
-              y="170"
-              text-anchor="middle"
-              fill="#6b7280"
-              font-size="9"
-              font-family="system-ui"
-            >
-              Browser
-            </text>
-            <text
-              x="425"
-              y="104"
-              text-anchor="middle"
-              fill="#6b7280"
-              font-size="9"
-              font-family="system-ui"
-            >
-              HTTPS
-            </text>
-            <text
-              x="680"
-              y="120"
-              text-anchor="middle"
-              fill="#6b7280"
-              font-size="9"
-              font-family="system-ui"
-            >
-              REST
             </text>
           </svg>
 

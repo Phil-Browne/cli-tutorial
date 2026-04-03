@@ -186,8 +186,8 @@
     </div>
 
     <!-- ── Footer ── -->
-    <footer class="border-t border-gray-800 bg-gray-950 py-12 px-6 lg:px-8">
-      <div class="max-w-7xl mx-auto">
+    <footer class="border-t border-gray-800 bg-gray-950 py-12">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
         <div
           class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-10"
         >
