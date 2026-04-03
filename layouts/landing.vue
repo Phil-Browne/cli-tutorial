@@ -37,7 +37,7 @@
           aria-label="Main navigation"
         >
           <NuxtLink
-            v-for="link in filteredHeaderLinks"
+            v-for="link in headerLinks"
             :key="link.to"
             :to="link.to"
             class="px-3 py-1.5 rounded-md text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
@@ -153,7 +153,7 @@
         aria-label="Mobile navigation"
       >
         <NuxtLink
-          v-for="link in filteredHeaderLinks"
+          v-for="link in headerLinks"
           :key="link.to"
           :to="link.to"
           class="block px-3 py-2 rounded-md text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
@@ -342,9 +342,4 @@ function toggleColorMode() {
 }
 
 const headerLinks = useHeaderLinks();
-
-// Remove "Get Started" from header nav to avoid redundancy with hero CTA
-const filteredHeaderLinks = computed(() =>
-  headerLinks.filter((link) => link.label !== 'Get Started'),
-);
 </script>
