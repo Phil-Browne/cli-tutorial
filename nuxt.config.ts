@@ -3,8 +3,8 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
 
-  // Client-side only rendering — WASM requires browser context
-  ssr: false,
+  // SSR enabled for content pages; demo pages opt out (WASM requires browser context)
+  ssr: true,
 
   modules: ['@nuxt/content', '@nuxt/ui'],
 
@@ -17,8 +17,10 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: 'vercel',
-    // COOP/COEP headers required for Go WASM SharedArrayBuffer support
     routeRules: {
+      // WASM requires browser context — render demos client-side only
+      '/demos/**': { ssr: false },
+      // COOP/COEP headers required for Go WASM SharedArrayBuffer support
       '/**': {
         headers: {
           'Cross-Origin-Opener-Policy': 'same-origin',
