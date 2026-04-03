@@ -1,7 +1,7 @@
 <template>
   <nav
     v-if="links.length"
-    class="hidden xl:block sticky top-20 w-56 shrink-0 ml-8"
+    class="hidden lg:block sticky top-20 w-56 shrink-0 ml-8"
   >
     <p class="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">On this page</p>
     <ul class="space-y-1 border-l border-gray-800">
@@ -10,7 +10,6 @@
           :href="`#${link.id}`"
           class="block pl-3 py-1 text-sm transition-colors border-l-2 -ml-px"
           :class="[
-            link.depth === 3 ? 'pl-5 text-xs' : '',
             activeId === link.id
               ? 'border-violet-500 text-violet-400 font-medium'
               : 'border-transparent text-gray-500 hover:text-gray-300 hover:border-gray-600',
@@ -39,12 +38,8 @@ const { data: page } = useAsyncData(`toc-${route.path}`, () =>
 )
 
 const links = computed(() => {
-  const toc = page.value?.body?.toc?.links ?? []
-  // Flatten h2 + h3
-  return toc.flatMap((link: TocLink) => [
-    link,
-    ...(link.children?.map(c => ({ ...c, depth: 3 })) ?? []),
-  ])
+  // Only top-level h2 entries — keeps TOC short and scannable on long pages
+  return page.value?.body?.toc?.links ?? []
 })
 
 const activeId = ref('')
@@ -57,7 +52,7 @@ function scrollTo(id: string) {
 }
 
 function observeHeadings() {
-  document.querySelectorAll('h2[id], h3[id]').forEach(el => observer?.observe(el))
+  document.querySelectorAll('h2[id]').forEach(el => observer?.observe(el))
 }
 
 // IntersectionObserver to track active heading
