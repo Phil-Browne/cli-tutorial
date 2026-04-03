@@ -32,9 +32,10 @@ interface TocLink {
   children?: TocLink[]
 }
 
-// Get TOC from @nuxt/content
-const { data: page } = useAsyncData(() =>
-  queryContent().where({ _path: useRoute().path, _partial: { $ne: true } }).findOne()
+// Get TOC from @nuxt/content — route-specific key so it refreshes on navigation
+const route = useRoute()
+const { data: page } = useAsyncData(`toc-${route.path}`, () =>
+  queryContent().where({ _path: route.path, _partial: { $ne: true } }).findOne()
 )
 
 const links = computed(() => {

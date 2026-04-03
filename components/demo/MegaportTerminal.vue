@@ -109,7 +109,7 @@ const {
 } = useMegaportWASM({
   wasmPath: props.wasmPath,
   wasmExecPath: props.wasmExecPath,
-  debug: true,
+  debug: import.meta.dev,
 });
 
 // Local error state for component-level errors
@@ -457,16 +457,6 @@ const handleInput = (data: string) => {
 
   const code = data.charCodeAt(0);
 
-  console.log(
-    '⌨️ Input:',
-    data,
-    'code:',
-    code,
-    'activePrompt:',
-    !!activePrompt,
-    'isInInteractiveCommand:',
-    isInInteractiveCommand
-  );
 
   // Handle prompt mode input
   if (activePrompt) {

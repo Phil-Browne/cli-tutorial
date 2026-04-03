@@ -56,7 +56,7 @@
                   <button
                     v-for="(item, i) in group"
                     :key="item._path"
-                    :ref="el => { if (flatIndex(section, i) === selectedIndex) activeResultRef = el as HTMLElement }"
+                    :ref="el => { if (el && flatIndex(section, i) === selectedIndex) activeResultRef = el as HTMLElement }"
                     class="search-result"
                     :class="{ 'search-result--active': flatIndex(section, i) === selectedIndex, 'search-result--focused': flatIndex(section, i) === selectedIndex }"
                     role="option"
@@ -150,12 +150,14 @@ function loadRecent() {
 }
 
 function saveRecent(doc: Doc) {
+  if (typeof window === 'undefined') return
   const existing = recentSearches.value.filter(r => r._path !== doc._path)
   recentSearches.value = [doc, ...existing].slice(0, MAX_RECENT)
   localStorage.setItem(RECENT_KEY, JSON.stringify(recentSearches.value))
 }
 
 function removeRecent(path: string) {
+  if (typeof window === 'undefined') return
   recentSearches.value = recentSearches.value.filter(r => r._path !== path)
   localStorage.setItem(RECENT_KEY, JSON.stringify(recentSearches.value))
 }

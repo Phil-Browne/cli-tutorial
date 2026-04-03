@@ -220,17 +220,27 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'landing' })
 
+useHead({
+  title: 'Megaport CLI — Tutorials, Live Demo & Reference',
+})
+
+const sectionObserver = ref<IntersectionObserver | null>(null)
+
 onMounted(() => {
-  const observer = new IntersectionObserver(
+  sectionObserver.value = new IntersectionObserver(
     (entries) => entries.forEach(e => {
       if (e.isIntersecting) {
         e.target.classList.add('section-visible')
-        observer.unobserve(e.target)
+        sectionObserver.value?.unobserve(e.target)
       }
     }),
     { threshold: 0.1 }
   )
-  document.querySelectorAll('.section-reveal').forEach(el => observer.observe(el))
+  document.querySelectorAll('.section-reveal').forEach(el => sectionObserver.value?.observe(el))
+})
+
+onUnmounted(() => {
+  sectionObserver.value?.disconnect()
 })
 
 const audiencePaths = [

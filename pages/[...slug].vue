@@ -85,6 +85,16 @@ const { data: page } = await useAsyncData(`content-${route.path}`, () =>
     })
 )
 
+// Set page-specific title and description for SEO
+useHead(computed(() => ({
+  title: page.value?.title
+    ? `${page.value.title} — Megaport CLI`
+    : 'Megaport CLI',
+  meta: page.value?.description
+    ? [{ name: 'description', content: page.value.description }]
+    : [],
+})))
+
 // Fetch child pages when on a section index (single path segment, e.g. /tutorials)
 const isSectionIndex = computed(() => route.path.split('/').filter(Boolean).length === 1)
 

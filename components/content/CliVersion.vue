@@ -1,19 +1,10 @@
 <template>
-  <code>{{ version }}</code>
+  <code>{{ version ?? 'latest' }}</code>
 </template>
 
 <script setup lang="ts">
-const version = ref('latest')
-
-onMounted(async () => {
-  try {
-    const res = await fetch('/api/cli-version')
-    if (res.ok) {
-      const data = await res.json()
-      version.value = data.version ?? 'latest'
-    }
-  } catch {
-    // keep "latest" as fallback
-  }
-})
+const { data } = await useAsyncData('cli-version', () =>
+  $fetch<{ version: string }>('/api/cli-version').catch(() => ({ version: 'latest' }))
+)
+const version = computed(() => data.value?.version ?? 'latest')
 </script>
