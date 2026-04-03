@@ -1171,10 +1171,10 @@ const features = [
 ];
 
 // ── Quick Start: Tabbed install (Step 1) ──
-const activeInstallTab = ref('homebrew');
+const activeInstallTab = ref('binary');
 
 const installTabs = [
-  { id: 'homebrew', label: 'Homebrew' },
+  // { id: 'homebrew', label: 'Homebrew' }, // TODO: re-enable once custom brew tap is published
   { id: 'binary', label: 'Binary' },
   { id: 'go', label: 'Go' },
 ];
@@ -1183,10 +1183,10 @@ const installCommands: Record<
   string,
   { command: string; description: string }
 > = {
-  homebrew: {
-    command: 'brew install megaport/tap/megaport-cli',
-    description: 'Mac & Linux via Homebrew',
-  },
+  // homebrew: {
+  //   command: 'brew install megaport/tap/megaport-cli',
+  //   description: 'Mac & Linux via Homebrew',
+  // },
   binary: {
     command:
       'curl -sSL https://github.com/megaport/megaport-cli/releases/latest/download/megaport-cli_windows_amd64.zip -o megaport-cli.zip',
