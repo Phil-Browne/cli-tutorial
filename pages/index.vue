@@ -67,9 +67,7 @@
               class="mt-8 inline-flex items-center gap-3 rounded-lg border border-gray-700 bg-gray-900/80 px-4 py-2.5 font-mono text-sm"
             >
               <span class="text-green-400 select-none">$</span>
-              <span class="text-gray-200"
-                >megaport port list --output table</span
-              >
+              <span class="text-gray-200">megaport-cli ports list --table</span>
               <button
                 class="ml-1 p-1 rounded text-gray-500 hover:text-white hover:bg-gray-700 transition-colors relative"
                 aria-label="Copy command"
@@ -144,7 +142,9 @@
               </div>
               <div class="flex items-center gap-2 mb-2">
                 <span class="text-green-400" aria-hidden="true">$</span>
-                <span class="text-gray-100">megaport-cli ports list</span>
+                <span class="text-gray-100"
+                  >megaport-cli ports list --table</span
+                >
               </div>
               <p class="text-xs text-gray-500 font-sans">
                 Run CLI commands in your terminal or try the live browser demo.
@@ -273,7 +273,7 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8 items-stretch">
           <!-- Step 1: Tabbed install -->
-          <div class="flex flex-col gap-3">
+          <div class="flex flex-col gap-3 h-full">
             <div class="flex items-center gap-2">
               <span
                 class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
@@ -284,7 +284,7 @@
               <span class="font-semibold text-white text-sm">Install CLI</span>
             </div>
             <div
-              class="flex-1 flex flex-col rounded-xl border border-gray-700 overflow-hidden"
+              class="flex-1 flex flex-col rounded-xl border border-gray-700 overflow-hidden min-h-[170px]"
             >
               <!-- Tabs -->
               <div class="flex border-b border-gray-700 bg-gray-900">
@@ -359,7 +359,7 @@
           <div
             v-for="step in quickStartSteps"
             :key="step.label"
-            class="flex flex-col gap-3"
+            class="flex flex-col gap-3 h-full"
           >
             <div class="flex items-center gap-2">
               <span
@@ -376,7 +376,7 @@
               <CommandExample
                 :command="step.command"
                 :description="step.description"
-                class="flex-1"
+                class="flex-1 !my-0 min-h-[170px]"
               />
             </div>
           </div>
@@ -1021,7 +1021,7 @@ onUnmounted(() => {
 // ── Hero copy button ──
 const heroCopied = ref(false);
 async function copyHeroCommand() {
-  await navigator.clipboard.writeText('megaport port list --output table');
+  await navigator.clipboard.writeText('megaport-cli ports list --table');
   heroCopied.value = true;
   setTimeout(() => {
     heroCopied.value = false;
@@ -1150,11 +1150,12 @@ const features = [
 ];
 
 // ── Quick Start: Tabbed install (Step 1) ──
-const activeInstallTab = ref('binary');
+const activeInstallTab = ref('mac');
 
 const installTabs = [
   // { id: 'homebrew', label: 'Homebrew' }, // TODO: re-enable once custom brew tap is published
-  { id: 'binary', label: 'Binary' },
+  { id: 'mac', label: 'Mac' },
+  { id: 'windows', label: 'Windows' },
   { id: 'go', label: 'Go' },
 ];
 
@@ -1166,7 +1167,12 @@ const installCommands: Record<
   //   command: 'brew install megaport/tap/megaport-cli',
   //   description: 'Mac & Linux via Homebrew',
   // },
-  binary: {
+  mac: {
+    command:
+      'curl -sSL https://github.com/megaport/megaport-cli/releases/latest/download/megaport-cli_darwin_arm64.zip -o megaport-cli.zip',
+    description: 'Download pre-built binary for macOS (Apple Silicon)',
+  },
+  windows: {
     command:
       'curl -sSL https://github.com/megaport/megaport-cli/releases/latest/download/megaport-cli_windows_amd64.zip -o megaport-cli.zip',
     description: 'Download pre-built binary for Windows',
@@ -1201,7 +1207,7 @@ const quickStartSteps = [
   {
     num: 3,
     label: 'Create Resources',
-    command: 'megaport-cli ports list --output table',
+    command: 'megaport-cli ports list --table',
     description: 'List all your ports',
   },
 ];

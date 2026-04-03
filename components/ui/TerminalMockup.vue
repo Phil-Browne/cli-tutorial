@@ -1,27 +1,45 @@
 <template>
-  <div class="terminal-window rounded-xl overflow-hidden border border-gray-700 shadow-2xl bg-gray-950 font-mono text-sm select-none">
+  <div
+    class="terminal-window rounded-xl overflow-hidden border border-gray-700 shadow-2xl bg-gray-950 font-mono text-sm select-none"
+  >
     <!-- Title bar -->
-    <div class="flex items-center gap-1.5 px-4 py-3 bg-gray-900 border-b border-gray-800">
+    <div
+      class="flex items-center gap-1.5 px-4 py-3 bg-gray-900 border-b border-gray-800"
+    >
       <span class="w-3 h-3 rounded-full bg-red-500/80" />
       <span class="w-3 h-3 rounded-full bg-yellow-500/80" />
       <span class="w-3 h-3 rounded-full bg-green-500/80" />
-      <span class="ml-3 text-xs text-gray-500 flex-1 text-center">megaport-cli — terminal</span>
+      <span class="ml-3 text-xs text-gray-500 flex-1 text-center"
+        >megaport-cli — terminal</span
+      >
     </div>
 
     <!-- Terminal content -->
     <div class="p-5 text-left leading-relaxed h-[28rem] overflow-hidden">
       <!-- Session 1: port list -->
-      <div :class="['transition-opacity duration-500', phase >= 0 ? 'opacity-100' : 'opacity-0']">
+      <div
+        :class="[
+          'transition-opacity duration-500',
+          phase >= 0 ? 'opacity-100' : 'opacity-0',
+        ]"
+      >
         <div class="flex items-center gap-2">
           <span class="text-green-400">$</span>
-          <span class="text-gray-100 typing-command" :style="{ '--chars': 38 }">megaport port list --output table</span>
-          <span class="cursor" :class="phase === 0 ? 'opacity-100' : 'opacity-0'" />
+          <span class="text-gray-100 typing-command" :style="{ '--chars': 31 }"
+            >megaport-cli ports list --table</span
+          >
+          <span
+            class="cursor"
+            :class="phase === 0 ? 'opacity-100' : 'opacity-0'"
+          />
         </div>
       </div>
 
       <!-- Table output -->
       <div v-if="phase >= 1" class="mt-2 fade-in">
-        <pre class="text-xs leading-relaxed whitespace-pre text-gray-300"><span class="text-cyan-400">┌──────────┬────────────────┬───────┬────────┐
+        <pre
+          class="text-xs leading-relaxed whitespace-pre text-gray-300"
+        ><span class="text-cyan-400">┌──────────┬────────────────┬───────┬────────┐
 │ UID      │ Name           │ Speed │ Status │
 ├──────────┼────────────────┼───────┼────────┤</span>
 │ <span class="text-violet-300">abc-123</span>  │ Sydney Port    │ 10G   │ <span class="text-green-400">LIVE</span>   │
@@ -35,13 +53,20 @@
       <div v-if="phase >= 2" class="mt-4">
         <div class="flex items-center gap-2">
           <span class="text-green-400">$</span>
-          <span class="text-gray-100">megaport location list --filter country=AU</span>
-          <span class="cursor" :class="phase === 2 ? 'opacity-100' : 'opacity-0'" />
+          <span class="text-gray-100"
+            >megaport location list --filter country=AU</span
+          >
+          <span
+            class="cursor"
+            :class="phase === 2 ? 'opacity-100' : 'opacity-0'"
+          />
         </div>
       </div>
 
       <div v-if="phase >= 3" class="mt-2 fade-in">
-        <pre class="text-xs leading-relaxed whitespace-pre text-gray-300"><span class="text-cyan-400">┌─────┬───────────────────────┬─────────┐
+        <pre
+          class="text-xs leading-relaxed whitespace-pre text-gray-300"
+        ><span class="text-cyan-400">┌─────┬───────────────────────┬─────────┐
 │ ID  │ Name                  │ Country │
 ├─────┼───────────────────────┼─────────┤</span>
 │ <span class="text-violet-300">3</span>   │ NextDC S1 Sydney      │ <span class="text-yellow-300">AU</span>      │
@@ -58,35 +83,39 @@
 </template>
 
 <script setup lang="ts">
-const phase = ref(-1)
+const phase = ref(-1);
 
 // Sequence: 0=command1 typed, 1=table shown, 2=command2 typed, 3=table2 shown
-const delays = [400, 1800, 2600, 4000]
+const delays = [400, 1800, 2600, 4000];
 
-let timers: ReturnType<typeof setTimeout>[] = []
+let timers: ReturnType<typeof setTimeout>[] = [];
 
 function runSequence() {
-  timers.forEach(clearTimeout)
-  timers = []
-  phase.value = -1
+  timers.forEach(clearTimeout);
+  timers = [];
+  phase.value = -1;
 
   delays.forEach((delay, i) => {
-    timers.push(setTimeout(() => { phase.value = i }, delay))
-  })
+    timers.push(
+      setTimeout(() => {
+        phase.value = i;
+      }, delay),
+    );
+  });
 
   // Loop
-  timers.push(setTimeout(runSequence, 7000))
+  timers.push(setTimeout(runSequence, 7000));
 }
 
 onMounted(() => {
   // Skip animation sequence for users who prefer reduced motion
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    phase.value = delays.length - 1
-    return
+    phase.value = delays.length - 1;
+    return;
   }
-  runSequence()
-})
-onUnmounted(() => timers.forEach(clearTimeout))
+  runSequence();
+});
+onUnmounted(() => timers.forEach(clearTimeout));
 </script>
 
 <style scoped>
@@ -98,8 +127,12 @@ onUnmounted(() => timers.forEach(clearTimeout))
 }
 
 @keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
 }
 
 .cursor {
@@ -112,7 +145,9 @@ onUnmounted(() => timers.forEach(clearTimeout))
 }
 
 @keyframes blink {
-  50% { opacity: 0 }
+  50% {
+    opacity: 0;
+  }
 }
 
 .fade-in {
@@ -120,8 +155,12 @@ onUnmounted(() => timers.forEach(clearTimeout))
 }
 
 @keyframes fadeIn {
-  from { opacity: 0 }
-  to { opacity: 1 }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
