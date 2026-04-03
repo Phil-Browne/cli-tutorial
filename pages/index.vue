@@ -283,7 +283,7 @@
               </span>
               <span class="font-semibold text-white text-sm">Install CLI</span>
             </div>
-            <div class="flex flex-col rounded-xl border border-gray-700 overflow-hidden h-[152px]">
+            <div class="flex flex-col rounded-xl border border-gray-700 overflow-hidden h-[188px]">
               <!-- Tabs -->
               <div class="flex border-b border-gray-700 bg-gray-900">
                 <button
@@ -349,13 +349,25 @@
                 <p class="text-xs text-gray-500 mt-2 font-sans">
                   {{ activeInstallCommand.description }}
                 </p>
+                <div class="mt-2 border-t border-gray-800 pt-2">
+                  <p class="text-[11px] text-gray-500 mb-1 font-sans">Then verify:</p>
+                  <p class="text-[11px] text-gray-300 leading-relaxed break-all">
+                    unzip megaport-cli.zip && ./megaport-cli version
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div class="mt-2 rounded-lg border border-gray-800 bg-gray-900/40 px-3 py-2 h-[96px] flex items-start">
-              <p class="text-xs text-gray-500 leading-relaxed">
-                {{ activeInstallCommand.help }}
-              </p>
+            <div class="mt-2 rounded-lg border border-gray-800 bg-gray-900/40 px-3 py-2 h-[112px]">
+              <ul class="space-y-1">
+                <li
+                  v-for="line in activeInstallCommand.helpLines"
+                  :key="line"
+                  class="text-xs text-gray-500 leading-relaxed"
+                >
+                  {{ line }}
+                </li>
+              </ul>
             </div>
           </div>
 
@@ -381,12 +393,18 @@
                 :command="step.command"
                 :description="step.description"
                 :output="step.output"
-                class="!my-0 h-[152px]"
+                class="!my-0 h-[188px]"
               />
-              <div class="mt-2 rounded-lg border border-gray-800 bg-gray-900/40 px-3 py-2 h-[96px] flex items-start">
-                <p class="text-xs text-gray-500 leading-relaxed">
-                  {{ step.help }}
-                </p>
+              <div class="mt-2 rounded-lg border border-gray-800 bg-gray-900/40 px-3 py-2 h-[112px]">
+                <ul class="space-y-1">
+                  <li
+                    v-for="line in step.helpLines"
+                    :key="line"
+                    class="text-xs text-gray-500 leading-relaxed"
+                  >
+                    {{ line }}
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -1171,7 +1189,7 @@ const installTabs = [
 
 const installCommands: Record<
   string,
-  { command: string; description: string; help: string }
+  { command: string; description: string; helpLines: string[] }
 > = {
   // homebrew: {
   //   command: 'brew install megaport/tap/megaport-cli',
@@ -1181,18 +1199,30 @@ const installCommands: Record<
     command:
       'curl -sSL https://github.com/megaport/megaport-cli/releases/latest/download/megaport-cli_darwin_arm64.zip -o megaport-cli.zip',
     description: 'Download macOS binary (Apple Silicon)',
-    help: 'Choose Mac for Apple Silicon machines. For Intel Macs, use the darwin_amd64 release asset.',
+    helpLines: [
+      'Choose Mac for Apple Silicon machines.',
+      'For Intel Macs, use the darwin_amd64 release asset.',
+      'Move the binary to your PATH for global use.',
+    ],
   },
   windows: {
     command:
       'curl -sSL https://github.com/megaport/megaport-cli/releases/latest/download/megaport-cli_windows_amd64.zip -o megaport-cli.zip',
     description: 'Download pre-built binary for Windows',
-    help: 'Use PowerShell or Git Bash to download and extract the binary, then add it to your PATH.',
+    helpLines: [
+      'Use PowerShell or Git Bash to download and extract.',
+      'Add megaport-cli.exe to your PATH.',
+      'Run "megaport-cli version" to verify installation.',
+    ],
   },
   go: {
     command: 'go install github.com/megaport/megaport-cli@latest',
     description: 'Build from source (requires Go 1.21+)',
-    help: 'Great for developer environments that already manage tools with Go modules and pinned versions.',
+    helpLines: [
+      'Great for environments that manage tools with Go modules.',
+      'Keep Go updated to avoid build/runtime mismatches.',
+      'Pin versions in CI for predictable builds.',
+    ],
   },
 };
 
@@ -1218,7 +1248,11 @@ const quickStartSteps = [
     description: 'Enter your API key and secret',
     output:
       'Profile "default" created\nEnvironment: production\nActive profile: default',
-    help: 'Tip: Use production for live resources, or staging while learning and testing safely.',
+    helpLines: [
+      'Use production for live resources and real changes.',
+      'Use staging while learning and testing safely.',
+      'Switch profiles quickly with config use-profile.',
+    ],
   },
   {
     num: 3,
@@ -1227,7 +1261,11 @@ const quickStartSteps = [
     description: 'List all your ports',
     output:
       'UID       NAME          SPEED   STATUS\nabc-123   Sydney Port   10G     LIVE\ndef-456   Melbourne     1G      LIVE',
-    help: 'From here, run get/status/update commands on any UID returned in the list output.',
+    helpLines: [
+      'Run get/status/update commands on any returned UID.',
+      'Use --output json for script-friendly automation.',
+      'Add --profile to target another environment quickly.',
+    ],
   },
 ];
 
