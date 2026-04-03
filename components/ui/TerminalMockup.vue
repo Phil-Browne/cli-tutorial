@@ -54,7 +54,7 @@
         <div class="flex items-center gap-2">
           <span class="text-green-400">$</span>
           <span class="text-gray-100"
-            >megaport location list --filter country=AU</span
+            >megaport-cli locations list --country AU</span
           >
           <span
             class="cursor"
