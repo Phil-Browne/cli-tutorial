@@ -1202,7 +1202,7 @@ const installCommands: Record<
   { command: string; description: string; helpLines: string[] }
 > = {
   homebrew: {
-    command: 'brew install megaport/megaport-cli/megaport-cli',
+    command: 'brew install megaport/tap/megaport-cli',
     description: 'Mac & Linux via Homebrew',
     helpLines: [
       'The easiest way to install on macOS or Linux.',
