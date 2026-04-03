@@ -283,7 +283,7 @@
               </span>
               <span class="font-semibold text-white text-sm">Install CLI</span>
             </div>
-            <div class="flex flex-col rounded-xl border border-gray-700 overflow-hidden">
+            <div class="flex flex-col rounded-xl border border-gray-700 overflow-hidden min-h-[136px]">
               <!-- Tabs -->
               <div class="flex border-b border-gray-700 bg-gray-900">
                 <button
@@ -380,7 +380,7 @@
               <CommandExample
                 :command="step.command"
                 :description="step.description"
-                class="!my-0"
+                class="!my-0 min-h-[136px]"
               />
               <div class="mt-2 rounded-lg border border-gray-800 bg-gray-900/40 px-3 py-2 min-h-[84px]">
                 <p class="text-xs text-gray-500 leading-relaxed">
