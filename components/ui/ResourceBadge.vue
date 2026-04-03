@@ -27,7 +27,10 @@ const styleMap: Record<string, { letter: string; classes: string }> = {
   User:        { letter: 'U', classes: 'bg-slate-800 text-slate-300 border-slate-600' },
 }
 
-const styles = computed(() =>
-  styleMap[props.type] ?? { letter: props.type[0]?.toUpperCase() ?? '?', classes: 'bg-gray-800 text-gray-300 border-gray-600' }
-)
+const styles = computed(() => {
+  if (!(props.type in styleMap) && import.meta.dev) {
+    console.warn(`[ResourceBadge] Unknown type: "${props.type}". Expected one of: ${Object.keys(styleMap).join(', ')}`)
+  }
+  return styleMap[props.type] ?? { letter: props.type[0]?.toUpperCase() ?? '?', classes: 'bg-gray-800 text-gray-300 border-gray-600' }
+})
 </script>

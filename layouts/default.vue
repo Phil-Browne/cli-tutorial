@@ -19,7 +19,7 @@
             aria-label="Open navigation"
             @click="sidebarOpen = true"
           >
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
@@ -29,7 +29,7 @@
               class="w-7 h-7 rounded-md flex items-center justify-center shrink-0"
               style="background-color: #6B2D8B;"
             >
-              <span class="text-white font-bold text-xs">M</span>
+              <span class="text-white font-bold text-xs" aria-hidden="true">M</span>
             </div>
             <span class="font-semibold text-white group-hover:text-violet-400 transition-colors text-sm">
               Megaport CLI
@@ -38,13 +38,14 @@
         </div>
 
         <!-- Center nav (desktop) -->
-        <nav class="hidden md:flex items-center gap-1">
+        <nav class="hidden md:flex items-center gap-1" role="navigation" aria-label="Main">
           <NuxtLink
             v-for="link in headerLinks"
             :key="link.to"
             :to="link.to"
-            class="px-3 py-1.5 rounded-md text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
+            class="px-3 py-1.5 rounded-md text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500"
             active-class="text-white bg-gray-800"
+            :aria-current="$route.path.startsWith(link.to) ? 'page' : undefined"
           >
             {{ link.label }}
           </NuxtLink>
@@ -58,7 +59,7 @@
             aria-label="Search (⌘K)"
             @click="searchOpen = true"
           >
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
             <kbd class="hidden md:inline-block text-xs text-gray-500 border border-gray-700 rounded px-1 font-mono">⌘K</kbd>
@@ -80,14 +81,15 @@
 
     <!-- ── Mobile sidebar drawer ── -->
     <USlideover v-model="sidebarOpen" side="left">
-      <div class="flex flex-col h-full bg-gray-950 pt-4">
-        <div class="flex items-center justify-between px-4 mb-4">
+      <div class="flex flex-col max-h-screen bg-gray-950 pt-4">
+        <div class="flex items-center justify-between px-4 mb-4 shrink-0">
           <span class="font-semibold text-white">Navigation</span>
           <button
             class="p-1 rounded text-gray-400 hover:text-white"
+            aria-label="Close navigation"
             @click="sidebarOpen = false"
           >
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
@@ -101,7 +103,7 @@
     <!-- ── Body ── -->
     <div class="flex flex-1">
       <!-- Desktop sidebar -->
-      <aside class="w-64 shrink-0 hidden lg:flex flex-col border-r border-gray-800 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto py-5">
+      <aside class="w-64 shrink-0 hidden lg:flex flex-col border-r border-gray-800 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto py-5" role="navigation" aria-label="Sidebar">
         <div class="px-3">
           <SidebarNav :navigation="navigation" />
         </div>
@@ -163,13 +165,7 @@ function toggleColorMode() {
   colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
 }
 
-const headerLinks = [
-  { to: '/getting-started/introduction', label: 'Get Started' },
-  { to: '/core-concepts', label: 'Concepts' },
-  { to: '/tutorials', label: 'Tutorials' },
-  { to: '/demos', label: 'Live Demo' },
-  { to: '/reference', label: 'Reference' },
-]
+const headerLinks = useHeaderLinks()
 
 // Build navigation tree from content queries (more reliable than fetchContentNavigation with ssr:false)
 const { data: navigation } = useLazyAsyncData('navigation', async () => {
@@ -194,7 +190,7 @@ const { data: navigation } = useLazyAsyncData('navigation', async () => {
 
     if (parts.length === 1) {
       // Section index page — use its title as the section header
-      sections[sectionPath].title = page.title ?? parts[0]
+      sections[sectionPath].title = page.title || parts[0].replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) || 'Untitled'
     } else {
       // Child page
       sections[sectionPath].children.push({ title: page.title ?? parts[parts.length - 1], _path: page._path! })

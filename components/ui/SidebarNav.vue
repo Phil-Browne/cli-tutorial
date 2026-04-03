@@ -8,6 +8,7 @@
         <li v-for="item in section.children ?? []" :key="item._path">
           <NuxtLink
             :to="item._path"
+            :ref="el => { if (item._path === route.path) activeRef = el as HTMLElement }"
             class="flex items-center gap-2 px-2 py-1.5 rounded-md text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
             active-class="text-violet-400 bg-gray-800/60 font-medium"
             @click="emit('navigate')"
@@ -34,6 +35,15 @@ const props = defineProps<{
 const emit = defineEmits<{
   navigate: []
 }>()
+
+const route = useRoute()
+let activeRef: HTMLElement | null = null
+
+// Scroll active link into view when route changes
+watch(() => route.path, async () => {
+  await nextTick()
+  activeRef?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+}, { immediate: true })
 
 // Strip numeric prefixes from directory titles (e.g. "0.getting-started" → "Getting Started")
 function formatTitle(title: string): string {

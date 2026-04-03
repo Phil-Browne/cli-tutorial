@@ -1,8 +1,21 @@
 <template>
   <div>
+    <!-- Error state (query failed, distinct from not found) -->
+    <div v-if="queryError" class="py-12 text-center max-w-xl mx-auto">
+      <p class="text-6xl mb-6" aria-hidden="true">⚠️</p>
+      <h1 class="text-3xl font-bold text-white mb-4">Something went wrong</h1>
+      <p class="text-gray-400 mb-8">Unable to load this page. Try refreshing.</p>
+      <button
+        class="text-violet-400 hover:text-violet-300 underline"
+        @click="() => window.location.reload()"
+      >
+        Refresh page
+      </button>
+    </div>
+
     <!-- Not found state -->
-    <div v-if="!page" class="py-12 text-center max-w-xl mx-auto">
-      <p class="text-6xl mb-6">🔍</p>
+    <div v-else-if="!page" class="py-12 text-center max-w-xl mx-auto">
+      <p class="text-6xl mb-6" aria-hidden="true">🔍</p>
       <h1 class="text-3xl font-bold text-white mb-4">Page Not Found</h1>
       <p class="text-gray-400 mb-8">This tutorial page doesn't exist yet. Check back soon.</p>
       <NuxtLink to="/" class="text-violet-400 hover:text-violet-300 underline">
@@ -11,7 +24,7 @@
     </div>
 
     <!-- Content layout: prose + TOC -->
-    <div v-else class="flex gap-10 max-w-5xl">
+    <div v-else-if="page" class="flex gap-10 max-w-5xl">
       <!-- Main article -->
       <article class="flex-1 min-w-0">
         <!-- Tutorial header from frontmatter -->
@@ -56,12 +69,20 @@
 <script setup lang="ts">
 const route = useRoute()
 
+const queryError = ref(false)
+
 // Fetch the current page content — exact path, skip partials (_dir.yml etc.)
 const { data: page } = await useAsyncData(`content-${route.path}`, () =>
   queryContent()
     .where({ _path: route.path, _partial: { $ne: true } })
     .findOne()
-    .catch(() => null)
+    .catch((err) => {
+      // Distinguish actual errors from "not found" (findOne rejects when no match)
+      if (err?.statusCode !== 404 && err?.message !== 'Not Found') {
+        queryError.value = true
+      }
+      return null
+    })
 )
 
 // Fetch child pages when on a section index (single path segment, e.g. /tutorials)

@@ -3,7 +3,7 @@
       <!-- Auth form -->
       <div v-if="!authed" class="auth-panel">
         <div class="auth-header">
-          <span class="lock-icon">🔒</span>
+          <span class="lock-icon" aria-hidden="true">🔒</span>
           <h3 class="auth-title">Connect to Megaport API</h3>
         </div>
         <p class="auth-subtitle">
@@ -12,8 +12,9 @@
 
         <form class="auth-form" @submit.prevent="connect">
           <div class="field-group">
-            <label class="field-label">Access Key</label>
+            <label class="field-label" for="demo-access-key">Access Key</label>
             <input
+              id="demo-access-key"
               v-model="accessKey"
               type="password"
               class="field-input"
@@ -24,8 +25,9 @@
           </div>
 
           <div class="field-group">
-            <label class="field-label">Secret Key</label>
+            <label class="field-label" for="demo-secret-key">Secret Key</label>
             <input
+              id="demo-secret-key"
               v-model="secretKey"
               type="password"
               class="field-input"
@@ -36,8 +38,8 @@
           </div>
 
           <div class="field-group">
-            <label class="field-label">Environment</label>
-            <select v-model="environment" class="field-select">
+            <label class="field-label" for="demo-environment">Environment</label>
+            <select id="demo-environment" v-model="environment" class="field-select">
               <option value="staging">Staging (recommended for demos)</option>
               <option value="production">Production</option>
             </select>

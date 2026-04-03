@@ -5,6 +5,7 @@
       <div
         class="absolute inset-0 opacity-20 pointer-events-none"
         style="background: radial-gradient(ellipse 80% 60% at 50% -10%, #6B2D8B 0%, transparent 70%);"
+        aria-hidden="true"
       />
 
       <div class="relative max-w-7xl mx-auto px-6 lg:px-8 pt-16 pb-12">
@@ -45,9 +46,25 @@
             </div>
           </div>
 
-          <!-- Right: animated terminal -->
+          <!-- Right: animated terminal (desktop) -->
           <div class="hidden lg:block">
             <TerminalMockup />
+          </div>
+
+          <!-- Right: simplified terminal (mobile) -->
+          <div class="lg:hidden">
+            <div class="rounded-xl border border-gray-700 bg-gray-900 p-4 font-mono text-sm">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="w-3 h-3 rounded-full bg-red-500/70" aria-hidden="true"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-500/70" aria-hidden="true"></span>
+                <span class="w-3 h-3 rounded-full bg-green-500/70" aria-hidden="true"></span>
+              </div>
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-green-400" aria-hidden="true">$</span>
+                <span class="text-gray-100">megaport-cli ports list</span>
+              </div>
+              <p class="text-xs text-gray-500 font-sans">Run CLI commands in your terminal or try the live browser demo.</p>
+            </div>
           </div>
         </div>
       </div>

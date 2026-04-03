@@ -2,7 +2,7 @@
 interface using xterm.js */
 
 <template>
-  <div class="megaport-terminal-container">
+  <div class="megaport-terminal-container" role="region" aria-label="Interactive CLI terminal">
     <!-- Loading State -->
     <div v-if="isLoading" class="terminal-loading">
       <div class="spinner"></div>
@@ -42,6 +42,7 @@ interface using xterm.js */
 import {
   ref,
   computed,
+  watch,
   onMounted,
   onBeforeUnmount,
   onErrorCaptured,
@@ -125,6 +126,8 @@ let promptInputBuffer = '';
 let isInInteractiveCommand = false; // Track if we're in an interactive command session
 let resizeTimeoutId: NodeJS.Timeout | null = null; // For debouncing resize
 let resizeObserver: ResizeObserver | null = null;
+let windowResizeHandler: (() => void) | null = null;
+let viewportResizeHandler: (() => void) | null = null;
 
 /**
  * Debounce utility function
@@ -275,8 +278,9 @@ const initTerminal = async () => {
     terminal?.scrollToBottom();
   }, TERMINAL_CONFIG.RESIZE_DEBOUNCE_DELAY);
 
-  window.addEventListener('resize', handleResize);
-  // Visual Viewport API fires when the virtual keyboard opens/closes on mobile
+  // Visual Viewport API fires when the virtual keyboard opens/closes on mobile.
+  // ResizeObserver (above) already handles window resize — no double-fit needed.
+  viewportResizeHandler = handleResize;
   window.visualViewport?.addEventListener('resize', handleResize);
 };
 
@@ -658,23 +662,31 @@ const reload = () => {
 
 // Lifecycle
 onMounted(() => {
-  // Wait for WASM to be ready
-  const checkReady = setInterval(() => {
-    if (isReady.value) {
-      clearInterval(checkReady);
-      initTerminal(); // Now async but we don't need to await
-      setupPromptHandler(); // Register inline prompt handler
+  // Watch for WASM readiness instead of polling
+  const stopWatch = watch(isReady, (ready) => {
+    if (ready) {
+      stopWatch();
+      initTerminal();
+      setupPromptHandler();
     }
-  }, 100);
+  }, { immediate: true });
 
-  // Cleanup after 30 seconds if not ready
-  setTimeout(() => clearInterval(checkReady), 30000);
+  // If WASM never becomes ready (composable handles its own timeout/errors,
+  // but guard against the case where error fires before watch triggers)
+  // The composable sets error.value on failure, which hasError picks up automatically.
 });
 
 onBeforeUnmount(() => {
   // Clear resize timeout if pending
   if (resizeTimeoutId) {
     clearTimeout(resizeTimeoutId);
+    resizeTimeoutId = null;
+  }
+
+  // Remove viewport resize listener
+  if (viewportResizeHandler) {
+    window.visualViewport?.removeEventListener('resize', viewportResizeHandler);
+    viewportResizeHandler = null;
   }
 
   resizeObserver?.disconnect();

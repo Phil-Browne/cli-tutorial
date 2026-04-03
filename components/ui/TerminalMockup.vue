@@ -78,7 +78,14 @@ function runSequence() {
   timers.push(setTimeout(runSequence, 7000))
 }
 
-onMounted(runSequence)
+onMounted(() => {
+  // Skip animation sequence for users who prefer reduced motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    phase.value = delays.length - 1
+    return
+  }
+  runSequence()
+})
 onUnmounted(() => timers.forEach(clearTimeout))
 </script>
 
@@ -113,7 +120,22 @@ onUnmounted(() => timers.forEach(clearTimeout))
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px) }
-  to { opacity: 1; transform: translateY(0) }
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typing-command {
+    animation: none;
+    width: 100%;
+  }
+  .cursor {
+    animation: none;
+    opacity: 0;
+  }
+  .fade-in {
+    animation: none;
+    opacity: 1;
+  }
 }
 </style>

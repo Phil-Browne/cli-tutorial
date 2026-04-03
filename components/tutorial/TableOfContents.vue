@@ -50,11 +50,18 @@ const activeId = ref('')
 
 function scrollTo(id: string) {
   const el = document.getElementById(id)
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  if (!el) return
+  // Use explicit offset to reliably clear the fixed header (64px) + buffer
+  window.scrollTo({ top: el.offsetTop - 72, behavior: 'smooth' })
+}
+
+function observeHeadings() {
+  document.querySelectorAll('h2[id], h3[id]').forEach(el => observer?.observe(el))
 }
 
 // IntersectionObserver to track active heading
 let observer: IntersectionObserver | null = null
+let mutationObserver: MutationObserver | null = null
 
 onMounted(() => {
   observer = new IntersectionObserver(
@@ -65,12 +72,21 @@ onMounted(() => {
         }
       }
     },
-    { rootMargin: '-80px 0px -60% 0px', threshold: 0 }
+    { rootMargin: '-64px 0px -60% 0px', threshold: 0 }
   )
 
-  // Observe all headings
-  document.querySelectorAll('h2[id], h3[id]').forEach(el => observer?.observe(el))
+  observeHeadings()
+
+  // Re-scan headings when content renders asynchronously (SPA mode)
+  const content = document.getElementById('main-content')
+  if (content) {
+    mutationObserver = new MutationObserver(() => observeHeadings())
+    mutationObserver.observe(content, { childList: true, subtree: true })
+  }
 })
 
-onUnmounted(() => observer?.disconnect())
+onUnmounted(() => {
+  observer?.disconnect()
+  mutationObserver?.disconnect()
+})
 </script>

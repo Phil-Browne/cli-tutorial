@@ -17,7 +17,7 @@
             class="w-7 h-7 rounded-md flex items-center justify-center shrink-0"
             style="background-color: #6B2D8B;"
           >
-            <span class="text-white font-bold text-xs">M</span>
+            <span class="text-white font-bold text-xs" aria-hidden="true">M</span>
           </div>
           <span class="font-semibold text-white group-hover:text-violet-400 transition-colors text-sm">
             Megaport CLI
@@ -46,7 +46,7 @@
             aria-label="Search (⌘K)"
             @click="searchOpen = true"
           >
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
             <kbd class="hidden md:inline-block text-xs text-gray-500 border border-gray-700 rounded px-1 font-mono">⌘K</kbd>
@@ -116,11 +116,5 @@ function toggleColorMode() {
   colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
 }
 
-const headerLinks = [
-  { to: '/getting-started/introduction', label: 'Get Started' },
-  { to: '/core-concepts', label: 'Concepts' },
-  { to: '/tutorials', label: 'Tutorials' },
-  { to: '/demos', label: 'Live Demo' },
-  { to: '/reference', label: 'Reference' },
-]
+const headerLinks = useHeaderLinks()
 </script>

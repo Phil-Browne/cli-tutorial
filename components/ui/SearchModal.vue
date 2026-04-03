@@ -6,8 +6,9 @@
         class="search-backdrop"
         @click.self="close"
         @keydown.escape="close"
+        @keydown.tab.prevent="trapFocus"
       >
-        <div class="search-modal" role="dialog" aria-modal="true" aria-label="Search">
+        <div ref="modalRef" class="search-modal" role="dialog" aria-modal="true" aria-label="Search">
           <!-- Input row -->
           <div class="search-input-row">
             <svg class="search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -29,8 +30,16 @@
             <kbd class="search-esc-key">Esc</kbd>
           </div>
 
+          <!-- Screen reader status announcement -->
+          <div
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+            class="sr-only"
+          >{{ statusMessage }}</div>
+
           <!-- Results / recents -->
-          <div class="search-body" ref="resultsRef">
+          <div class="search-body" ref="resultsRef" role="listbox" aria-label="Search results">
             <!-- Loading -->
             <div v-if="loading" class="search-empty">Loading…</div>
 
@@ -47,8 +56,11 @@
                   <button
                     v-for="(item, i) in group"
                     :key="item._path"
+                    :ref="el => { if (flatIndex(section, i) === selectedIndex) activeResultRef = el as HTMLElement }"
                     class="search-result"
-                    :class="{ 'search-result--active': flatIndex(section, i) === selectedIndex }"
+                    :class="{ 'search-result--active': flatIndex(section, i) === selectedIndex, 'search-result--focused': flatIndex(section, i) === selectedIndex }"
+                    role="option"
+                    :aria-selected="flatIndex(section, i) === selectedIndex"
                     @click="navigate(item._path)"
                     @mouseenter="selectedIndex = flatIndex(section, i)"
                   >
@@ -116,6 +128,11 @@ const loading = ref(false)
 const results = ref<Doc[]>([])
 const selectedIndex = ref(0)
 const inputRef = ref<HTMLInputElement | null>(null)
+const modalRef = ref<HTMLElement | null>(null)
+const activeResultRef = ref<HTMLElement | null>(null)
+
+// Focus management
+let previouslyFocused: HTMLElement | null = null
 
 // Recent searches — persisted in localStorage
 const RECENT_KEY = 'megaport-recent-searches'
@@ -179,6 +196,14 @@ function flatIndex(section: string, i: number): number {
 
 const totalResultCount = computed(() => results.value.length)
 
+// Screen reader status message
+const statusMessage = computed(() => {
+  if (loading.value) return 'Loading results...'
+  if (!query.value.trim()) return ''
+  if (results.value.length === 0) return `No results for "${query.value}"`
+  return `${results.value.length} result${results.value.length === 1 ? '' : 's'} found`
+})
+
 async function loadDocs() {
   if (docsCache) return
   loading.value = true
@@ -205,16 +230,48 @@ watch(query, (q) => {
   results.value = fuseInstance.search(q).map(r => r.item).slice(0, 20)
 })
 
+// Scroll active result into view when selection changes
+watch(selectedIndex, async () => {
+  await nextTick()
+  activeResultRef.value?.scrollIntoView({ block: 'nearest' })
+})
+
 watch(() => props.modelValue, async (open) => {
   if (open) {
+    previouslyFocused = document.activeElement as HTMLElement
     loadRecent()
     await loadDocs()
     await nextTick()
     inputRef.value?.focus()
     query.value = ''
     selectedIndex.value = 0
+  } else {
+    // Restore focus to the element that opened the modal
+    previouslyFocused?.focus()
+    previouslyFocused = null
   }
 })
+
+function getFocusableElements(): HTMLElement[] {
+  if (!modalRef.value) return []
+  return Array.from(
+    modalRef.value.querySelectorAll<HTMLElement>(
+      'input, button, [tabindex]:not([tabindex="-1"])'
+    )
+  ).filter(el => !el.hasAttribute('disabled'))
+}
+
+function trapFocus(event: KeyboardEvent) {
+  const focusable = getFocusableElements()
+  if (focusable.length === 0) return
+  const first = focusable[0]
+  const last = focusable[focusable.length - 1]
+  if (event.shiftKey) {
+    if (document.activeElement === first) last.focus()
+  } else {
+    if (document.activeElement === last) first.focus()
+  }
+}
 
 function close() {
   emit('update:modelValue', false)
@@ -231,7 +288,7 @@ function navigate(path: string) {
 }
 
 function moveSelection(delta: number) {
-  const max = query.trim() ? totalResultCount.value : recentSearches.value.length
+  const max = query.value.trim() ? totalResultCount.value : recentSearches.value.length
   selectedIndex.value = Math.max(0, Math.min(max - 1, selectedIndex.value + delta))
 }
 
@@ -253,7 +310,7 @@ function selectCurrent() {
   inset: 0;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(2px);
-  z-index: 9999;
+  z-index: 70;
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -354,6 +411,11 @@ function selectCurrent() {
   background: #1f2937;
 }
 
+.search-result--focused {
+  outline: 2px solid #7c3aed;
+  outline-offset: -2px;
+}
+
 .search-result--recent {
   flex-direction: row;
   align-items: center;
@@ -394,6 +456,18 @@ function selectCurrent() {
 
 .search-recent-remove:hover {
   color: #d1d5db;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Transitions */

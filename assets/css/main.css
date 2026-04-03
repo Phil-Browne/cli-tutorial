@@ -23,7 +23,7 @@ html {
 }
 
 .prose h1, .prose h2, .prose h3, .prose h4 {
-  @apply text-white font-semibold scroll-mt-20;
+  @apply text-white font-semibold scroll-mt-16;
 }
 
 .prose a {
@@ -121,6 +121,8 @@ html {
   display: block;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #374151 transparent;
 }
 
 /* ── Reduced motion ── */

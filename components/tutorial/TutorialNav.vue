@@ -7,7 +7,7 @@
       class="group flex flex-col gap-1 p-4 rounded-xl border border-gray-800 hover:border-violet-700 bg-gray-900 hover:bg-gray-900/80 transition-all"
     >
       <span class="flex items-center gap-1 text-xs text-gray-500 group-hover:text-violet-400 transition-colors">
-        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
         </svg>
         Previous
@@ -24,7 +24,7 @@
     >
       <span class="flex items-center justify-end gap-1 text-xs text-gray-500 group-hover:text-violet-400 transition-colors">
         Next
-        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
         </svg>
       </span>
