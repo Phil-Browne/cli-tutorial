@@ -24,6 +24,24 @@
         </a>
       </li>
     </ul>
+
+    <div v-if="isTutorialIndex" class="mt-5 pt-4 border-t border-gray-800">
+      <p
+        class="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2"
+      >
+        Tutorials
+      </p>
+      <ul class="space-y-1 border-l border-gray-800">
+        <li v-for="item in tutorialLinks" :key="item.to">
+          <NuxtLink
+            :to="item.to"
+            class="block pl-3 py-1 text-sm transition-colors border-l-2 -ml-px border-transparent text-gray-500 hover:text-gray-300 hover:border-gray-600"
+          >
+            {{ item.label }}
+          </NuxtLink>
+        </li>
+      </ul>
+    </div>
   </nav>
 </template>
 
@@ -42,6 +60,17 @@ const { data: page } = useAsyncData(`toc-${route.path}`, () =>
     .where({ _path: route.path, _partial: { $ne: true } })
     .findOne(),
 );
+
+const isTutorialIndex = computed(() => route.path === '/tutorials');
+
+const tutorialLinks = [
+  { label: 'Port Lifecycle', to: '/tutorials/port-lifecycle' },
+  { label: 'Connect to AWS', to: '/tutorials/connect-aws' },
+  { label: 'Connect to Azure', to: '/tutorials/connect-azure' },
+  { label: 'MCR Routing', to: '/tutorials/mcr-routing' },
+  { label: 'Multi-Cloud', to: '/tutorials/multi-cloud' },
+  { label: 'Automation', to: '/tutorials/automation' },
+];
 
 const links = computed(() => {
   // Only top-level h2 entries — keeps TOC short and scannable on long pages
