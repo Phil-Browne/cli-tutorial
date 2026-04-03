@@ -274,7 +274,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8 items-stretch">
           <!-- Step 1: Tabbed install -->
           <div class="grid grid-rows-[auto_188px_112px] gap-3 h-full">
-            <div class="flex items-center gap-2">
+            <div class="flex items-center justify-center gap-2">
               <span
                 class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
                 style="background-color: #6b2d8b"
@@ -389,7 +389,7 @@
             :key="step.label"
             class="grid grid-rows-[auto_188px_112px] gap-3 h-full"
           >
-            <div class="flex items-center gap-2">
+            <div class="flex items-center justify-center gap-2">
               <span
                 class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
                 style="background-color: #6b2d8b"
