@@ -303,9 +303,9 @@
               <!-- Tab content -->
               <div class="p-3 bg-gray-900/50 flex-1 font-mono text-sm">
                 <div class="flex items-center justify-between gap-2">
-                  <div class="flex items-center gap-2 min-w-0">
+                  <div class="flex items-center gap-2 min-w-0 overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-700">
                     <span class="text-green-400 shrink-0 select-none">$</span>
-                    <span class="text-gray-100 text-xs break-all">{{
+                    <span class="text-gray-100 text-xs whitespace-nowrap">{{
                       activeInstallCommand.command
                     }}</span>
                   </div>
@@ -376,6 +376,11 @@
                 :description="step.description"
                 class="!my-0"
               />
+              <div class="mt-2 rounded-lg border border-gray-800 bg-gray-900/40 px-3 py-2">
+                <p class="text-xs text-gray-500 leading-relaxed">
+                  {{ step.help }}
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -1168,7 +1173,7 @@ const installCommands: Record<
   mac: {
     command:
       'curl -sSL https://github.com/megaport/megaport-cli/releases/latest/download/megaport-cli_darwin_arm64.zip -o megaport-cli.zip',
-    description: 'Download pre-built binary for macOS (Apple Silicon)',
+    description: 'Download macOS binary (Apple Silicon)',
   },
   windows: {
     command:
@@ -1201,12 +1206,14 @@ const quickStartSteps = [
     label: 'Authenticate',
     command: 'megaport-cli config create-profile default',
     description: 'Enter your API key and secret',
+    help: 'Tip: Use production for live resources, or staging while learning and testing safely.',
   },
   {
     num: 3,
     label: 'Create Resources',
     command: 'megaport-cli ports list --table',
     description: 'List all your ports',
+    help: 'From here, run get/status/update commands on any UID returned in the list output.',
   },
 ];
 
