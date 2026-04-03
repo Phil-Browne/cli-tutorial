@@ -41,9 +41,9 @@
             <p
               class="text-lg md:text-xl text-gray-400 mb-10 leading-relaxed max-w-lg"
             >
-              The complete guide to managing network infrastructure from your
-              terminal — or your browser. Interactive demos, no install
-              required.
+              Learn real Megaport CLI workflows: provision services,
+              troubleshoot connectivity, and automate repeatable network
+              operations from your terminal or browser.
             </p>
 
             <div class="flex flex-wrap gap-4">
