@@ -271,9 +271,9 @@
           :steps="['Install CLI', 'Authenticate', 'Create Resources']"
         />
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8 items-stretch">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8 items-start">
           <!-- Step 1: Tabbed install -->
-          <div class="flex flex-col gap-3 h-full">
+          <div class="flex flex-col gap-3">
             <div class="flex items-center gap-2">
               <span
                 class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
@@ -283,9 +283,7 @@
               </span>
               <span class="font-semibold text-white text-sm">Install CLI</span>
             </div>
-            <div
-              class="flex-1 flex flex-col rounded-xl border border-gray-700 overflow-hidden min-h-[170px]"
-            >
+            <div class="flex flex-col rounded-xl border border-gray-700 overflow-hidden">
               <!-- Tabs -->
               <div class="flex border-b border-gray-700 bg-gray-900">
                 <button
@@ -359,7 +357,7 @@
           <div
             v-for="step in quickStartSteps"
             :key="step.label"
-            class="flex flex-col gap-3 h-full"
+            class="flex flex-col gap-3"
           >
             <div class="flex items-center gap-2">
               <span
@@ -372,11 +370,11 @@
                 step.label
               }}</span>
             </div>
-            <div class="flex-1 flex flex-col">
+            <div class="flex flex-col">
               <CommandExample
                 :command="step.command"
                 :description="step.description"
-                class="flex-1 !my-0 min-h-[170px]"
+                class="!my-0"
               />
             </div>
           </div>
