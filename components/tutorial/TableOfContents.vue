@@ -42,6 +42,42 @@
         </li>
       </ul>
     </div>
+
+    <div v-if="isCoreConceptsIndex" class="mt-5 pt-4 border-t border-gray-800">
+      <p
+        class="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2"
+      >
+        Core Concepts
+      </p>
+      <ul class="space-y-1 border-l border-gray-800">
+        <li v-for="item in coreConceptLinks" :key="item.to">
+          <NuxtLink
+            :to="item.to"
+            class="block pl-3 py-1 text-sm transition-colors border-l-2 -ml-px border-transparent text-gray-500 hover:text-gray-300 hover:border-gray-600"
+          >
+            {{ item.label }}
+          </NuxtLink>
+        </li>
+      </ul>
+    </div>
+
+    <div v-if="isReferenceIndex" class="mt-5 pt-4 border-t border-gray-800">
+      <p
+        class="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2"
+      >
+        Command Groups
+      </p>
+      <ul class="space-y-1 border-l border-gray-800">
+        <li v-for="item in referenceCommandGroupLinks" :key="item.to">
+          <NuxtLink
+            :to="item.to"
+            class="block pl-3 py-1 text-sm transition-colors border-l-2 -ml-px border-transparent text-gray-500 hover:text-gray-300 hover:border-gray-600"
+          >
+            {{ item.label }}
+          </NuxtLink>
+        </li>
+      </ul>
+    </div>
   </nav>
 </template>
 
@@ -63,6 +99,7 @@ const { data: page } = useAsyncData(`toc-${route.path}`, () =>
 
 const isTutorialIndex = computed(() => route.path === '/tutorials');
 const isCoreConceptsIndex = computed(() => route.path === '/core-concepts');
+const isReferenceIndex = computed(() => route.path === '/reference');
 
 const tutorialLinks = [
   { label: 'Port Lifecycle', to: '/tutorials/port-lifecycle' },
@@ -78,6 +115,27 @@ const coreConceptLinks = [
   { label: 'Input Modes', to: '/core-concepts/input-modes' },
   { label: 'Output Formats', to: '/core-concepts/output-formats' },
   { label: 'Config Profiles', to: '/core-concepts/config-profiles' },
+];
+
+const referenceCommandGroupLinks = [
+  { label: 'Apply', to: '/reference/command-reference#apply' },
+  { label: 'Ports', to: '/reference/command-reference#ports' },
+  { label: 'VXC', to: '/reference/command-reference#vxc' },
+  { label: 'MCR', to: '/reference/command-reference#mcr' },
+  { label: 'MVE', to: '/reference/command-reference#mve' },
+  { label: 'IX', to: '/reference/command-reference#ix' },
+  { label: 'Product', to: '/reference/command-reference#product' },
+  { label: 'Locations', to: '/reference/command-reference#locations' },
+  { label: 'Partners', to: '/reference/command-reference#partners' },
+  { label: 'Service Keys', to: '/reference/command-reference#service-keys' },
+  { label: 'Users', to: '/reference/command-reference#users' },
+  { label: 'Managed Account', to: '/reference/command-reference#managed-account' },
+  { label: 'Config', to: '/reference/command-reference#config' },
+  { label: 'Topology', to: '/reference/command-reference#topology' },
+  { label: 'Billing Market', to: '/reference/command-reference#billing-market' },
+  { label: 'Status', to: '/reference/command-reference#status' },
+  { label: 'Completion', to: '/reference/command-reference#completion' },
+  { label: 'Version', to: '/reference/command-reference#version' },
 ];
 
 const links = computed(() => {
