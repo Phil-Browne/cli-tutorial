@@ -8,18 +8,34 @@
         @keydown.escape="close"
         @keydown.tab.prevent="trapFocus"
       >
-        <div ref="modalRef" class="search-modal" role="dialog" aria-modal="true" aria-label="Search">
+        <div
+          ref="modalRef"
+          class="search-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Search"
+        >
           <!-- Input row -->
           <div class="search-input-row">
-            <svg class="search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            <svg
+              class="search-icon"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
             </svg>
             <input
               ref="inputRef"
               v-model="query"
               class="search-input"
               type="text"
-              placeholder="Search docs…"
+              placeholder="Search tutorials, guides & reference..."
               autocomplete="off"
               spellcheck="false"
               @keydown.up.prevent="moveSelection(-1)"
@@ -36,16 +52,25 @@
             aria-live="polite"
             aria-atomic="true"
             class="sr-only"
-          >{{ statusMessage }}</div>
+          >
+            {{ statusMessage }}
+          </div>
 
           <!-- Results / recents -->
-          <div class="search-body" ref="resultsRef" role="listbox" aria-label="Search results">
+          <div
+            class="search-body"
+            ref="resultsRef"
+            role="listbox"
+            aria-label="Search results"
+          >
             <!-- Loading -->
             <div v-if="loading" class="search-empty">Loading…</div>
 
             <!-- Search results -->
             <template v-else-if="query.trim()">
-              <div v-if="results.length === 0" class="search-empty">No results for "{{ query }}"</div>
+              <div v-if="results.length === 0" class="search-empty">
+                No results for "{{ query }}"
+              </div>
               <template v-else>
                 <div
                   v-for="(group, section) in groupedResults"
@@ -56,9 +81,19 @@
                   <button
                     v-for="(item, i) in group"
                     :key="item._path"
-                    :ref="el => { if (el && flatIndex(section, i) === selectedIndex) activeResultRef = el as HTMLElement }"
+                    :ref="
+                      (el) => {
+                        if (el && flatIndex(section, i) === selectedIndex)
+                          activeResultRef = el as HTMLElement;
+                      }
+                    "
                     class="search-result"
-                    :class="{ 'search-result--active': flatIndex(section, i) === selectedIndex, 'search-result--focused': flatIndex(section, i) === selectedIndex }"
+                    :class="{
+                      'search-result--active':
+                        flatIndex(section, i) === selectedIndex,
+                      'search-result--focused':
+                        flatIndex(section, i) === selectedIndex,
+                    }"
                     role="option"
                     :aria-selected="flatIndex(section, i) === selectedIndex"
                     @click="navigate(item._path)"
@@ -66,7 +101,8 @@
                   >
                     <span class="search-result-title">{{ item.title }}</span>
                     <span v-if="item.description" class="search-result-desc">
-                      {{ item.description.slice(0, 90) }}{{ item.description.length > 90 ? '…' : '' }}
+                      {{ item.description.slice(0, 90)
+                      }}{{ item.description.length > 90 ? '…' : '' }}
                     </span>
                   </button>
                 </div>
@@ -85,15 +121,27 @@
                   @click="navigate(item._path)"
                   @mouseenter="selectedIndex = i"
                 >
-                  <svg class="search-recent-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <svg
+                    class="search-recent-icon"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
                   </svg>
                   <span class="search-result-title">{{ item.title }}</span>
                   <button
                     class="search-recent-remove"
                     aria-label="Remove"
                     @click.stop="removeRecent(item._path)"
-                  >×</button>
+                  >
+                    ×
+                  </button>
                 </div>
               </div>
               <div v-else class="search-empty">Type to search…</div>
@@ -106,201 +154,216 @@
 </template>
 
 <script setup lang="ts">
-import Fuse from 'fuse.js'
+import Fuse from 'fuse.js';
 
-const props = defineProps<{ modelValue: boolean }>()
-const emit = defineEmits<{ 'update:modelValue': [boolean] }>()
+const props = defineProps<{ modelValue: boolean }>();
+const emit = defineEmits<{ 'update:modelValue': [boolean] }>();
 
-const { track } = useAnalytics()
+const { track } = useAnalytics();
 
 interface Doc {
-  _path: string
-  title: string
-  description?: string
+  _path: string;
+  title: string;
+  description?: string;
 }
 
 // Module-level cache — only fetched once per session
-let docsCache: Doc[] | null = null
-let fuseInstance: Fuse<Doc> | null = null
+let docsCache: Doc[] | null = null;
+let fuseInstance: Fuse<Doc> | null = null;
 
-const query = ref('')
-const loading = ref(false)
-const results = ref<Doc[]>([])
-const selectedIndex = ref(0)
-const inputRef = ref<HTMLInputElement | null>(null)
-const modalRef = ref<HTMLElement | null>(null)
-const activeResultRef = ref<HTMLElement | null>(null)
+const query = ref('');
+const loading = ref(false);
+const results = ref<Doc[]>([]);
+const selectedIndex = ref(0);
+const inputRef = ref<HTMLInputElement | null>(null);
+const modalRef = ref<HTMLElement | null>(null);
+const activeResultRef = ref<HTMLElement | null>(null);
 
 // Focus management
-let previouslyFocused: HTMLElement | null = null
+let previouslyFocused: HTMLElement | null = null;
 
 // Recent searches — persisted in localStorage
-const RECENT_KEY = 'megaport-recent-searches'
-const MAX_RECENT = 5
+const RECENT_KEY = 'megaport-recent-searches';
+const MAX_RECENT = 5;
 
-const recentSearches = ref<Doc[]>([])
+const recentSearches = ref<Doc[]>([]);
 
 function loadRecent() {
-  if (typeof window === 'undefined') return
+  if (typeof window === 'undefined') return;
   try {
-    recentSearches.value = JSON.parse(localStorage.getItem(RECENT_KEY) ?? '[]')
+    recentSearches.value = JSON.parse(localStorage.getItem(RECENT_KEY) ?? '[]');
   } catch {
-    recentSearches.value = []
+    recentSearches.value = [];
   }
 }
 
 function saveRecent(doc: Doc) {
-  if (typeof window === 'undefined') return
-  const existing = recentSearches.value.filter(r => r._path !== doc._path)
-  recentSearches.value = [doc, ...existing].slice(0, MAX_RECENT)
-  localStorage.setItem(RECENT_KEY, JSON.stringify(recentSearches.value))
+  if (typeof window === 'undefined') return;
+  const existing = recentSearches.value.filter((r) => r._path !== doc._path);
+  recentSearches.value = [doc, ...existing].slice(0, MAX_RECENT);
+  localStorage.setItem(RECENT_KEY, JSON.stringify(recentSearches.value));
 }
 
 function removeRecent(path: string) {
-  if (typeof window === 'undefined') return
-  recentSearches.value = recentSearches.value.filter(r => r._path !== path)
-  localStorage.setItem(RECENT_KEY, JSON.stringify(recentSearches.value))
+  if (typeof window === 'undefined') return;
+  recentSearches.value = recentSearches.value.filter((r) => r._path !== path);
+  localStorage.setItem(RECENT_KEY, JSON.stringify(recentSearches.value));
 }
 
 // Section label map
 const SECTION_LABELS: Record<string, string> = {
   'getting-started': 'Getting Started',
   'core-concepts': 'Core Concepts',
-  'tutorials': 'Tutorials',
-  'demos': 'Live Demo',
-  'reference': 'Reference',
-}
+  tutorials: 'Tutorials',
+  demos: 'Live Demo',
+  reference: 'Reference',
+};
 
 function sectionFor(path: string): string {
-  const segment = path.split('/').filter(Boolean)[0] ?? ''
-  return SECTION_LABELS[segment] ?? 'Other'
+  const segment = path.split('/').filter(Boolean)[0] ?? '';
+  return SECTION_LABELS[segment] ?? 'Other';
 }
 
 const groupedResults = computed(() => {
-  const groups: Record<string, Doc[]> = {}
+  const groups: Record<string, Doc[]> = {};
   for (const r of results.value) {
-    const section = sectionFor(r._path)
-    if (!groups[section]) groups[section] = []
-    groups[section].push(r)
+    const section = sectionFor(r._path);
+    if (!groups[section]) groups[section] = [];
+    groups[section].push(r);
   }
-  return groups
-})
+  return groups;
+});
 
 // Flat index mapping for keyboard navigation
 function flatIndex(section: string, i: number): number {
-  let offset = 0
+  let offset = 0;
   for (const [s, items] of Object.entries(groupedResults.value)) {
-    if (s === section) return offset + i
-    offset += items.length
+    if (s === section) return offset + i;
+    offset += items.length;
   }
-  return i
+  return i;
 }
 
-const totalResultCount = computed(() => results.value.length)
+const totalResultCount = computed(() => results.value.length);
 
 // Screen reader status message
 const statusMessage = computed(() => {
-  if (loading.value) return 'Loading results...'
-  if (!query.value.trim()) return ''
-  if (results.value.length === 0) return `No results for "${query.value}"`
-  return `${results.value.length} result${results.value.length === 1 ? '' : 's'} found`
-})
+  if (loading.value) return 'Loading results...';
+  if (!query.value.trim()) return '';
+  if (results.value.length === 0) return `No results for "${query.value}"`;
+  return `${results.value.length} result${results.value.length === 1 ? '' : 's'} found`;
+});
 
 async function loadDocs() {
-  if (docsCache) return
-  loading.value = true
+  if (docsCache) return;
+  loading.value = true;
   try {
-    const docs = await queryContent().only(['_path', 'title', 'description']).find()
-    docsCache = (docs as Doc[]).filter(d => d._path !== '/')
+    const docs = await queryContent()
+      .only(['_path', 'title', 'description'])
+      .find();
+    docsCache = (docs as Doc[]).filter((d) => d._path !== '/');
     fuseInstance = new Fuse(docsCache, {
       keys: ['title', 'description'],
       threshold: 0.35,
       includeMatches: true,
-    })
+    });
   } finally {
-    loading.value = false
+    loading.value = false;
   }
 }
 
 watch(query, (q) => {
-  selectedIndex.value = 0
+  selectedIndex.value = 0;
   if (!q.trim()) {
-    results.value = []
-    return
+    results.value = [];
+    return;
   }
-  if (!fuseInstance) return
-  results.value = fuseInstance.search(q).map(r => r.item).slice(0, 20)
-})
+  if (!fuseInstance) return;
+  results.value = fuseInstance
+    .search(q)
+    .map((r) => r.item)
+    .slice(0, 20);
+});
 
 // Scroll active result into view when selection changes
 watch(selectedIndex, async () => {
-  await nextTick()
-  activeResultRef.value?.scrollIntoView({ block: 'nearest' })
-})
+  await nextTick();
+  activeResultRef.value?.scrollIntoView({ block: 'nearest' });
+});
 
-watch(() => props.modelValue, async (open) => {
-  if (open) {
-    previouslyFocused = document.activeElement as HTMLElement
-    loadRecent()
-    await loadDocs()
-    await nextTick()
-    inputRef.value?.focus()
-    query.value = ''
-    selectedIndex.value = 0
-  } else {
-    // Restore focus to the element that opened the modal
-    previouslyFocused?.focus()
-    previouslyFocused = null
-  }
-})
+watch(
+  () => props.modelValue,
+  async (open) => {
+    if (open) {
+      previouslyFocused = document.activeElement as HTMLElement;
+      loadRecent();
+      await loadDocs();
+      await nextTick();
+      inputRef.value?.focus();
+      query.value = '';
+      selectedIndex.value = 0;
+    } else {
+      // Restore focus to the element that opened the modal
+      previouslyFocused?.focus();
+      previouslyFocused = null;
+    }
+  },
+);
 
 function getFocusableElements(): HTMLElement[] {
-  if (!modalRef.value) return []
+  if (!modalRef.value) return [];
   return Array.from(
     modalRef.value.querySelectorAll<HTMLElement>(
-      'input, button, [tabindex]:not([tabindex="-1"])'
-    )
-  ).filter(el => !el.hasAttribute('disabled'))
+      'input, button, [tabindex]:not([tabindex="-1"])',
+    ),
+  ).filter((el) => !el.hasAttribute('disabled'));
 }
 
 function trapFocus(event: KeyboardEvent) {
-  const focusable = getFocusableElements()
-  if (focusable.length === 0) return
-  const first = focusable[0]
-  const last = focusable[focusable.length - 1]
+  const focusable = getFocusableElements();
+  if (focusable.length === 0) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
   if (event.shiftKey) {
-    if (document.activeElement === first) last.focus()
+    if (document.activeElement === first) last.focus();
   } else {
-    if (document.activeElement === last) first.focus()
+    if (document.activeElement === last) first.focus();
   }
 }
 
 function close() {
-  emit('update:modelValue', false)
+  emit('update:modelValue', false);
 }
 
 function navigate(path: string) {
-  const doc = docsCache?.find(d => d._path === path) ?? recentSearches.value.find(r => r._path === path)
-  if (doc) saveRecent(doc)
+  const doc =
+    docsCache?.find((d) => d._path === path) ??
+    recentSearches.value.find((r) => r._path === path);
+  if (doc) saveRecent(doc);
   if (query.value.trim()) {
-    track('Search Query', { query: query.value.trim() })
+    track('Search Query', { query: query.value.trim() });
   }
-  navigateTo(path)
-  close()
+  navigateTo(path);
+  close();
 }
 
 function moveSelection(delta: number) {
-  const max = query.value.trim() ? totalResultCount.value : recentSearches.value.length
-  selectedIndex.value = Math.max(0, Math.min(max - 1, selectedIndex.value + delta))
+  const max = query.value.trim()
+    ? totalResultCount.value
+    : recentSearches.value.length;
+  selectedIndex.value = Math.max(
+    0,
+    Math.min(max - 1, selectedIndex.value + delta),
+  );
 }
 
 function selectCurrent() {
   if (query.value.trim()) {
-    const flat = results.value
-    if (flat[selectedIndex.value]) navigate(flat[selectedIndex.value]._path)
+    const flat = results.value;
+    if (flat[selectedIndex.value]) navigate(flat[selectedIndex.value]._path);
   } else {
     if (recentSearches.value[selectedIndex.value]) {
-      navigate(recentSearches.value[selectedIndex.value]._path)
+      navigate(recentSearches.value[selectedIndex.value]._path);
     }
   }
 }
