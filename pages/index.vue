@@ -283,7 +283,9 @@
               </span>
               <span class="font-semibold text-white text-sm">Install CLI</span>
             </div>
-            <div class="flex flex-col rounded-xl border border-gray-700 overflow-hidden h-[188px]">
+            <div
+              class="flex flex-col rounded-xl border border-gray-700 overflow-hidden h-[188px]"
+            >
               <!-- Tabs -->
               <div class="flex border-b border-gray-700 bg-gray-900">
                 <button
@@ -301,9 +303,13 @@
                 </button>
               </div>
               <!-- Tab content -->
-              <div class="p-3 bg-gray-900/50 flex-1 flex flex-col justify-between font-mono text-sm">
+              <div
+                class="p-3 bg-gray-900/50 flex-1 flex flex-col justify-between font-mono text-sm"
+              >
                 <div class="flex items-center justify-between gap-2">
-                  <div class="flex items-center gap-2 min-w-0 overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-700">
+                  <div
+                    class="flex items-center gap-2 min-w-0 overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-700"
+                  >
                     <span class="text-green-400 shrink-0 select-none">$</span>
                     <span class="text-gray-100 text-xs whitespace-nowrap">{{
                       activeInstallCommand.command
@@ -350,15 +356,21 @@
                   {{ activeInstallCommand.description }}
                 </p>
                 <div class="mt-2 border-t border-gray-800 pt-2">
-                  <p class="text-[11px] text-gray-500 mb-1 font-sans">Then verify:</p>
-                  <p class="text-[11px] text-gray-300 leading-relaxed break-all">
+                  <p class="text-[11px] text-gray-500 mb-1 font-sans">
+                    Then verify:
+                  </p>
+                  <p
+                    class="text-[11px] text-gray-300 leading-relaxed break-all"
+                  >
                     unzip megaport-cli.zip && ./megaport-cli version
                   </p>
                 </div>
               </div>
             </div>
 
-            <div class="rounded-lg border border-gray-800 bg-gray-900/40 px-3 py-2 h-[112px]">
+            <div
+              class="rounded-lg border border-gray-800 bg-gray-900/40 px-3 py-2 h-[112px]"
+            >
               <ul class="space-y-1">
                 <li
                   v-for="line in activeInstallCommand.helpLines"
@@ -397,7 +409,9 @@
               />
             </div>
 
-            <div class="rounded-lg border border-gray-800 bg-gray-900/40 px-3 py-2 h-[112px]">
+            <div
+              class="rounded-lg border border-gray-800 bg-gray-900/40 px-3 py-2 h-[112px]"
+            >
               <ul class="space-y-1">
                 <li
                   v-for="line in step.helpLines"

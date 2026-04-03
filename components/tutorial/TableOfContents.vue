@@ -129,10 +129,16 @@ const referenceCommandGroupLinks = [
   { label: 'Partners', to: '/reference/command-reference#partners' },
   { label: 'Service Keys', to: '/reference/command-reference#service-keys' },
   { label: 'Users', to: '/reference/command-reference#users' },
-  { label: 'Managed Account', to: '/reference/command-reference#managed-account' },
+  {
+    label: 'Managed Account',
+    to: '/reference/command-reference#managed-account',
+  },
   { label: 'Config', to: '/reference/command-reference#config' },
   { label: 'Topology', to: '/reference/command-reference#topology' },
-  { label: 'Billing Market', to: '/reference/command-reference#billing-market' },
+  {
+    label: 'Billing Market',
+    to: '/reference/command-reference#billing-market',
+  },
   { label: 'Status', to: '/reference/command-reference#status' },
   { label: 'Completion', to: '/reference/command-reference#completion' },
   { label: 'Version', to: '/reference/command-reference#version' },

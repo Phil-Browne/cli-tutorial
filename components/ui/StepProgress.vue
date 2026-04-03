@@ -2,28 +2,26 @@
   <div class="my-6">
     <div
       class="relative grid gap-6"
-      :style="{
-          class="relative grid gap-6"
-      }"
+      :style="{ gridTemplateColumns: `repeat(${total}, minmax(0, 1fr))` }"
     >
       <div
         v-for="(step, i) in normalizedSteps"
         :key="i"
         class="relative z-10 flex flex-col items-center"
       >
-            <!-- Connector segments drawn per column so circles align with card grid centers -->
-            <div class="absolute inset-x-0 top-4 h-0.5 pointer-events-none">
-              <div
-                v-if="i > 0"
-                class="absolute left-[-0.75rem] right-1/2 h-0.5"
-                :class="i - 1 < current - 1 ? 'bg-violet-600' : 'bg-gray-700'"
-              />
-              <div
-                v-if="i < normalizedSteps.length - 1"
-                class="absolute left-1/2 right-[-0.75rem] h-0.5"
-                :class="i < current - 1 ? 'bg-violet-600' : 'bg-gray-700'"
-              />
-            </div>
+        <!-- Connector segments drawn per column so circles align with card grid centers -->
+        <div class="absolute inset-x-0 top-4 h-0.5 pointer-events-none">
+          <div
+            v-if="i > 0"
+            class="absolute left-[-0.75rem] right-1/2 h-0.5"
+            :class="i - 1 < current - 1 ? 'bg-violet-600' : 'bg-gray-700'"
+          />
+          <div
+            v-if="i < normalizedSteps.length - 1"
+            class="absolute left-1/2 right-[-0.75rem] h-0.5"
+            :class="i < current - 1 ? 'bg-violet-600' : 'bg-gray-700'"
+          />
+        </div>
 
         <div
           class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-colors border-2"

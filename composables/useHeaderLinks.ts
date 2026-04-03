@@ -5,5 +5,5 @@ export function useHeaderLinks() {
     { to: '/tutorials', label: 'Tutorials' },
     { to: '/demos', label: 'Try Live Demo' },
     { to: '/reference', label: 'Reference' },
-  ]
+  ];
 }
