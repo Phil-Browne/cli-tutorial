@@ -271,9 +271,9 @@
           :steps="['Install CLI', 'Authenticate', 'Create Resources']"
         />
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8 items-start">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8 items-stretch">
           <!-- Step 1: Tabbed install -->
-          <div class="flex flex-col gap-3">
+          <div class="flex flex-col gap-3 h-full">
             <div class="flex items-center gap-2">
               <span
                 class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
@@ -283,7 +283,7 @@
               </span>
               <span class="font-semibold text-white text-sm">Install CLI</span>
             </div>
-            <div class="flex flex-col rounded-xl border border-gray-700 overflow-hidden min-h-[136px]">
+            <div class="flex flex-col rounded-xl border border-gray-700 overflow-hidden h-[152px]">
               <!-- Tabs -->
               <div class="flex border-b border-gray-700 bg-gray-900">
                 <button
@@ -301,7 +301,7 @@
                 </button>
               </div>
               <!-- Tab content -->
-              <div class="p-3 bg-gray-900/50 flex-1 font-mono text-sm">
+              <div class="p-3 bg-gray-900/50 flex-1 flex flex-col justify-between font-mono text-sm">
                 <div class="flex items-center justify-between gap-2">
                   <div class="flex items-center gap-2 min-w-0 overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-700">
                     <span class="text-green-400 shrink-0 select-none">$</span>
@@ -352,7 +352,7 @@
               </div>
             </div>
 
-            <div class="mt-2 rounded-lg border border-gray-800 bg-gray-900/40 px-3 py-2 min-h-[84px]">
+            <div class="mt-2 rounded-lg border border-gray-800 bg-gray-900/40 px-3 py-2 h-[96px] flex items-start">
               <p class="text-xs text-gray-500 leading-relaxed">
                 {{ activeInstallCommand.help }}
               </p>
@@ -363,7 +363,7 @@
           <div
             v-for="step in quickStartSteps"
             :key="step.label"
-            class="flex flex-col gap-3"
+            class="flex flex-col gap-3 h-full"
           >
             <div class="flex items-center gap-2">
               <span
@@ -380,9 +380,9 @@
               <CommandExample
                 :command="step.command"
                 :description="step.description"
-                class="!my-0 min-h-[136px]"
+                class="!my-0 h-[152px]"
               />
-              <div class="mt-2 rounded-lg border border-gray-800 bg-gray-900/40 px-3 py-2 min-h-[84px]">
+              <div class="mt-2 rounded-lg border border-gray-800 bg-gray-900/40 px-3 py-2 h-[96px] flex items-start">
                 <p class="text-xs text-gray-500 leading-relaxed">
                   {{ step.help }}
                 </p>
