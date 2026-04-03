@@ -273,7 +273,7 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8 items-stretch">
           <!-- Step 1: Tabbed install -->
-          <div class="flex flex-col gap-3 h-full">
+          <div class="grid grid-rows-[auto_188px_112px] gap-3 h-full">
             <div class="flex items-center gap-2">
               <span
                 class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
@@ -358,7 +358,7 @@
               </div>
             </div>
 
-            <div class="mt-2 rounded-lg border border-gray-800 bg-gray-900/40 px-3 py-2 h-[112px]">
+            <div class="rounded-lg border border-gray-800 bg-gray-900/40 px-3 py-2 h-[112px]">
               <ul class="space-y-1">
                 <li
                   v-for="line in activeInstallCommand.helpLines"
@@ -375,7 +375,7 @@
           <div
             v-for="step in quickStartSteps"
             :key="step.label"
-            class="flex flex-col gap-3 h-full"
+            class="grid grid-rows-[auto_188px_112px] gap-3 h-full"
           >
             <div class="flex items-center gap-2">
               <span
@@ -388,24 +388,25 @@
                 step.label
               }}</span>
             </div>
-            <div class="flex flex-col">
+            <div class="flex flex-col h-[188px]">
               <CommandExample
                 :command="step.command"
                 :description="step.description"
                 :output="step.output"
-                class="!my-0 h-[188px]"
+                class="!my-0 h-full"
               />
-              <div class="mt-2 rounded-lg border border-gray-800 bg-gray-900/40 px-3 py-2 h-[112px]">
-                <ul class="space-y-1">
-                  <li
-                    v-for="line in step.helpLines"
-                    :key="line"
-                    class="text-xs text-gray-500 leading-relaxed"
-                  >
-                    {{ line }}
-                  </li>
-                </ul>
-              </div>
+            </div>
+
+            <div class="rounded-lg border border-gray-800 bg-gray-900/40 px-3 py-2 h-[112px]">
+              <ul class="space-y-1">
+                <li
+                  v-for="line in step.helpLines"
+                  :key="line"
+                  class="text-xs text-gray-500 leading-relaxed"
+                >
+                  {{ line }}
+                </li>
+              </ul>
             </div>
           </div>
         </div>
