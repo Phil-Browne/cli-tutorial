@@ -12,7 +12,9 @@
             :to="item._path"
             :ref="
               (el) => {
-                if (item._path === route.path) activeRef = el as HTMLElement;
+                if (item._path !== route.path) return;
+                const candidate = (el as { $el?: unknown } | null)?.$el ?? el;
+                activeRef = candidate as Element | null;
               }
             "
             :aria-current="item._path === route.path ? 'page' : undefined"
@@ -44,14 +46,23 @@ const emit = defineEmits<{
 }>();
 
 const route = useRoute();
-let activeRef: HTMLElement | null = null;
+let activeRef: Element | null = null;
+
+function scrollIntoViewIfSupported(target: Element | null) {
+  if (!target) return;
+  const maybeElement = target as Element & {
+    scrollIntoView?: (options?: ScrollIntoViewOptions) => void;
+  };
+  if (typeof maybeElement.scrollIntoView !== 'function') return;
+  maybeElement.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+}
 
 // Scroll active link into view when route changes
 watch(
   () => route.path,
   async () => {
     await nextTick();
-    activeRef?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    scrollIntoViewIfSupported(activeRef);
   },
   { immediate: true },
 );

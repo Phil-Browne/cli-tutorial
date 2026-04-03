@@ -50,7 +50,7 @@
             :key="link.to"
             :to="link.to"
             class="p-4 rounded-xl border border-gray-800 bg-gray-900/50 hover:border-violet-700 hover:bg-gray-900 transition-all text-left group"
-            @click="clearNuxtError()"
+            @click="resetErrorState"
           >
             <div class="text-lg mb-1" aria-hidden="true">{{ link.icon }}</div>
             <div
@@ -66,7 +66,7 @@
 
         <button
           class="text-sm text-violet-400 hover:text-violet-300 transition-colors underline"
-          @click="clearError"
+          @click="handleBackHome"
         >
           ← Back to home
         </button>
@@ -80,9 +80,12 @@ const props = defineProps<{ error: { statusCode: number; message: string } }>();
 
 const is404 = computed(() => props.error.statusCode === 404);
 
-function clearError() {
-  clearNuxtError();
-  navigateTo('/');
+function resetErrorState() {
+  clearError();
+}
+
+function handleBackHome() {
+  clearError({ redirect: '/' });
 }
 
 const quickLinks = [

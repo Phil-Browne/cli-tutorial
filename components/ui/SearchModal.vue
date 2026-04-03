@@ -288,7 +288,10 @@ watch(query, (q) => {
 // Scroll active result into view when selection changes
 watch(selectedIndex, async () => {
   await nextTick();
-  activeResultRef.value?.scrollIntoView({ block: 'nearest' });
+  const target = activeResultRef.value;
+  if (target && typeof target.scrollIntoView === 'function') {
+    target.scrollIntoView({ block: 'nearest' });
+  }
 });
 
 watch(
