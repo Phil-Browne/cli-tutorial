@@ -351,6 +351,12 @@
                 </p>
               </div>
             </div>
+
+            <div class="mt-2 rounded-lg border border-gray-800 bg-gray-900/40 px-3 py-2 min-h-[84px]">
+              <p class="text-xs text-gray-500 leading-relaxed">
+                {{ activeInstallCommand.help }}
+              </p>
+            </div>
           </div>
 
           <!-- Steps 2-4 -->
@@ -376,7 +382,7 @@
                 :description="step.description"
                 class="!my-0"
               />
-              <div class="mt-2 rounded-lg border border-gray-800 bg-gray-900/40 px-3 py-2">
+              <div class="mt-2 rounded-lg border border-gray-800 bg-gray-900/40 px-3 py-2 min-h-[84px]">
                 <p class="text-xs text-gray-500 leading-relaxed">
                   {{ step.help }}
                 </p>
@@ -1164,7 +1170,7 @@ const installTabs = [
 
 const installCommands: Record<
   string,
-  { command: string; description: string }
+  { command: string; description: string; help: string }
 > = {
   // homebrew: {
   //   command: 'brew install megaport/tap/megaport-cli',
@@ -1174,15 +1180,18 @@ const installCommands: Record<
     command:
       'curl -sSL https://github.com/megaport/megaport-cli/releases/latest/download/megaport-cli_darwin_arm64.zip -o megaport-cli.zip',
     description: 'Download macOS binary (Apple Silicon)',
+    help: 'Choose Mac for Apple Silicon machines. For Intel Macs, use the darwin_amd64 release asset.',
   },
   windows: {
     command:
       'curl -sSL https://github.com/megaport/megaport-cli/releases/latest/download/megaport-cli_windows_amd64.zip -o megaport-cli.zip',
     description: 'Download pre-built binary for Windows',
+    help: 'Use PowerShell or Git Bash to download and extract the binary, then add it to your PATH.',
   },
   go: {
     command: 'go install github.com/megaport/megaport-cli@latest',
     description: 'Build from source (requires Go 1.21+)',
+    help: 'Great for developer environments that already manage tools with Go modules and pinned versions.',
   },
 };
 
