@@ -187,7 +187,7 @@
       <!-- ── Resource types ── -->
       <section class="section-reveal">
         <div class="text-center mb-8">
-          <h2 class="text-3xl font-bold text-white mb-3">14 Resource Types</h2>
+          <h2 class="text-3xl font-bold text-white mb-3">9 Resource Types</h2>
           <p class="text-gray-400">Complete CLI coverage across the entire Megaport platform.</p>
         </div>
         <div class="flex flex-wrap gap-3 justify-center">
@@ -244,7 +244,7 @@ const audiencePaths = [
 const features = [
   {
     icon: '📦',
-    title: '14 Resource Types',
+    title: '9 Resource Types',
     description: 'Ports, VXCs, MCR, MVE, Internet Exchange, and more — the complete Megaport platform.',
   },
   {
@@ -290,13 +290,13 @@ const quickStart = [
   {
     num: 3,
     label: 'Authenticate',
-    command: 'megaport config create-profile --name default',
+    command: 'megaport-cli config create-profile default',
     description: 'Enter your API key and secret',
   },
   {
     num: 4,
     label: 'Create Resources',
-    command: 'megaport port list --output table',
+    command: 'megaport-cli ports list --output table',
     description: 'List all your ports',
   },
 ]
