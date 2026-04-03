@@ -357,12 +357,12 @@
                 </p>
                 <div class="mt-2 border-t border-gray-800 pt-2">
                   <p class="text-[11px] text-gray-500 mb-1 font-sans">
-                    Then verify:
+                    {{ activeInstallCommand.verifyHint }}
                   </p>
                   <p
                     class="text-[11px] text-gray-300 leading-relaxed break-all"
                   >
-                    unzip megaport-cli.zip && ./megaport-cli version
+                    {{ activeInstallCommand.verifyCommand }}
                   </p>
                 </div>
               </div>
@@ -1199,11 +1199,13 @@ const installTabs = [
 
 const installCommands: Record<
   string,
-  { command: string; description: string; helpLines: string[] }
+  { command: string; description: string; verifyHint: string; verifyCommand: string; helpLines: string[] }
 > = {
   homebrew: {
     command: 'brew install megaport/tap/megaport-cli',
     description: 'Mac & Linux via Homebrew',
+    verifyHint: 'Then verify:',
+    verifyCommand: 'megaport-cli version',
     helpLines: [
       'The easiest way to install on macOS or Linux.',
       'Run "brew upgrade megaport-cli" to update.',
@@ -1214,6 +1216,8 @@ const installCommands: Record<
     command:
       'curl -sSL https://github.com/megaport/megaport-cli/releases/latest/download/megaport-cli_darwin_arm64.zip -o megaport-cli.zip',
     description: 'Download macOS binary (Apple Silicon)',
+    verifyHint: 'Then unzip and verify:',
+    verifyCommand: 'unzip megaport-cli.zip && ./megaport-cli version',
     helpLines: [
       'Choose Mac for Apple Silicon machines.',
       'For Intel Macs, use the darwin_amd64 release asset.',
@@ -1224,6 +1228,8 @@ const installCommands: Record<
     command:
       'curl -sSL https://github.com/megaport/megaport-cli/releases/latest/download/megaport-cli_windows_amd64.zip -o megaport-cli.zip',
     description: 'Download pre-built binary for Windows',
+    verifyHint: 'Then unzip and verify:',
+    verifyCommand: 'unzip megaport-cli.zip && ./megaport-cli version',
     helpLines: [
       'Use PowerShell or Git Bash to download and extract.',
       'Add megaport-cli.exe to your PATH.',
@@ -1233,6 +1239,8 @@ const installCommands: Record<
   go: {
     command: 'go install github.com/megaport/megaport-cli@latest',
     description: 'Build from source (requires Go 1.21+)',
+    verifyHint: 'Then verify:',
+    verifyCommand: 'megaport-cli version',
     helpLines: [
       'Great for environments that manage tools with Go modules.',
       'Keep Go updated to avoid build/runtime mismatches.',
