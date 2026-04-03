@@ -380,6 +380,7 @@
               <CommandExample
                 :command="step.command"
                 :description="step.description"
+                :output="step.output"
                 class="!my-0 h-[152px]"
               />
               <div class="mt-2 rounded-lg border border-gray-800 bg-gray-900/40 px-3 py-2 h-[96px] flex items-start">
@@ -1215,6 +1216,8 @@ const quickStartSteps = [
     label: 'Authenticate',
     command: 'megaport-cli config create-profile default',
     description: 'Enter your API key and secret',
+    output:
+      'Profile "default" created\nEnvironment: production\nActive profile: default',
     help: 'Tip: Use production for live resources, or staging while learning and testing safely.',
   },
   {
@@ -1222,6 +1225,8 @@ const quickStartSteps = [
     label: 'Create Resources',
     command: 'megaport-cli ports list --table',
     description: 'List all your ports',
+    output:
+      'UID       NAME          SPEED   STATUS\nabc-123   Sydney Port   10G     LIVE\ndef-456   Melbourne     1G      LIVE',
     help: 'From here, run get/status/update commands on any UID returned in the list output.',
   },
 ];
