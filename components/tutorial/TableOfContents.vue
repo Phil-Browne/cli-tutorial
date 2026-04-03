@@ -62,6 +62,7 @@ const { data: page } = useAsyncData(`toc-${route.path}`, () =>
 );
 
 const isTutorialIndex = computed(() => route.path === '/tutorials');
+const isCoreConceptsIndex = computed(() => route.path === '/core-concepts');
 
 const tutorialLinks = [
   { label: 'Port Lifecycle', to: '/tutorials/port-lifecycle' },
@@ -70,6 +71,13 @@ const tutorialLinks = [
   { label: 'MCR Routing', to: '/tutorials/mcr-routing' },
   { label: 'Multi-Cloud', to: '/tutorials/multi-cloud' },
   { label: 'Automation', to: '/tutorials/automation' },
+];
+
+const coreConceptLinks = [
+  { label: 'Resource Types', to: '/core-concepts/resource-types' },
+  { label: 'Input Modes', to: '/core-concepts/input-modes' },
+  { label: 'Output Formats', to: '/core-concepts/output-formats' },
+  { label: 'Config Profiles', to: '/core-concepts/config-profiles' },
 ];
 
 const links = computed(() => {
