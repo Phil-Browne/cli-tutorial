@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-type CardType = 'tip' | 'warning' | 'note' | 'important'
+type CardType = 'tip' | 'warning' | 'note' | 'important' | 'info'
 
 const props = defineProps<{
   type?: CardType
@@ -53,6 +53,13 @@ const styleMap: Record<CardType, {
     icon: 'ℹ️',
     defaultTitle: 'Note',
   },
+  info: {
+    container: 'border-cyan-500 bg-cyan-950/30',
+    title: 'text-cyan-300',
+    body: 'text-cyan-100',
+    icon: 'ℹ️',
+    defaultTitle: 'Info',
+  },
   important: {
     container: 'border-red-500 bg-red-950/30',
     title: 'text-red-400',
@@ -62,5 +69,8 @@ const styleMap: Record<CardType, {
   },
 }
 
-const styles = computed(() => styleMap[props.type ?? 'note'])
+const styles = computed(() => {
+  const key = props.type ?? 'note'
+  return styleMap[key] ?? styleMap.note
+})
 </script>
