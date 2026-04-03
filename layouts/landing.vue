@@ -246,17 +246,7 @@
             <ul class="space-y-2.5 text-sm">
               <li>
                 <a
-                  href="https://status.megaport.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="text-gray-400 hover:text-white transition-colors"
-                >
-                  API Status
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://support.megaport.com/"
+                  href="https://www.megaport.com/contact/support/"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="text-gray-400 hover:text-white transition-colors"
@@ -266,17 +256,7 @@
               </li>
               <li>
                 <a
-                  href="https://community.megaport.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="text-gray-400 hover:text-white transition-colors"
-                >
-                  Community
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://docs.megaport.com/"
+                  href="https://dev.megaport.com/"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="text-gray-400 hover:text-white transition-colors"
@@ -303,7 +283,7 @@
               </li>
               <li>
                 <a
-                  href="https://docs.megaport.com/"
+                  href="https://dev.megaport.com/"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="text-gray-400 hover:text-white transition-colors"

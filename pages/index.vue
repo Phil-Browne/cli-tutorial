@@ -156,28 +156,28 @@
     </div>
 
     <div class="max-w-7xl mx-auto px-6 lg:px-8 py-12 space-y-20">
-      <!-- ── Audience Paths ── -->
+      <!-- ── What Is the Megaport CLI? ── -->
       <section class="section-reveal">
         <div class="text-center mb-10">
-          <h2 class="text-3xl font-bold text-white mb-3">Choose Your Path</h2>
-          <p class="text-gray-400">
-            Tailored content for different roles and goals.
+          <h2 class="text-3xl font-bold text-white mb-3">
+            What Is the Megaport CLI?
+          </h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">
+            A single command-line tool for provisioning and managing your entire
+            Megaport network — ports, virtual cross connects, cloud routers, and
+            more.
           </p>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <NuxtLink
-            v-for="path in audiencePaths"
-            :key="path.title"
-            :to="path.to"
-            class="group p-8 rounded-2xl border border-gray-800 bg-gray-900/50 hover:border-violet-600 hover:shadow-lg hover:shadow-violet-900/20 hover:-translate-y-1 transition-all duration-200 cursor-pointer"
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div
+            v-for="item in cliHighlights"
+            :key="item.title"
+            class="p-6 rounded-2xl border border-gray-800 bg-gray-900/50"
           >
-            <!-- SVG icon -->
             <div
-              class="w-10 h-10 rounded-lg flex items-center justify-center mb-4 border border-gray-700 bg-gray-800 group-hover:border-violet-600 transition-colors"
+              class="w-10 h-10 rounded-lg flex items-center justify-center mb-4 border border-gray-700 bg-gray-800"
             >
-              <!-- Blueprint/Code icon for Architects -->
               <svg
-                v-if="path.id === 'architects'"
                 class="w-5 h-5 text-violet-400"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -188,48 +188,31 @@
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="1.5"
-                  d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"
-                />
-              </svg>
-              <!-- Briefcase/Presentation icon for Sales -->
-              <svg
-                v-else
-                class="w-5 h-5 text-violet-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="1.5"
-                  d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z"
+                  :d="item.icon"
                 />
               </svg>
             </div>
-            <h3
-              class="text-xl font-semibold text-white mb-3 group-hover:text-violet-400 transition-colors"
-            >
-              {{ path.title }}
+            <h3 class="text-lg font-semibold text-white mb-2">
+              {{ item.title }}
             </h3>
-            <ul class="space-y-2 mb-6">
-              <li
-                v-for="point in path.points"
-                :key="point"
-                class="flex items-start gap-2 text-sm text-gray-400"
-              >
-                <span
-                  class="w-1.5 h-1.5 rounded-full bg-violet-500 shrink-0 mt-1.5"
-                />
-                {{ point }}
-              </li>
-            </ul>
-            <span
-              class="text-sm font-medium text-violet-400 group-hover:underline"
-            >
-              {{ path.cta }} →
-            </span>
+            <p class="text-sm text-gray-400 leading-relaxed">
+              {{ item.description }}
+            </p>
+          </div>
+        </div>
+
+        <div class="text-center mt-8">
+          <p class="text-gray-500 text-sm mb-4">
+            This tutorial walks you through installation, core concepts, and
+            hands-on workflows — from your first command to multi-cloud
+            automation.
+          </p>
+          <NuxtLink
+            to="/getting-started"
+            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium text-white transition-colors"
+            style="background-color: #6b2d8b"
+          >
+            Get started →
           </NuxtLink>
         </div>
       </section>
@@ -1098,29 +1081,25 @@ const IconContainer = createSvgIcon(
   'M5.25 7.5A2.25 2.25 0 017.5 5.25h9a2.25 2.25 0 012.25 2.25v9a2.25 2.25 0 01-2.25 2.25h-9a2.25 2.25 0 01-2.25-2.25v-9z',
 );
 
-// ── Audience paths ──
-const audiencePaths = [
+// ── CLI highlights ──
+const cliHighlights = [
   {
-    id: 'architects',
-    title: 'For Solutions Architects',
-    points: [
-      'Deep-dive tutorials on ports, VXCs, MCR, and MVE',
-      'Architecture patterns and multi-cloud connectivity',
-      'Automation scripts and JSON input mode',
-    ],
-    cta: 'Start learning',
-    to: '/getting-started',
+    title: 'Provision Infrastructure',
+    description:
+      'Create ports, VXCs, MCRs, MVEs, and cloud on-ramps directly from your terminal — no portal clicks required.',
+    icon: 'M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z',
   },
   {
-    id: 'sales',
-    title: 'For Sales & Pre-Sales',
-    points: [
-      'Interactive browser demos — no install required',
-      'Ready-to-run customer presentation scripts',
-      'Quick talking points for every resource type',
-    ],
-    cta: 'See live demos',
-    to: '/demos',
+    title: 'Multiple Input Modes',
+    description:
+      'Interactive prompts for exploration, CLI flags for scripting, and JSON file input for full automation and CI/CD pipelines.',
+    icon: 'M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z M15 12a3 3 0 11-6 0 3 3 0 016 0z',
+  },
+  {
+    title: 'Try It in the Browser',
+    description:
+      'A live WASM-powered terminal lets you explore commands without installing anything — great for learning and quick demos.',
+    icon: 'M12 21a9.004 9.004 0 008.354-5.646M12 21a9.004 9.004 0 01-8.354-5.646M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418',
   },
 ];
 
