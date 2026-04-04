@@ -85,7 +85,8 @@ const { data: page } = await useAsyncData(`content-${route.path}`, () =>
     })
 )
 
-// Set page-specific title and description for SEO
+// Set page-specific title, description, and canonical URL for SEO
+const siteUrl = 'https://cli-tutorial.megaport.com'
 useHead(computed(() => ({
   title: page.value?.title
     ? `${page.value.title} — Megaport CLI`
@@ -93,6 +94,9 @@ useHead(computed(() => ({
   meta: page.value?.description
     ? [{ name: 'description', content: page.value.description }]
     : [],
+  link: [
+    { rel: 'canonical', href: `${siteUrl}${route.path}` },
+  ],
 })))
 
 // Fetch child pages when on a section index (single path segment, e.g. /tutorials)
