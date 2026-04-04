@@ -1,7 +1,7 @@
 import { chromium, devices } from 'playwright';
 import fs from 'fs';
 
-const base = 'http://localhost:3002';
+const base = process.argv[2] || process.env.BASE_URL || 'http://localhost:3000';
 const outDir = '/tmp/cli-ui-review';
 const summaryPath = `${outDir}/summary.txt`;
 

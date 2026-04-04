@@ -94,7 +94,7 @@ let currentLine = '';
 let cursorPosition = 0;
 let justCleared = false; // Track if terminal was just cleared
 
-// Command history
+// Command history — intentionally per-session (not persisted) since commands may contain sensitive args
 const commandHistory = ref<string[]>([]);
 let historyIndex = -1; // Current position in history (-1 = not browsing)
 

@@ -21,6 +21,7 @@
               placeholder="Your Megaport access key"
               autocomplete="off"
               required
+              minlength="8"
             />
           </div>
 
@@ -34,6 +35,7 @@
               placeholder="Your Megaport secret key"
               autocomplete="off"
               required
+              minlength="8"
             />
           </div>
 
