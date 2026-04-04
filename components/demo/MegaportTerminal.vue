@@ -127,7 +127,6 @@ let promptInputBuffer = '';
 let isInInteractiveCommand = false; // Track if we're in an interactive command session
 let resizeTimeoutId: NodeJS.Timeout | null = null; // For debouncing resize
 let resizeObserver: ResizeObserver | null = null;
-let windowResizeHandler: (() => void) | null = null;
 let viewportResizeHandler: (() => void) | null = null;
 
 /**
@@ -175,8 +174,10 @@ const setupPromptHandler = () => {
       promptRequest.message
     );
 
-    // Display the prompt message in terminal style
-    terminal.write(`\r\n\x1b[36m${promptRequest.message}\x1b[0m `);
+    // Sanitize prompt message — strip any embedded ANSI escape sequences to prevent
+    // terminal spoofing (e.g. screen clearing, fake login prompts)
+    const safeMessage = promptRequest.message.replace(/\x1b\[[^a-zA-Z]*[a-zA-Z]/g, '');
+    terminal.write(`\r\n\x1b[36m${safeMessage}\x1b[0m `);
 
     // Track this prompt
     activePrompt = {
@@ -277,7 +278,9 @@ const writePrompt = () => {
  * Handle prompt input when in interactive mode
  */
 const handlePromptInput = (data: string, code: number): boolean => {
-  if (!terminal || !activePrompt) return false;
+  // Capture reference locally to prevent resolving a different prompt after async gaps
+  const prompt = activePrompt;
+  if (!terminal || !prompt) return false;
 
   // Enter key - submit prompt response
   if (code === 13) {
@@ -285,7 +288,7 @@ const handlePromptInput = (data: string, code: number): boolean => {
     const response = promptInputBuffer;
 
     // Submit the response
-    activePrompt.resolve(response);
+    prompt.resolve(response);
 
     // Clear the prompt buffer but DON'T clear activePrompt yet
     // The next prompt will overwrite it, or command completion will clear it
@@ -305,8 +308,8 @@ const handlePromptInput = (data: string, code: number): boolean => {
   // Ctrl+C - cancel prompt
   if (code === 3) {
     terminal.write('^C\r\n');
-    if (window.cancelPrompt && activePrompt) {
-      window.cancelPrompt(activePrompt.id);
+    if (window.cancelPrompt) {
+      window.cancelPrompt(prompt.id);
     }
     activePrompt = null;
     promptInputBuffer = '';
@@ -609,10 +612,7 @@ const executeCommand = async (command: string) => {
   activePrompt = null;
   promptInputBuffer = '';
 
-  // Only write a new prompt if we're not in an active prompt session
-  if (!activePrompt) {
-    writePrompt();
-  }
+  writePrompt();
 };
 
 /**
@@ -639,6 +639,11 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
+  // Clear prompt state to prevent stale data on remount
+  activePrompt = null;
+  promptInputBuffer = '';
+  isInInteractiveCommand = false;
+
   // Clear resize timeout if pending
   if (resizeTimeoutId) {
     clearTimeout(resizeTimeoutId);

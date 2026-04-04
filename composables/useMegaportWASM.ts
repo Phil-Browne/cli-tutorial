@@ -159,9 +159,13 @@ export function useMegaportWASM(config: MegaportWASMConfig = {}) {
       throw err;
     }
 
-    // Create timeout promise
+    // Create timeout promise with clearable timer
+    let timeoutId: NodeJS.Timeout;
+    let aborted = false;
+
     const timeoutPromise = new Promise<never>((_, reject) => {
-      setTimeout(() => {
+      timeoutId = setTimeout(() => {
+        aborted = true;
         reject(new Error(`WASM initialization timeout after ${initTimeout}ms`));
       }, initTimeout);
     });
@@ -174,6 +178,7 @@ export function useMegaportWASM(config: MegaportWASMConfig = {}) {
 
         // Load wasm_exec.js
         await loadWasmExec();
+        if (aborted) return;
 
         if (!window.Go) {
           throw new Error('Go WASM runtime not loaded');
@@ -184,7 +189,9 @@ export function useMegaportWASM(config: MegaportWASMConfig = {}) {
 
         // Fetch and instantiate WASM
         const response = await fetch(wasmPath);
+        if (aborted) return;
         const buffer = await response.arrayBuffer();
+        if (aborted) return;
         const result = await WebAssembly.instantiate(buffer, go.importObject);
 
         // Run the Go program
@@ -194,6 +201,7 @@ export function useMegaportWASM(config: MegaportWASMConfig = {}) {
         await new Promise((resolve) =>
           setTimeout(resolve, WASM_CONFIG.INIT_STABILIZATION_DELAY)
         );
+        if (aborted) return;
 
         // Verify functions are available
         if (!hasWASMFunctions(window)) {
@@ -259,6 +267,10 @@ export function useMegaportWASM(config: MegaportWASMConfig = {}) {
     try {
       await Promise.race([initPromise(), timeoutPromise]);
     } catch (err) {
+      // On timeout, clean up any partially registered globals
+      if (aborted) {
+        cleanup();
+      }
       error.value = err as Error;
       isLoading.value = false;
       const duration = Date.now() - startTime;
@@ -271,6 +283,8 @@ export function useMegaportWASM(config: MegaportWASMConfig = {}) {
         duration
       );
       throw err;
+    } finally {
+      clearTimeout(timeoutId!);
     }
   };
 
@@ -612,11 +626,14 @@ export function useMegaportWASM(config: MegaportWASMConfig = {}) {
       window.clearAuthCredentials();
     }
 
-    // Remove global spinner functions
+    // Remove global functions registered during initialization
     if (typeof window !== 'undefined') {
       delete (window as any).wasmStartSpinner;
       delete (window as any).wasmStopSpinner;
     }
+
+    // Reset state
+    isReady.value = false;
 
     log('Cleanup complete');
   };

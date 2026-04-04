@@ -152,7 +152,7 @@ onMounted(() => {
 
 // Auto-connect when WASM becomes ready and we have saved credentials
 watch(() => termRef.value?.isReady, (ready) => {
-  if (ready && accessKey.value && secretKey.value && !authed.value) {
+  if (ready && accessKey.value && secretKey.value && !authed.value && !connecting.value) {
     connect()
   }
 })
