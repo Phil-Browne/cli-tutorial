@@ -158,6 +158,42 @@ html {
   }
 }
 
+/* ── Print styles ── */
+@media print {
+  header, footer, aside, .search-backdrop, .scroll-to-top,
+  .breadcrumbs, button, .terminal-panel, .demo-terminal-wrapper {
+    display: none !important;
+  }
+  main {
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+  .prose {
+    color: #000 !important;
+  }
+  .prose h1, .prose h2, .prose h3, .prose h4 {
+    color: #000 !important;
+  }
+  .prose a {
+    color: #6b2d8b !important;
+    text-decoration: underline !important;
+  }
+  .prose a::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.75em;
+    color: #666;
+  }
+  .prose pre {
+    border: 1px solid #ccc !important;
+    background: #f9f9f9 !important;
+    color: #000 !important;
+  }
+  .prose code:not(pre code) {
+    background: #f0f0f0 !important;
+    color: #333 !important;
+  }
+}
+
 /* ── Mobile menu transition ── */
 .slide-down-enter-active,
 .slide-down-leave-active {

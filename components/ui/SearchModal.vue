@@ -151,7 +151,10 @@
                   </button>
                 </div>
               </div>
-              <div v-else class="search-empty">Type to search…</div>
+              <div v-else class="search-empty">
+                <p>Type to search tutorials, guides & reference docs</p>
+                <p class="mt-2 text-xs text-gray-600">Try: port, VXC, MCR, AWS, automation, install</p>
+              </div>
             </template>
           </div>
         </div>
@@ -455,7 +458,7 @@ function selectCurrent() {
 }
 
 .search-body {
-  max-height: 420px;
+  max-height: min(420px, 50vh);
   overflow-y: auto;
   padding: 0.5rem;
 }

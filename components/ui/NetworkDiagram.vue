@@ -1,7 +1,7 @@
 <template>
   <div>
     <ClientOnly>
-      <div class="py-2 px-4 flex justify-center rounded-lg bg-slate-100 max-w-2xl mx-auto">
+      <div class="py-2 px-4 flex justify-center rounded-lg bg-gray-800 max-w-2xl mx-auto">
         <div ref="diagramRef" class="mermaid-diagram" v-html="renderedSvg" />
       </div>
       <template #fallback>
@@ -28,21 +28,21 @@ onMounted(async () => {
       startOnLoad: false,
       theme: 'base',
       themeVariables: {
-        primaryColor: '#ede9fe',
-        primaryTextColor: '#1e1b4b',
-        primaryBorderColor: '#6B2D8B',
-        lineColor: '#6B2D8B',
-        secondaryColor: '#f0fdfa',
-        tertiaryColor: '#f3f4f6',
+        primaryColor: '#2e1065',
+        primaryTextColor: '#e2e8f0',
+        primaryBorderColor: '#9B5DBB',
+        lineColor: '#9B5DBB',
+        secondaryColor: '#1e293b',
+        tertiaryColor: '#1e293b',
         background: 'transparent',
-        mainBkg: '#ede9fe',
-        nodeBorder: '#6B2D8B',
-        nodeTextColor: '#1e1b4b',
-        clusterBkg: '#f8fafc',
-        clusterBorder: '#6B2D8B',
-        titleColor: '#1e1b4b',
-        edgeLabelBackground: '#ffffff',
-        labelTextColor: '#374151',
+        mainBkg: '#2e1065',
+        nodeBorder: '#9B5DBB',
+        nodeTextColor: '#e2e8f0',
+        clusterBkg: '#1e293b',
+        clusterBorder: '#9B5DBB',
+        titleColor: '#e2e8f0',
+        edgeLabelBackground: '#1e293b',
+        labelTextColor: '#cbd5e1',
         fontSize: '20px',
         fontFamily: 'Inter, system-ui, sans-serif',
       },
@@ -84,17 +84,18 @@ onMounted(async () => {
 }
 
 .mermaid-diagram :deep(.edgeLabel) {
-  color: #374151;
-  background: #ffffff;
+  color: #cbd5e1;
+  background: #1e293b;
   padding: 2px 6px;
   border-radius: 4px;
 }
 
+/* !important needed to override mermaid's inline SVG styles */
 .mermaid-diagram :deep(text) {
-  fill: #1e1b4b !important;
+  fill: #e2e8f0 !important;
 }
 
 .mermaid-diagram :deep(.label) {
-  color: #1e1b4b;
+  color: #e2e8f0;
 }
 </style>

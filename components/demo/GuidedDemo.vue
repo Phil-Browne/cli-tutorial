@@ -359,8 +359,8 @@ async function copy(command: string, index: number) {
   flex: 1;
   font-family: 'JetBrains Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
   font-size: 0.875rem;
-  color: #00BCD4;
-  word-break: break-all;
+  color: #4DD0E1;
+  word-break: break-word;
   white-space: pre-wrap;
 }
 

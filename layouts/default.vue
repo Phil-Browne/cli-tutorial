@@ -333,6 +333,7 @@
 
     <!-- Search modal -->
     <SearchModal v-model="searchOpen" />
+    <ScrollToTop />
   </div>
 </template>
 
