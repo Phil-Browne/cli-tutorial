@@ -104,7 +104,7 @@ const authed = ref(false)
 const connecting = ref(false)
 const error = ref('')
 
-const termRef = ref<{ setAuth: (a: string, s: string, e: string) => void; isReady: boolean } | null>(null)
+const termRef = ref<{ setAuth: (a: string, s: string, e: string) => void; clearAuth: () => void; isReady: boolean } | null>(null)
 const terminalReady = ref(false)
 const { track } = useAnalytics()
 
@@ -212,6 +212,7 @@ function disconnect() {
 
 function reAuth() {
   if (accessKey.value && secretKey.value) {
+    termRef.value?.clearAuth()
     termRef.value?.setAuth(accessKey.value, secretKey.value, environment.value)
   }
 }

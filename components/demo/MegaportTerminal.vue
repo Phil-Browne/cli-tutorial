@@ -112,6 +112,7 @@ const {
   error,
   execute,
   setAuth,
+  clearAuth,
   registerPromptHandler,
   retry,
   activeSpinners,
@@ -582,8 +583,8 @@ const executeCommand = async (command: string) => {
     if (isTokenExpired) {
       terminal.write('\x1b[33m⟳ Token expired, re-authenticating...\x1b[0m\r\n');
       emit('tokenExpired');
-      // Give parent time to call setAuth with fresh credentials
-      await new Promise(resolve => setTimeout(resolve, 500));
+      // Give parent time to clear + re-set auth and the CLI to fetch a new token
+      await new Promise(resolve => setTimeout(resolve, 2000));
       // Retry the command
       terminal.write('\x1b[90mRetrying...\x1b[0m\r\n');
       const retryResult = await execute(command);
@@ -715,6 +716,7 @@ defineExpose({
   fitAddon,
   execute: executeCommand,
   setAuth,
+  clearAuth,
   isReady,
 });
 </script>
