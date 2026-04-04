@@ -33,11 +33,11 @@ withDefaults(defineProps<{
   height: 600,
 })
 
-const prefillCommand = ref('locations list --country "Australia"')
+const prefillCommand = ref('locations list --metro "Sydney"')
 
 onMounted(() => {
   if (window.innerWidth < 1024) {
-    prefillCommand.value = 'locations list --country "Australia" --output json'
+    prefillCommand.value = 'locations list --metro "Sydney" --output json'
   }
 })
 </script>
