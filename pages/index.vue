@@ -1022,6 +1022,44 @@
           </NuxtLink>
         </div>
       </section>
+
+      <!-- ── Why Megaport CLI? ── -->
+      <section class="section-reveal">
+        <div class="text-center mb-10">
+          <h2 class="text-3xl font-bold text-white mb-3">
+            Why Use the CLI?
+          </h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">
+            Move faster, reduce errors, and scale your network operations.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="p-6 rounded-2xl border border-gray-800 bg-gray-900/50 text-center">
+            <p class="text-4xl font-extrabold text-violet-400 mb-2">Minutes</p>
+            <p class="text-sm text-gray-300 font-medium mb-1">vs. days with manual processes</p>
+            <p class="text-xs text-gray-500">Provision a port, connect to AWS, and route traffic — all from one terminal session.</p>
+          </div>
+          <div class="p-6 rounded-2xl border border-gray-800 bg-gray-900/50 text-center">
+            <p class="text-4xl font-extrabold text-violet-400 mb-2">Repeatable</p>
+            <p class="text-sm text-gray-300 font-medium mb-1">Script once, deploy everywhere</p>
+            <p class="text-xs text-gray-500">JSON templates and CI/CD pipelines replace portal clicks with auditable, version-controlled infrastructure.</p>
+          </div>
+          <div class="p-6 rounded-2xl border border-gray-800 bg-gray-900/50 text-center">
+            <p class="text-4xl font-extrabold text-violet-400 mb-2">800+</p>
+            <p class="text-sm text-gray-300 font-medium mb-1">Data centres in 26 countries</p>
+            <p class="text-xs text-gray-500">Query live availability, filter by metro, and connect to any cloud provider — all via API.</p>
+          </div>
+        </div>
+        <div class="text-center mt-8">
+          <NuxtLink
+            to="/getting-started/learning-paths"
+            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium text-white transition-colors"
+            style="background-color: #6b2d8b"
+          >
+            Choose your learning path →
+          </NuxtLink>
+        </div>
+      </section>
     </div>
   </div>
 </template>

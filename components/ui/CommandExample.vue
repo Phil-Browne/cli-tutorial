@@ -6,7 +6,7 @@
     <div class="flex items-center justify-between gap-3 px-4 py-3 bg-gray-900">
       <div class="flex items-center gap-2 flex-1 min-w-0">
         <span class="text-green-400 shrink-0 select-none">$</span>
-        <span class="text-gray-100 break-all">{{ command }}</span>
+        <span class="text-gray-100 break-words">{{ command }}</span>
       </div>
       <button
         class="flex items-center gap-1 px-2 py-1 rounded text-xs text-gray-500 hover:text-white hover:bg-gray-700 transition-colors shrink-0"
