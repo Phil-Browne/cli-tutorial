@@ -68,6 +68,7 @@
 
             <!-- Search results -->
             <template v-else-if="query.trim()">
+              <!-- Safety: query MUST use {{ }} interpolation (not v-html) to prevent XSS -->
               <div v-if="results.length === 0" class="search-empty">
                 No results for "{{ query }}"
               </div>

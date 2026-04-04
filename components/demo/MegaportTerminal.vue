@@ -48,6 +48,7 @@ import {
   onErrorCaptured,
 } from 'vue';
 import { Terminal } from '@xterm/xterm';
+import '@xterm/xterm/css/xterm.css';
 import { FitAddon } from '@xterm/addon-fit';
 import { WebLinksAddon } from '@xterm/addon-web-links';
 import { useMegaportWASM } from '~/composables/useMegaportWASM';
@@ -194,39 +195,10 @@ const setupPromptHandler = () => {
 };
 
 /**
- * Lazy load xterm CSS only when needed
- */
-const loadXtermCSS = (): Promise<void> => {
-  return new Promise((resolve, reject) => {
-    // Check if already loaded
-    if (document.querySelector('link[href*="xterm.css"]')) {
-      resolve();
-      return;
-    }
-
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'https://cdn.jsdelivr.net/npm/@xterm/xterm@5.5.0/css/xterm.css';
-    link.onload = () => resolve();
-    link.onerror = () => reject(new Error('Failed to load xterm CSS'));
-    document.head.appendChild(link);
-  });
-};
-
-/**
  * Initialize xterm.js terminal
  */
 const initTerminal = async () => {
   if (!terminalRef.value) return;
-
-  // Lazy load xterm CSS first
-  try {
-    await loadXtermCSS();
-  } catch (err) {
-    console.error('Failed to load xterm CSS:', err);
-    componentError.value = err instanceof Error ? err : new Error(String(err));
-    return;
-  }
 
   terminal = new Terminal({
     cursorBlink: true,

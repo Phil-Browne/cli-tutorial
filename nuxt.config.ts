@@ -21,21 +21,25 @@ export default defineNuxtConfig({
       // WASM requires browser context — render demos client-side only
       '/demos/**': { ssr: false },
       // COOP/COEP headers required for Go WASM SharedArrayBuffer support
+      // CSP restricts resource loading to trusted origins
       '/**': {
         headers: {
           'Cross-Origin-Opener-Policy': 'same-origin',
           'Cross-Origin-Embedder-Policy': 'credentialless',
+          'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' https://plausible.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.github.com https://plausible.io; img-src 'self' data:; worker-src 'self' blob:; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests",
+          'X-Frame-Options': 'DENY',
         },
       },
     },
   },
 
-  // Dev server also needs COOP/COEP headers
+  // Dev server also needs COOP/COEP headers (relaxed CSP for HMR/devtools WebSocket)
   vite: {
     server: {
       headers: {
         'Cross-Origin-Opener-Policy': 'same-origin',
         'Cross-Origin-Embedder-Policy': 'credentialless',
+        'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' ws: wss: https://api.github.com https://plausible.io; img-src 'self' data:; worker-src 'self' blob:; object-src 'none'",
       },
     },
     // Prevent Vite from trying to process .wasm as assets
