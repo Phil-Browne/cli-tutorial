@@ -9,24 +9,31 @@
       </div>
     </div>
 
-    <!-- Loading skeleton -->
-    <div v-if="!terminalReady" class="terminal-skeleton" :style="{ height: `${height}px` }">
-      <div class="skeleton skeleton-line w-1/3" />
-      <div class="skeleton skeleton-line w-1/2" />
-      <div class="skeleton skeleton-line w-2/5" />
-    </div>
+    <!-- Terminal area — always rendered so xterm.js can measure its container -->
+    <div class="terminal-area-wrapper" :style="{ height: `${height}px` }">
+      <!-- Loading skeleton overlay -->
+      <Transition name="fade">
+        <div v-if="!terminalReady" class="terminal-skeleton-overlay">
+          <div class="skeleton skeleton-line w-1/3" />
+          <div class="skeleton skeleton-line w-1/2" />
+          <div class="skeleton skeleton-line w-2/5" />
+          <div class="skeleton skeleton-line w-3/5" />
+          <div class="skeleton skeleton-line w-1/4" />
+        </div>
+      </Transition>
 
-    <!-- Terminal -->
-    <div v-show="terminalReady" class="terminal-area" :style="{ height: `${height}px` }">
-      <ClientOnly>
-        <MegaportTerminal
-          ref="termRef"
-          welcome-message="Megaport CLI (Public Mode — no login required)
+      <!-- Terminal (always in DOM) -->
+      <div class="terminal-area">
+        <ClientOnly>
+          <MegaportTerminal
+            ref="termRef"
+            welcome-message="Megaport CLI (Public Mode — no login required)
 Available commands: locations, partners, version
 Type 'help' for details.
 "
-        />
-      </ClientOnly>
+          />
+        </ClientOnly>
+      </div>
     </div>
   </div>
 </template>
@@ -46,7 +53,7 @@ const terminalReady = ref(false)
 // Show terminal once WASM is ready (no auth needed)
 watch(() => termRef.value?.isReady, (ready) => {
   if (ready) {
-    setTimeout(() => { terminalReady.value = true }, 800)
+    setTimeout(() => { terminalReady.value = true }, 1200)
   }
 })
 </script>
@@ -105,7 +112,15 @@ watch(() => termRef.value?.isReady, (ready) => {
   border: 1px solid rgba(96, 165, 250, 0.3);
 }
 
-.terminal-skeleton {
+.terminal-area-wrapper {
+  position: relative;
+}
+
+.terminal-skeleton-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: #030712;
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -113,6 +128,16 @@ watch(() => termRef.value?.isReady, (ready) => {
 }
 
 .terminal-area {
-  transition: height 0.15s ease;
+  width: 100%;
+  height: 100%;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
