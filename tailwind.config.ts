@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss'
 
 export default {
+  // Content paths are automatically configured by @nuxt/ui module
   content: [],
   theme: {
     extend: {

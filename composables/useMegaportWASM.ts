@@ -3,7 +3,7 @@
  * Handles WASM loading, initialization, and command execution
  */
 
-import { ref, onMounted, onUnmounted, readonly, triggerRef } from 'vue';
+import { ref, onMounted, onUnmounted, readonly } from 'vue';
 import type { Ref } from 'vue';
 import { WASM_CONFIG } from '~/constants/megaportWASM';
 import {
@@ -109,9 +109,7 @@ export function useMegaportWASM(config: MegaportWASMConfig = {}) {
     // Global spinner start function
     (window as any).wasmStartSpinner = (message: string): string => {
       const spinnerId = `spinner_${Date.now()}_${spinnerCounter++}`;
-      // Mutate the Map directly and trigger reactivity manually
-      activeSpinners.value.set(spinnerId, message);
-      triggerRef(activeSpinners);
+      activeSpinners.value = new Map([...activeSpinners.value, [spinnerId, message]]);
 
       log(`🔄 Spinner started: ${spinnerId} - ${message}`);
       emitTelemetry('spinner_start', { spinnerId, message });
@@ -122,9 +120,9 @@ export function useMegaportWASM(config: MegaportWASMConfig = {}) {
     // Global spinner stop function
     (window as any).wasmStopSpinner = (spinnerId: string): void => {
       const message = activeSpinners.value.get(spinnerId);
-      // Mutate the Map directly and trigger reactivity manually
-      activeSpinners.value.delete(spinnerId);
-      triggerRef(activeSpinners);
+      const next = new Map(activeSpinners.value);
+      next.delete(spinnerId);
+      activeSpinners.value = next;
 
       if (message) {
         log(`⏹️ Spinner stopped: ${spinnerId} - ${message}`);

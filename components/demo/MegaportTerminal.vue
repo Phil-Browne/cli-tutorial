@@ -786,6 +786,7 @@ defineExpose({
   padding: 0.5rem;
 }
 
+/* !important needed to override xterm.js inline styles */
 :deep(.xterm) {
   height: 100% !important;
 }
