@@ -434,15 +434,15 @@ export function useMegaportWASM(config: MegaportWASMConfig = {}) {
       emitTelemetry('auth_set', { environment, success: result?.success });
 
       if (result && !result.success) {
-        console.error('Failed to set credentials:', result.error); // Always log errors
+        warn('Failed to set credentials:', result.error);
       }
       if (window.debugAuthInfo) {
         log('Auth info:', window.debugAuthInfo());
       }
     } else {
-      console.error(
-        '❌ setAuthCredentials function not available. WASM may not be initialized.'
-      ); // Always log errors
+      warn(
+        'setAuthCredentials function not available. WASM may not be initialized.'
+      );
       emitTelemetry('auth_set', { environment, success: false });
     }
   };
@@ -456,9 +456,7 @@ export function useMegaportWASM(config: MegaportWASMConfig = {}) {
       log('🔓 Auth credentials cleared from memory');
       emitTelemetry('auth_clear', {});
     } else {
-      console.error(
-        '❌ clearAuthCredentials function not available. WASM may not be initialized.'
-      ); // Always log errors
+      warn('clearAuthCredentials function not available. WASM may not be initialized.');
     }
   };
 
@@ -484,15 +482,13 @@ export function useMegaportWASM(config: MegaportWASMConfig = {}) {
       });
 
       if (result && !result.success) {
-        console.error('Failed to set token:', result.error);
+        warn('Failed to set token:', result.error);
       }
       if (window.debugAuthInfo) {
         log('Auth info:', window.debugAuthInfo());
       }
     } else {
-      console.error(
-        '❌ setAuthToken function not available. WASM may not be initialized.'
-      );
+      warn('setAuthToken function not available. WASM may not be initialized.');
       emitTelemetry('auth_token_set' as any, { hostname: actualHostname, success: false });
     }
   };

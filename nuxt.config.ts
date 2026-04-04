@@ -28,6 +28,7 @@ export default defineNuxtConfig({
           'Cross-Origin-Embedder-Policy': 'credentialless',
           'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' https://plausible.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.github.com https://plausible.io; img-src 'self' data:; worker-src 'self' blob:; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests",
           'X-Frame-Options': 'DENY',
+          'X-Content-Type-Options': 'nosniff',
         },
       },
     },

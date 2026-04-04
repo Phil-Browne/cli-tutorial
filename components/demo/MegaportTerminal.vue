@@ -175,9 +175,13 @@ const setupPromptHandler = () => {
       promptRequest.message
     );
 
-    // Sanitize prompt message — strip any embedded ANSI escape sequences to prevent
-    // terminal spoofing (e.g. screen clearing, fake login prompts)
-    const safeMessage = promptRequest.message.replace(/\x1b\[[^a-zA-Z]*[a-zA-Z]/g, '');
+    // Sanitize prompt message — strip ALL escape sequences to prevent terminal spoofing
+    // Covers SGR, cursor movement, erase, scroll, and 8-bit control sequences
+    const safeMessage = promptRequest.message
+      .replace(/\x1b\[[0-9;]*[a-zA-Z]/g, '')   // CSI sequences (SGR, cursor, erase)
+      .replace(/\x1b\([B0UK]/g, '')              // Character set selection
+      .replace(/\x1b[NOcDEHMZ78>=>]/g, '')       // Other 7-bit escape sequences
+      .replace(/[\x00-\x08\x0b\x0c\x0e-\x1f]/g, ''); // Control characters except \t \n \r
     terminal.write(`\r\n\x1b[36m${safeMessage}\x1b[0m `);
 
     // Track this prompt
