@@ -37,10 +37,6 @@ withDefaults(defineProps<{
 <style scoped>
 .public-terminal-wrapper {
   width: 100%;
-  /* Break out of the narrow max-w-5xl content column so the table fits */
-  margin-left: -2rem;
-  margin-right: -2rem;
-  width: calc(100% + 4rem);
   border: 1px solid #374151;
   border-radius: 12px;
   overflow: hidden;

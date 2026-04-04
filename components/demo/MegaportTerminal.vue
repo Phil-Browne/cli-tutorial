@@ -808,6 +808,24 @@ defineExpose({
 }
 
 :deep(.xterm-viewport) {
-  overflow-y: auto !important;
+  overflow-y: scroll !important;
+}
+
+/* Keep the scrollbar track always visible */
+:deep(.xterm-viewport::-webkit-scrollbar) {
+  width: 8px;
+}
+
+:deep(.xterm-viewport::-webkit-scrollbar-track) {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+:deep(.xterm-viewport::-webkit-scrollbar-thumb) {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+:deep(.xterm-viewport::-webkit-scrollbar-thumb:hover) {
+  background: rgba(255, 255, 255, 0.35);
 }
 </style>

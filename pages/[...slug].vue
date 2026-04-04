@@ -24,7 +24,7 @@
     </div>
 
     <!-- Content layout: prose + TOC -->
-    <div v-else-if="page" class="flex gap-10 max-w-5xl">
+    <div v-else-if="page" class="flex gap-10" :class="page.wideLayout ? 'max-w-7xl' : 'max-w-5xl'">
       <!-- Main article -->
       <article class="flex-1 min-w-0">
         <!-- Tutorial header from frontmatter -->
