@@ -14,7 +14,7 @@
       <ClientOnly>
         <MegaportTerminal
           ref="termRef"
-          prefill-command="locations list --country &quot;Australia&quot;"
+          :prefill-command="prefillCommand"
           welcome-message="Megaport CLI (Public Mode — no login required)
 Available command: locations list
 Try: megaport-cli locations list --metro Sydney
@@ -31,6 +31,14 @@ withDefaults(defineProps<{
   height?: number
 }>(), {
   height: 600,
+})
+
+const prefillCommand = ref('locations list --country "Australia"')
+
+onMounted(() => {
+  if (window.innerWidth < 1024) {
+    prefillCommand.value = 'locations list --country "Australia" --output json'
+  }
 })
 </script>
 
