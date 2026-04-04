@@ -86,8 +86,8 @@
                 >
                   <div class="search-group-label">{{ section }}</div>
                   <button
-                    v-for="(item, i) in group"
-                    :key="item._path"
+                    v-for="(sr, i) in group"
+                    :key="sr.item._path"
                     :ref="
                       (el) => {
                         if (el && flatIndex(section, i) === selectedIndex)
@@ -103,13 +103,15 @@
                     }"
                     role="option"
                     :aria-selected="flatIndex(section, i) === selectedIndex"
-                    @click="navigate(item._path)"
+                    @click="navigate(sr.item._path)"
                     @mouseenter="selectedIndex = flatIndex(section, i)"
                   >
-                    <span class="search-result-title">{{ item.title }}</span>
-                    <span v-if="item.description" class="search-result-desc">
-                      {{ item.description.slice(0, 90)
-                      }}{{ item.description.length > 90 ? '…' : '' }}
+                    <span class="search-result-title">{{ sr.item.title }}</span>
+                    <!-- Show highlighted snippet if available, otherwise plain description -->
+                    <span v-if="sr.descSnippet" class="search-result-desc" v-html="sr.descSnippet" />
+                    <span v-else-if="sr.item.description" class="search-result-desc">
+                      {{ sr.item.description.slice(0, 90)
+                      }}{{ sr.item.description.length > 90 ? '...' : '' }}
                     </span>
                   </button>
                 </div>
@@ -184,7 +186,11 @@ let fuseInstance: Fuse<Doc> | null = null;
 const query = ref('');
 const loading = ref(false);
 const loadError = ref(false);
-const results = ref<Doc[]>([]);
+interface SearchResult {
+  item: Doc;
+  descSnippet?: string; // highlighted HTML snippet from description match
+}
+const results = ref<SearchResult[]>([]);
 const selectedIndex = ref(0);
 const inputRef = ref<HTMLInputElement | null>(null);
 const modalRef = ref<HTMLElement | null>(null);
@@ -236,9 +242,9 @@ function sectionFor(path: string): string {
 }
 
 const groupedResults = computed(() => {
-  const groups: Record<string, Doc[]> = {};
+  const groups: Record<string, SearchResult[]> = {};
   for (const r of results.value) {
-    const section = sectionFor(r._path);
+    const section = sectionFor(r.item._path);
     if (!groups[section]) groups[section] = [];
     groups[section].push(r);
   }
@@ -294,6 +300,29 @@ async function loadDocs() {
   }
 }
 
+function buildSnippet(fuseResult: Fuse.FuseResult<Doc>): string | undefined {
+  const descMatch = fuseResult.matches?.find(m => m.key === 'description');
+  if (!descMatch?.value) return undefined;
+  const text = descMatch.value.slice(0, 120);
+  // Build highlighted string from match indices
+  const indices = descMatch.indices.filter(([s]) => s < 120).sort((a, b) => a[0] - b[0]);
+  if (indices.length === 0) return text;
+  let result = '';
+  let last = 0;
+  for (const [start, end] of indices) {
+    const s = Math.max(start, 0);
+    const e = Math.min(end + 1, text.length);
+    result += escapeHtml(text.slice(last, s)) + '<mark class="bg-violet-500/30 text-violet-300 rounded px-0.5">' + escapeHtml(text.slice(s, e)) + '</mark>';
+    last = e;
+  }
+  result += escapeHtml(text.slice(last));
+  return result + (descMatch.value.length > 120 ? '...' : '');
+}
+
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 watch(query, (q) => {
   selectedIndex.value = 0;
   if (!q.trim()) {
@@ -303,8 +332,8 @@ watch(query, (q) => {
   if (!fuseInstance) return;
   results.value = fuseInstance
     .search(q)
-    .map((r) => r.item)
-    .slice(0, 20);
+    .slice(0, 20)
+    .map((r) => ({ item: r.item, descSnippet: buildSnippet(r) }));
 });
 
 // Scroll active result into view when selection changes
@@ -385,7 +414,7 @@ function moveSelection(delta: number) {
 function selectCurrent() {
   if (query.value.trim()) {
     const flat = results.value;
-    if (flat[selectedIndex.value]) navigate(flat[selectedIndex.value]._path);
+    if (flat[selectedIndex.value]) navigate(flat[selectedIndex.value].item._path);
   } else {
     if (recentSearches.value[selectedIndex.value]) {
       navigate(recentSearches.value[selectedIndex.value]._path);
