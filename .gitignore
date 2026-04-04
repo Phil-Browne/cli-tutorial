@@ -5,6 +5,7 @@ node_modules
 dist
 .env
 *.local
+.claude
 
 # Site recordings and Gemini review output
 scripts/recordings/
