@@ -85,7 +85,7 @@
         </div>
         <div v-show="terminalReady" class="terminal-area" :style="terminalAreaStyle" tabindex="-1">
           <ClientOnly>
-            <MegaportTerminal ref="termRef" />
+            <MegaportTerminal ref="termRef" @token-expired="reAuth" />
           </ClientOnly>
         </div>
       </div>
@@ -208,6 +208,12 @@ function disconnect() {
   accessKey.value = ''
   secretKey.value = ''
   error.value = ''
+}
+
+function reAuth() {
+  if (accessKey.value && secretKey.value) {
+    termRef.value?.setAuth(accessKey.value, secretKey.value, environment.value)
+  }
 }
 </script>
 
