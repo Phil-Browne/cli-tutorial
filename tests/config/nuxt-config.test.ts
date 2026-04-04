@@ -44,6 +44,10 @@ describe('nuxt.config.ts — security headers', () => {
       expect(directives['connect-src']).toContain('https://api.megaport.com')
     })
 
+    it('connect-src allows https://api-staging.megaport.com for staging environment', () => {
+      expect(directives['connect-src']).toContain('https://api-staging.megaport.com')
+    })
+
     it('connect-src allows https://api.github.com', () => {
       expect(directives['connect-src']).toContain('https://api.github.com')
     })
