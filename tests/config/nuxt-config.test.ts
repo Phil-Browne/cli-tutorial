@@ -48,6 +48,14 @@ describe('nuxt.config.ts — security headers', () => {
       expect(directives['connect-src']).toContain('https://api-staging.megaport.com')
     })
 
+    it('connect-src allows https://auth-m2m.megaport.com for OAuth token exchange', () => {
+      expect(directives['connect-src']).toContain('https://auth-m2m.megaport.com')
+    })
+
+    it('connect-src allows https://auth-m2m-staging.megaport.com for staging OAuth', () => {
+      expect(directives['connect-src']).toContain('https://auth-m2m-staging.megaport.com')
+    })
+
     it('connect-src allows https://api.github.com', () => {
       expect(directives['connect-src']).toContain('https://api.github.com')
     })
