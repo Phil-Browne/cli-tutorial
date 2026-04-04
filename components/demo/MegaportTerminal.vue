@@ -595,6 +595,7 @@ const executeCommand = async (command: string) => {
       } else {
         terminal.write(`\x1b[31mError: ${result.error}\x1b[0m\r\n`);
       }
+    } else if (result.output) {
       // For interactive commands, filter out ONLY prompt messages from output
       // Keep all other output like progress indicators, success messages, etc.
       let outputToDisplay = result.output;
