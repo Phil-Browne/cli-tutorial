@@ -31,7 +31,7 @@ export const WASM_CONFIG = {
  */
 export const TERMINAL_CONFIG = {
   /** Font size for terminal display (pixels) */
-  FONT_SIZE: 14,
+  FONT_SIZE: 12,
   
   /** Font family for terminal display */
   FONT_FAMILY: 'Menlo, Monaco, "Courier New", monospace',

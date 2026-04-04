@@ -68,6 +68,7 @@ export interface MegaportTerminalProps {
   wasmPath?: string;
   wasmExecPath?: string;
   welcomeMessage?: string;
+  prefillCommand?: string;
   theme?: {
     background?: string;
     foreground?: string;
@@ -80,6 +81,7 @@ const props = withDefaults(defineProps<MegaportTerminalProps>(), {
   wasmExecPath: '/wasm_exec.js',
   welcomeMessage:
     'Welcome to Megaport CLI (WebAssembly)\nType "help" for available commands.\n',
+  prefillCommand: '',
   theme: () => ({
     background: '#1e1e1e',
     foreground: '#d4d4d4',
@@ -246,6 +248,13 @@ const initTerminal = async () => {
   terminal.write(props.welcomeMessage.replace(/\r?\n/g, '\r\n'));
   // Don't set justCleared here - welcome message already has proper newlines
   writePrompt();
+
+  // Pre-fill a command so the user can just press Enter
+  if (props.prefillCommand) {
+    terminal.write(props.prefillCommand);
+    currentLine = props.prefillCommand;
+    cursorPosition = props.prefillCommand.length;
+  }
 
   // Handle input
   terminal.onData((data: string) => {

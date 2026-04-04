@@ -14,9 +14,11 @@
       <ClientOnly>
         <MegaportTerminal
           ref="termRef"
+          prefill-command="locations list --country &quot;Australia&quot; --output json"
           welcome-message="Megaport CLI (Public Mode — no login required)
 Available command: locations list
 Try: megaport-cli locations list --metro Sydney
+     megaport-cli locations list --output json
 "
         />
       </ClientOnly>
@@ -28,13 +30,17 @@ Try: megaport-cli locations list --metro Sydney
 withDefaults(defineProps<{
   height?: number
 }>(), {
-  height: 450,
+  height: 600,
 })
 </script>
 
 <style scoped>
 .public-terminal-wrapper {
   width: 100%;
+  /* Break out of the narrow max-w-5xl content column so the table fits */
+  margin-left: -2rem;
+  margin-right: -2rem;
+  width: calc(100% + 4rem);
   border: 1px solid #374151;
   border-radius: 12px;
   overflow: hidden;
@@ -91,6 +97,8 @@ withDefaults(defineProps<{
   /* Use flex so the ClientOnly wrapper div and MegaportTerminal stretch to fill */
   display: flex;
   flex-direction: column;
+  /* Prevent the last prompt line from being clipped */
+  overflow: visible;
 }
 
 .terminal-area :deep(> *) {
