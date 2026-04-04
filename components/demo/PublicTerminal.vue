@@ -37,7 +37,7 @@ const prefillCommand = ref('locations list --metro "Sydney"')
 
 onMounted(() => {
   if (window.innerWidth < 1024) {
-    prefillCommand.value = 'locations list --metro "Sydney" --output json'
+    prefillCommand.value = 'locations list --output json --metro "Sydney"'
   }
 })
 </script>
