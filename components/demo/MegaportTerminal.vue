@@ -10,7 +10,7 @@ interface using xterm.js */
     </div>
 
     <!-- Error State -->
-    <div v-else-if="hasError" class="terminal-error">
+    <div v-else-if="hasError" class="terminal-error" role="alert">
       <h3>❌ Failed to load Megaport CLI</h3>
       <p>{{ displayError?.message }}</p>
       <button @click="handleRetry">Retry</button>
@@ -230,10 +230,12 @@ const initTerminal = async () => {
   fitAddon.fit();
 
   // Refit when the container transitions from hidden to visible (v-show on ancestor)
-  resizeObserver = new ResizeObserver(() => {
-    fitAddon?.fit();
-  });
-  resizeObserver.observe(terminalRef.value);
+  if (typeof ResizeObserver !== 'undefined') {
+    resizeObserver = new ResizeObserver(() => {
+      fitAddon?.fit();
+    });
+    resizeObserver.observe(terminalRef.value);
+  }
 
   // Display welcome message
   terminal.write(props.welcomeMessage);

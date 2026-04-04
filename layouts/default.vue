@@ -18,7 +18,8 @@
           <!-- Mobile: hamburger -->
           <button
             class="lg:hidden p-1.5 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
-            aria-label="Open navigation"
+            :aria-label="sidebarOpen ? 'Close navigation' : 'Open navigation'"
+            :aria-expanded="sidebarOpen"
             @click="sidebarOpen = true"
           >
             <svg

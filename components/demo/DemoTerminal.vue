@@ -81,7 +81,7 @@
           <div class="skeleton skeleton-line w-3/5" />
           <div class="skeleton skeleton-line w-1/4" />
         </div>
-        <div v-show="terminalReady" class="terminal-area" :style="terminalAreaStyle">
+        <div v-show="terminalReady" class="terminal-area" :style="terminalAreaStyle" tabindex="-1">
           <ClientOnly>
             <MegaportTerminal ref="termRef" />
           </ClientOnly>
@@ -183,8 +183,14 @@ async function connect() {
     // Small delay to let the terminal finish mounting
     await new Promise(resolve => setTimeout(resolve, 200))
     termRef.value?.setAuth(accessKey.value, secretKey.value, environment.value)
-    // Show terminal after WASM initialises
-    setTimeout(() => { terminalReady.value = true }, 1500)
+    // Show terminal after WASM initialises, then move focus for keyboard users
+    setTimeout(() => {
+      terminalReady.value = true
+      nextTick(() => {
+        const el = termRef.value?.$el as HTMLElement | undefined
+        el?.focus()
+      })
+    }, 1500)
   } catch (e) {
     authed.value = false
     error.value = e instanceof Error ? e.message : 'Connection failed'
