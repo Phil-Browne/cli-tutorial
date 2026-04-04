@@ -807,14 +807,12 @@ defineExpose({
   height: 100% !important;
 }
 
+/* Put viewport on top so its native scrollbar is clickable.
+   Make background transparent so the canvas behind shows through. */
 :deep(.xterm-viewport) {
   overflow-y: scroll !important;
-}
-
-/* Ensure the scrollbar is clickable — pull the canvas layer back so it
-   doesn't cover the viewport's native scrollbar track. */
-:deep(.xterm-screen) {
-  width: calc(100% - 8px) !important;
+  z-index: 1 !important;
+  background-color: transparent !important;
 }
 
 /* Keep the scrollbar track always visible */
