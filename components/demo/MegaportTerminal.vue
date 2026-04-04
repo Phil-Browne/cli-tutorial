@@ -811,6 +811,12 @@ defineExpose({
   overflow-y: scroll !important;
 }
 
+/* Ensure the scrollbar is clickable — pull the canvas layer back so it
+   doesn't cover the viewport's native scrollbar track. */
+:deep(.xterm-screen) {
+  width: calc(100% - 8px) !important;
+}
+
 /* Keep the scrollbar track always visible */
 :deep(.xterm-viewport::-webkit-scrollbar) {
   width: 8px;

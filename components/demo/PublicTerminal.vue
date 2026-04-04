@@ -14,7 +14,7 @@
       <ClientOnly>
         <MegaportTerminal
           ref="termRef"
-          prefill-command="locations list --country &quot;Australia&quot; --output json"
+          prefill-command="locations list --country &quot;Australia&quot;"
           welcome-message="Megaport CLI (Public Mode — no login required)
 Available command: locations list
 Try: megaport-cli locations list --metro Sydney
