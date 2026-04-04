@@ -242,8 +242,8 @@ const initTerminal = async () => {
     resizeObserver.observe(terminalRef.value);
   }
 
-  // Display welcome message
-  terminal.write(props.welcomeMessage);
+  // Display welcome message — normalise bare \n to \r\n for xterm.js
+  terminal.write(props.welcomeMessage.replace(/\r?\n/g, '\r\n'));
   // Don't set justCleared here - welcome message already has proper newlines
   writePrompt();
 
