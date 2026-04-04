@@ -66,6 +66,12 @@
             <!-- Loading -->
             <div v-if="loading" class="search-empty">Loading…</div>
 
+            <!-- Load error -->
+            <div v-else-if="loadError" class="search-empty">
+              Failed to load search index.
+              <button class="mt-2 px-3 py-1 text-xs rounded bg-gray-700 text-gray-300 hover:bg-gray-600" @click="docsCache = null; loadDocs()">Try again</button>
+            </div>
+
             <!-- Search results -->
             <template v-else-if="query.trim()">
               <!-- Safety: query MUST use {{ }} interpolation (not v-html) to prevent XSS -->
@@ -174,6 +180,7 @@ let fuseInstance: Fuse<Doc> | null = null;
 
 const query = ref('');
 const loading = ref(false);
+const loadError = ref(false);
 const results = ref<Doc[]>([]);
 const selectedIndex = ref(0);
 const inputRef = ref<HTMLInputElement | null>(null);
@@ -258,6 +265,13 @@ const statusMessage = computed(() => {
 async function loadDocs() {
   if (docsCache) return;
   loading.value = true;
+  loadError.value = false;
+
+  const timeoutId = setTimeout(() => {
+    loading.value = false;
+    loadError.value = true;
+  }, 10000);
+
   try {
     const docs = await queryContent()
       .only(['_path', 'title', 'description'])
@@ -268,7 +282,11 @@ async function loadDocs() {
       threshold: 0.35,
       includeMatches: true,
     });
+  } catch {
+    docsCache = null;
+    loadError.value = true;
   } finally {
+    clearTimeout(timeoutId);
     loading.value = false;
   }
 }

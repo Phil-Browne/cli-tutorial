@@ -13,7 +13,7 @@ interface using xterm.js */
     <div v-else-if="hasError" class="terminal-error">
       <h3>❌ Failed to load Megaport CLI</h3>
       <p>{{ displayError?.message }}</p>
-      <button @click="reload">Retry</button>
+      <button @click="handleRetry">Retry</button>
     </div>
 
     <!-- Terminal with Spinner Overlay -->
@@ -106,6 +106,7 @@ const {
   execute,
   setAuth,
   registerPromptHandler,
+  retry,
   activeSpinners,
 } = useMegaportWASM({
   wasmPath: props.wasmPath,
@@ -616,11 +617,16 @@ const executeCommand = async (command: string) => {
 };
 
 /**
- * Reload the page
+ * Retry WASM initialization without reloading the page
  */
-const reload = () => {
-  window.location.reload();
-};
+async function handleRetry() {
+  componentError.value = null;
+  await retry();
+  if (isReady.value) {
+    initTerminal();
+    setupPromptHandler();
+  }
+}
 
 // Lifecycle
 onMounted(() => {

@@ -76,7 +76,17 @@ const currentLang = computed(() =>
 )
 
 async function copy() {
-  await navigator.clipboard.writeText(currentCode.value)
+  try {
+    await navigator.clipboard.writeText(currentCode.value)
+  } catch {
+    // Fallback for browsers without clipboard API
+    const el = document.createElement('textarea')
+    el.value = currentCode.value
+    document.body.appendChild(el)
+    el.select()
+    document.execCommand('copy')
+    document.body.removeChild(el)
+  }
   copied.value = true
   track('Copy Command', { command: currentCode.value.slice(0, 100) })
   setTimeout(() => { copied.value = false }, 2000)

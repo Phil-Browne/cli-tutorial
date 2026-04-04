@@ -638,6 +638,21 @@ export function useMegaportWASM(config: MegaportWASMConfig = {}) {
     log('Cleanup complete');
   };
 
+  /**
+   * Retry WASM initialization without reloading the page
+   */
+  const retry = async () => {
+    cleanup();
+    error.value = null;
+    isLoading.value = true;
+    try {
+      await initWithRetry();
+    } catch (err) {
+      console.error('Failed to initialize Megaport WASM after all retries:', err);
+      error.value = err as Error;
+    }
+  };
+
   // Cleanup on unmount
   onUnmounted(() => {
     cleanup();
@@ -659,6 +674,7 @@ export function useMegaportWASM(config: MegaportWASMConfig = {}) {
     resetOutput,
     toggleDebug,
     registerPromptHandler,
+    retry, // Retry initialization without page reload
     cleanup, // Expose cleanup for manual cleanup if needed
   };
 }
