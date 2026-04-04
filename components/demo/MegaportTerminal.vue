@@ -826,13 +826,18 @@ defineExpose({
   width: 100%;
   height: 100%;
   padding: 0.5rem;
-  /* Extra bottom padding so the prompt line isn't clipped on mobile */
-  padding-bottom: 1.5rem;
 }
 
 /* !important needed to override xterm.js inline styles */
 :deep(.xterm) {
   height: 100% !important;
+  padding-bottom: 1.25rem;
+}
+
+:deep(.xterm-screen) {
+  /* Prevent the canvas from filling the full xterm height so bottom padding
+     keeps the last row (chevron prompt) visible on mobile. */
+  height: calc(100% - 1.25rem) !important;
 }
 
 /* Put viewport on top so its native scrollbar is clickable.
