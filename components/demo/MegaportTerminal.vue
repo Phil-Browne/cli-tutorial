@@ -826,6 +826,8 @@ defineExpose({
   width: 100%;
   height: 100%;
   padding: 0.5rem;
+  /* Extra bottom padding so the prompt line isn't clipped on mobile */
+  padding-bottom: 1.5rem;
 }
 
 /* !important needed to override xterm.js inline styles */
