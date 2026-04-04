@@ -575,26 +575,28 @@ const executeCommand = async (command: string) => {
 
     const result = await execute(command);
 
-    if (result.error) {
-      // Detect token expiry — emit event so parent can re-auth, then retry
-      if (result.error.includes('token expired') || result.error.includes('re-authenticate')) {
-        terminal.write('\x1b[33m⟳ Token expired, re-authenticating...\x1b[0m\r\n');
-        emit('tokenExpired');
-        // Give parent time to call setAuth with fresh credentials
-        await new Promise(resolve => setTimeout(resolve, 500));
-        // Retry the command
-        const retryResult = await execute(command);
-        if (retryResult.error) {
-          terminal.write(`\x1b[31mError: ${retryResult.error}\x1b[0m\r\n`);
-        } else if (retryResult.output) {
-          const lines = retryResult.output.split('\n');
-          lines.forEach((line) => {
-            if (terminal) terminal.write(line + '\r\n');
-          });
-        }
-      } else {
-        terminal.write(`\x1b[31mError: ${result.error}\x1b[0m\r\n`);
+    // Check both error and output for token expiry (CLI may report in either field)
+    const fullResponse = `${result.error ?? ''} ${result.output ?? ''}`;
+    const isTokenExpired = fullResponse.includes('token expired') || fullResponse.includes('re-authenticate');
+
+    if (isTokenExpired) {
+      terminal.write('\x1b[33m⟳ Token expired, re-authenticating...\x1b[0m\r\n');
+      emit('tokenExpired');
+      // Give parent time to call setAuth with fresh credentials
+      await new Promise(resolve => setTimeout(resolve, 500));
+      // Retry the command
+      terminal.write('\x1b[90mRetrying...\x1b[0m\r\n');
+      const retryResult = await execute(command);
+      if (retryResult.error) {
+        terminal.write(`\x1b[31mError: ${retryResult.error}\x1b[0m\r\n`);
+      } else if (retryResult.output) {
+        const lines = retryResult.output.split('\n');
+        lines.forEach((line) => {
+          if (terminal) terminal.write(line + '\r\n');
+        });
       }
+    } else if (result.error) {
+      terminal.write(`\x1b[31mError: ${result.error}\x1b[0m\r\n`);
     } else if (result.output) {
       // For interactive commands, filter out ONLY prompt messages from output
       // Keep all other output like progress indicators, success messages, etc.
