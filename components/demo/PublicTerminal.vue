@@ -88,5 +88,18 @@ withDefaults(defineProps<{
 
 .terminal-area {
   width: 100%;
+  /* Use flex so the ClientOnly wrapper div and MegaportTerminal stretch to fill */
+  display: flex;
+  flex-direction: column;
+}
+
+.terminal-area :deep(> *) {
+  flex: 1;
+  min-height: 0;
+}
+
+.terminal-area :deep(.megaport-terminal-container) {
+  flex: 1;
+  min-height: 0;
 }
 </style>
