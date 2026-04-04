@@ -56,6 +56,11 @@
           </div>
         </div>
 
+        <!-- Progress tracking -->
+        <ClientOnly>
+          <ProgressToggle :path="route.path" />
+        </ClientOnly>
+
         <!-- Prev / Next navigation -->
         <TutorialNav :prev="prev" :next="next" />
       </article>
