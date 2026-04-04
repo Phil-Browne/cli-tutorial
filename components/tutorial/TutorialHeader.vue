@@ -1,6 +1,6 @@
 <template>
   <div class="mb-10 pb-8 border-b border-gray-800">
-    <!-- Audience + difficulty badges -->
+    <!-- Difficulty + duration badges -->
     <div class="flex flex-wrap items-center gap-2 mb-4">
       <Badge v-if="difficulty" :variant="difficultyVariant">{{ difficulty }}</Badge>
       <span v-if="duration" class="inline-flex items-center gap-1 text-xs text-gray-400">
@@ -8,13 +8,6 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         {{ duration }}
-      </span>
-      <span
-        v-for="tag in audience"
-        :key="tag"
-        class="px-2 py-0.5 rounded text-xs bg-gray-800 text-gray-400 border border-gray-700"
-      >
-        {{ tag }}
       </span>
     </div>
 
@@ -51,7 +44,6 @@ const props = defineProps<{
   description?: string
   duration?: string
   difficulty?: Difficulty
-  audience?: string[]
   prerequisites?: string[]
 }>()
 

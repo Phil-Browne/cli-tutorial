@@ -33,7 +33,6 @@
           :description="page.description"
           :duration="page.duration"
           :difficulty="page.difficulty"
-          :audience="page.audience"
           :prerequisites="page.prerequisites"
         />
 

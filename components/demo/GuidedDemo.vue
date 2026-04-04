@@ -4,7 +4,6 @@
       <h3 class="demo-title">{{ script.title }}</h3>
       <div class="demo-meta">
         <span class="meta-item">🕐 {{ script.duration }}</span>
-        <span class="meta-item audience-badge">{{ script.audience }}</span>
       </div>
       <p v-if="script.opening" class="demo-opening">"{{ script.opening }}"</p>
     </div>
@@ -58,7 +57,6 @@ interface Step {
 interface Script {
   title: string
   duration: string
-  audience: string
   opening?: string
   steps: Step[]
 }
@@ -67,7 +65,6 @@ const SCRIPTS: Record<string, Script> = {
   'port-lifecycle': {
     title: 'The 5-Minute Network',
     duration: '5 min',
-    audience: 'Sales / SA',
     opening: "Let me show you how quickly you can provision network infrastructure with Megaport.",
     steps: [
       {
@@ -105,7 +102,6 @@ const SCRIPTS: Record<string, Script> = {
   'cloud-connect': {
     title: 'Cloud Connect',
     duration: '10 min',
-    audience: 'SA',
     opening: "AWS Direct Connect in under 10 minutes — no hardware, no cross-connect orders.",
     steps: [
       {
@@ -138,7 +134,6 @@ const SCRIPTS: Record<string, Script> = {
   'multi-cloud': {
     title: 'Multi-Cloud Hub',
     duration: '15 min',
-    audience: 'SA',
     opening: "One command-line tool to connect AWS, Azure, and GCP through private infrastructure.",
     steps: [
       {
@@ -177,7 +172,6 @@ const SCRIPTS: Record<string, Script> = {
   'browser-demo': {
     title: 'Browser Demo',
     duration: '3 min',
-    audience: 'Sales',
     opening: "Full CLI — zero install, runs anywhere.",
     steps: [
       {
@@ -207,7 +201,6 @@ const props = defineProps<{ script: string }>()
 const currentScript = computed(() => SCRIPTS[props.script] ?? {
   title: `Unknown script: ${props.script}`,
   duration: '',
-  audience: '',
   steps: [],
 })
 
@@ -268,18 +261,6 @@ async function copy(command: string, index: number) {
 .meta-item {
   font-size: 0.8125rem;
   color: #64748b;
-}
-
-.audience-badge {
-  background: rgba(107, 45, 139, 0.2);
-  color: #9B5DBB;
-  border: 1px solid rgba(107, 45, 139, 0.4);
-  padding: 0.125rem 0.5rem;
-  border-radius: 999px;
-  font-size: 0.6875rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
 .demo-opening {
