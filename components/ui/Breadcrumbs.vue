@@ -17,27 +17,32 @@
 <script setup lang="ts">
 const route = useRoute()
 
-const SECTION_LABELS: Record<string, string> = {
-  'getting-started': 'Getting Started',
-  'core-concepts': 'Core Concepts',
-  'tutorials': 'Tutorials',
-  'demos': 'Live Demo',
-  'reference': 'Reference',
-}
+// Fetch section titles from content _dir.yml files (cached globally)
+const { data: sectionPages } = useLazyAsyncData('breadcrumb-sections', () =>
+  queryContent()
+    .where({ _partial: { $ne: true } })
+    .only(['_path', 'title'])
+    .find()
+    .catch(() => [])
+)
 
 const crumbs = computed(() => {
   const segments = route.path.split('/').filter(Boolean)
   if (segments.length === 0) return []
 
-  const result = [{ path: '/', label: 'Home' }]
+  // Build a path→title lookup from content
+  const titleMap: Record<string, string> = {}
+  for (const page of sectionPages.value ?? []) {
+    if (page._path && page.title) titleMap[page._path] = page.title
+  }
 
+  const result = [{ path: '/', label: 'Home' }]
   let accumulated = ''
   for (const segment of segments) {
     accumulated += '/' + segment
-    // Strip leading numbers from segment (e.g. "1.port-lifecycle" → "port-lifecycle")
-    const clean = segment.replace(/^\d+\./, '')
-    // Look up in section map, or title-case the segment
-    const label = SECTION_LABELS[clean] ?? clean
+    // Try content title first, then title-case the segment
+    const label = titleMap[accumulated] ?? segment
+      .replace(/^\d+\./, '')
       .split('-')
       .map((w: string) => w.charAt(0).toUpperCase() + w.slice(1))
       .join(' ')
