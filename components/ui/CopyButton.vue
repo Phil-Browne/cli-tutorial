@@ -25,6 +25,7 @@ const props = withDefaults(defineProps<{
 
 const copied = ref(false)
 const { track } = useAnalytics()
+const { show } = useToast()
 
 async function handleCopy() {
   try {
@@ -38,6 +39,7 @@ async function handleCopy() {
     document.body.removeChild(el)
   }
   copied.value = true
+  show('Copied to clipboard')
   track('Copy', { text: props.text.slice(0, 100) })
   setTimeout(() => { copied.value = false }, 2000)
 }
