@@ -43,6 +43,7 @@ import {
   ref,
   computed,
   watch,
+  nextTick,
   onMounted,
   onBeforeUnmount,
   onErrorCaptured,
@@ -637,9 +638,11 @@ async function handleRetry() {
 // Lifecycle
 onMounted(() => {
   // Watch for WASM readiness instead of polling
-  const stopWatch = watch(isReady, (ready) => {
+  const stopWatch = watch(isReady, async (ready) => {
     if (ready) {
       stopWatch();
+      // Wait for Vue to flush the v-if DOM update (loading → terminal container)
+      await nextTick();
       initTerminal();
       setupPromptHandler();
     }
