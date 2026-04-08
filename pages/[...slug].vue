@@ -1,22 +1,7 @@
 <template>
   <div>
-    <!-- Loading skeleton -->
-    <div v-if="pending" class="max-w-5xl animate-pulse" aria-label="Loading page content">
-      <div class="mb-8">
-        <div class="skeleton h-9 w-2/3 mb-4" />
-        <div class="skeleton h-4 w-full mb-2" />
-        <div class="skeleton h-4 w-5/6" />
-      </div>
-      <div class="space-y-4">
-        <div class="skeleton h-4 w-full" />
-        <div class="skeleton h-4 w-11/12" />
-        <div class="skeleton h-4 w-4/5" />
-        <div class="skeleton h-32 w-full rounded-xl mt-6" />
-        <div class="skeleton h-4 w-full mt-6" />
-        <div class="skeleton h-4 w-3/4" />
-        <div class="skeleton h-4 w-5/6" />
-      </div>
-    </div>
+    <!-- Loading state -->
+    <MegaportLoader v-if="pending" />
 
     <!-- Error state (query failed, distinct from not found) -->
     <div v-else-if="queryError" class="py-12 text-center max-w-xl mx-auto">

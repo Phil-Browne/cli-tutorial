@@ -5,8 +5,7 @@ interface using xterm.js */
   <div class="megaport-terminal-container" role="region" aria-label="Interactive CLI terminal">
     <!-- Loading State -->
     <div v-if="isLoading" class="terminal-loading">
-      <div class="spinner"></div>
-      <p>Loading Megaport CLI...</p>
+      <MegaportLoader />
     </div>
 
     <!-- Error State -->

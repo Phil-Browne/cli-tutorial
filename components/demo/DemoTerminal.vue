@@ -75,13 +75,9 @@
           </div>
           <button class="disconnect-btn" @click="disconnect">Disconnect</button>
         </div>
-        <!-- Loading skeleton shown while terminal initialises -->
+        <!-- Loading state while terminal initialises -->
         <div v-if="authed && !terminalReady" class="terminal-skeleton" :style="terminalAreaStyle">
-          <div class="skeleton skeleton-line w-1/3" />
-          <div class="skeleton skeleton-line w-1/2" />
-          <div class="skeleton skeleton-line w-2/5" />
-          <div class="skeleton skeleton-line w-3/5" />
-          <div class="skeleton skeleton-line w-1/4" />
+          <MegaportLoader />
         </div>
         <div v-show="terminalReady" class="terminal-area" :style="terminalAreaStyle" tabindex="-1">
           <ClientOnly>
