@@ -174,13 +174,15 @@
           <div
             v-for="item in cliHighlights"
             :key="item.title"
-            class="p-6 rounded-2xl border border-gray-800 bg-gray-900/50"
+            class="group card-glow p-6 rounded-2xl border border-gray-800 bg-gray-900/50"
           >
             <div
-              class="w-10 h-10 rounded-lg flex items-center justify-center mb-4 border border-gray-700 bg-gray-800"
+              class="icon-box w-10 h-10 rounded-lg flex items-center justify-center mb-4"
+              :style="{ background: item.bgGradient }"
             >
               <svg
-                class="w-5 h-5 text-violet-400"
+                class="w-5 h-5 transition-transform duration-300 group-hover:scale-110"
+                :style="{ color: item.color }"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -237,11 +239,13 @@
             class="group card-glow p-6 rounded-2xl border border-gray-800 bg-gray-900/50 hover:border-gray-700 hover:-translate-y-0.5 transition-all duration-200"
           >
             <div
-              class="w-10 h-10 rounded-lg flex items-center justify-center mb-3 border border-gray-700 bg-gray-800 group-hover:border-violet-600 transition-colors"
+              class="icon-box w-10 h-10 rounded-lg flex items-center justify-center mb-3 transition-all duration-300"
+              :style="{ background: feature.bgGradient }"
             >
               <component
                 :is="feature.iconComponent"
-                class="w-5 h-5 text-gray-400 group-hover:text-violet-400 transition-colors"
+                class="w-5 h-5 transition-transform duration-300 group-hover:scale-110"
+                :style="{ color: feature.color }"
               />
             </div>
             <h3
@@ -1201,18 +1205,24 @@ const cliHighlights = [
     description:
       'Create ports, VXCs, MCRs, MVEs, and cloud on-ramps directly from your terminal — no portal clicks required.',
     icon: 'M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z',
+    color: '#c084fc',
+    bgGradient: 'linear-gradient(135deg, rgba(107,45,139,0.25) 0%, rgba(107,45,139,0.08) 100%)',
   },
   {
     title: 'Multiple Input Modes',
     description:
       'Interactive prompts for exploration, CLI flags for scripting, and JSON file input for full automation and CI/CD pipelines.',
     icon: 'M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z M15 12a3 3 0 11-6 0 3 3 0 016 0z',
+    color: '#4dd0e1',
+    bgGradient: 'linear-gradient(135deg, rgba(0,188,212,0.2) 0%, rgba(0,188,212,0.06) 100%)',
   },
   {
     title: 'Try It in the Browser',
     description:
       'A live WASM-powered terminal lets you explore commands without installing anything — great for learning and quick demos.',
     icon: 'M12 21a9.004 9.004 0 008.354-5.646M12 21a9.004 9.004 0 01-8.354-5.646M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418',
+    color: '#f87171',
+    bgGradient: 'linear-gradient(135deg, rgba(228,0,70,0.2) 0%, rgba(228,0,70,0.06) 100%)',
   },
 ];
 
@@ -1224,6 +1234,8 @@ const features = [
     description:
       'Ports, VXCs, MCR, MVE, Internet Exchange, and more — the complete Megaport platform.',
     href: '/core-concepts/resource-types',
+    color: '#c084fc',
+    bgGradient: 'linear-gradient(135deg, rgba(107,45,139,0.25) 0%, rgba(107,45,139,0.08) 100%)',
   },
   {
     iconComponent: IconTarget,
@@ -1231,6 +1243,8 @@ const features = [
     description:
       'Interactive prompts for beginners, CLI flags for power users, JSON files for automation.',
     href: '/core-concepts/input-modes',
+    color: '#4dd0e1',
+    bgGradient: 'linear-gradient(135deg, rgba(0,188,212,0.2) 0%, rgba(0,188,212,0.06) 100%)',
   },
   {
     iconComponent: IconBolt,
@@ -1238,6 +1252,8 @@ const features = [
     description:
       'Compiled to WebAssembly — try every command live without installing anything.',
     href: '/demos',
+    color: '#f87171',
+    bgGradient: 'linear-gradient(135deg, rgba(228,0,70,0.2) 0%, rgba(228,0,70,0.06) 100%)',
   },
   {
     iconComponent: IconCloud,
@@ -1245,6 +1261,8 @@ const features = [
     description:
       'Native connectors for AWS Direct Connect, Azure ExpressRoute, and Google Cloud Interconnect.',
     href: '/tutorials/multi-cloud',
+    color: '#38bdf8',
+    bgGradient: 'linear-gradient(135deg, rgba(56,189,248,0.2) 0%, rgba(56,189,248,0.06) 100%)',
   },
   {
     iconComponent: IconCog,
@@ -1252,6 +1270,8 @@ const features = [
     description:
       'Structured JSON output, exit codes, and JSON input mode for CI/CD pipelines and scripts.',
     href: '/tutorials/automation',
+    color: '#fbbf24',
+    bgGradient: 'linear-gradient(135deg, rgba(251,191,36,0.2) 0%, rgba(251,191,36,0.06) 100%)',
   },
   {
     iconComponent: IconContainer,
@@ -1259,6 +1279,8 @@ const features = [
     description:
       'Run the web terminal in any environment with a single Docker command.',
     href: '/reference/troubleshooting',
+    color: '#34d399',
+    bgGradient: 'linear-gradient(135deg, rgba(52,211,153,0.2) 0%, rgba(52,211,153,0.06) 100%)',
   },
 ];
 

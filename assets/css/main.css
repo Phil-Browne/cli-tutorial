@@ -206,6 +206,15 @@ html {
     0 0 40px rgba(0, 188, 212, 0.08);
 }
 
+/* ── Colored icon box ── */
+.icon-box {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.group:hover .icon-box {
+  transform: scale(1.1) rotate(-4deg);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
 /* ── Animated data flow dashes on SVG paths ── */
 .data-flow {
   stroke-dasharray: 6 4;
