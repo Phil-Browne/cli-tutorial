@@ -72,9 +72,11 @@ export default defineNuxtConfig({
         { property: 'og:title', content: 'Megaport CLI — Tutorials, Live Demo & Reference' },
         { property: 'og:description', content: 'Learn to manage Megaport network infrastructure with the CLI — tutorials, live demos, and reference docs for Solutions Architects and Sales teams.' },
         { property: 'og:type', content: 'website' },
+        { property: 'og:url', content: 'https://cli-tutorial.megaport.com' },
         { property: 'og:image', content: 'https://cli-tutorial.megaport.com/images/megaport-og.png' },
-        { property: 'og:image:width', content: '2917' },
-        { property: 'og:image:height', content: '692' },
+        { property: 'og:image:width', content: '1200' },
+        { property: 'og:image:height', content: '630' },
+        { property: 'og:image:type', content: 'image/png' },
         // Twitter Card
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: 'Megaport CLI — Tutorials, Live Demo & Reference' },
