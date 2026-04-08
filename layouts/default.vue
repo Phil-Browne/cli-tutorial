@@ -39,14 +39,7 @@
           </button>
 
           <NuxtLink to="/" class="flex items-center gap-2.5 group">
-            <div
-              class="w-7 h-7 rounded-md flex items-center justify-center shrink-0"
-              style="background-color: #6b2d8b"
-            >
-              <span class="text-white font-bold text-xs" aria-hidden="true"
-                >M</span
-              >
-            </div>
+            <img src="/images/megaport-icon-red.svg" alt="Megaport" class="w-7 h-7 shrink-0" width="28" height="28" />
             <span
               class="font-semibold text-white group-hover:text-violet-400 transition-colors text-sm"
             >
@@ -199,18 +192,7 @@
               class="flex items-center gap-2.5 mb-4 group w-fit"
               aria-label="Go to Megaport CLI landing page"
             >
-              <div
-                class="w-7 h-7 rounded-md flex items-center justify-center shrink-0"
-                style="background-color: #6b2d8b"
-              >
-                <span class="text-white font-bold text-xs" aria-hidden="true"
-                  >M</span
-                >
-              </div>
-              <span
-                class="font-semibold text-white text-sm group-hover:text-violet-400 transition-colors"
-                >Megaport CLI</span
-              >
+              <img src="/images/megaport-logo-color-white.svg" alt="Megaport" class="h-6" height="24" />
             </NuxtLink>
             <p class="text-sm text-gray-500 leading-relaxed">
               The complete guide to managing network infrastructure from your
@@ -326,7 +308,7 @@
             >© {{ new Date().getFullYear() }} Megaport. All rights
             reserved.</span
           >
-          <span class="text-gray-600">Powered by Megaport CLI WASM</span>
+          <img src="/images/powered-by-megaport-white.svg" alt="Powered by Megaport" class="h-4 opacity-60" height="16" />
         </div>
       </div>
     </footer>
