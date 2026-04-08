@@ -1,6 +1,6 @@
 <template>
   <NetworkDiagram v-if="language === 'mermaid'" :definition="code ?? ''" />
-  <div v-else class="prose-code-wrapper group relative rounded-xl border border-gray-800 bg-gray-900 my-4">
+  <div v-else class="prose-code-wrapper group relative rounded-xl border border-gray-800 overflow-hidden bg-gray-900 my-4 max-w-full">
     <!-- Header bar -->
     <div class="flex items-center justify-between px-4 py-2 bg-gray-800/60 border-b border-gray-700">
       <div class="flex items-center gap-2">
@@ -24,7 +24,7 @@
     </div>
 
     <!-- Syntax-highlighted content from Shiki -->
-    <div class="prose-code-content overflow-x-auto">
+    <div class="prose-code-content">
       <slot />
     </div>
   </div>
