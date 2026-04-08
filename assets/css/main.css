@@ -90,6 +90,132 @@ html {
   background-clip: text;
 }
 
+/* Animated gradient text — shifts the gradient on loop */
+.megaport-gradient-text-animated {
+  background: linear-gradient(
+    270deg,
+    #9b5dbb,
+    #4dd0e1,
+    #e40046,
+    #9b5dbb
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 6s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ── Animated gradient glow border ── */
+.glow-border {
+  position: relative;
+  border-radius: 0.75rem;
+}
+.glow-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--glow-angle, 0deg),
+    #6b2d8b,
+    #00bcd4,
+    #e40046,
+    #6b2d8b
+  );
+  animation: glow-rotate 4s linear infinite;
+  z-index: -1;
+  opacity: 0.6;
+}
+.glow-border::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--glow-angle, 0deg),
+    #6b2d8b,
+    #00bcd4,
+    #e40046,
+    #6b2d8b
+  );
+  animation: glow-rotate 4s linear infinite;
+  z-index: -1;
+  filter: blur(16px);
+  opacity: 0.35;
+}
+
+@keyframes glow-rotate {
+  to { --glow-angle: 360deg; }
+}
+
+@property --glow-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* ── Rocket icon hover animation ── */
+.rocket-hover {
+  transition: transform 0.3s ease;
+}
+.rocket-hover:hover {
+  transform: scale(1.15) rotate(-8deg);
+}
+
+/* ── CTA button shimmer ── */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.12),
+    transparent
+  );
+  animation: btn-shimmer-sweep 3s ease-in-out infinite;
+}
+
+@keyframes btn-shimmer-sweep {
+  0% { left: -100%; }
+  50%, 100% { left: 150%; }
+}
+
+/* ── Feature card gradient glow on hover ── */
+.card-glow {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.card-glow:hover {
+  border-color: rgba(107, 45, 139, 0.5);
+  box-shadow:
+    0 0 20px rgba(107, 45, 139, 0.15),
+    0 0 40px rgba(0, 188, 212, 0.08);
+}
+
+/* ── Animated data flow dashes on SVG paths ── */
+.data-flow {
+  stroke-dasharray: 6 4;
+  animation: dash-flow 1.5s linear infinite;
+}
+
+@keyframes dash-flow {
+  to { stroke-dashoffset: -20; }
+}
+
 /* ── Page transitions ── */
 .page-enter-active,
 .page-leave-active {

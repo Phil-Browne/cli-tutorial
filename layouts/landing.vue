@@ -15,7 +15,7 @@
       <div class="flex items-center justify-between px-4 lg:px-8 h-14">
         <!-- Logo -->
         <NuxtLink to="/" class="flex items-center gap-2.5 group">
-          <img src="/images/megaport-icon-red.svg" alt="Megaport" class="w-7 h-7 shrink-0" width="28" height="28" />
+          <img src="/images/megaport-icon-red.svg" alt="Megaport" class="w-7 h-7 shrink-0 rocket-hover" width="28" height="28" />
           <span
             class="font-semibold text-white group-hover:text-violet-400 transition-colors text-sm"
           >
@@ -94,7 +94,7 @@
           <!-- Try Live Demo CTA (matches other layouts) -->
           <NuxtLink
             to="/demos"
-            class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium text-white transition-colors"
+            class="btn-shimmer hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium text-white transition-colors"
             style="background-color: #6b2d8b"
           >
             <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />

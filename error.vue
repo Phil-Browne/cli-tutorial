@@ -4,7 +4,7 @@
     <header class="border-b border-gray-800 bg-gray-950">
       <div class="flex items-center px-6 h-14">
         <NuxtLink to="/" class="flex items-center gap-2.5 group">
-          <img src="/images/megaport-icon-red.svg" alt="Megaport" class="w-7 h-7 shrink-0" width="28" height="28" />
+          <img src="/images/megaport-icon-red.svg" alt="Megaport" class="w-7 h-7 shrink-0 rocket-hover" width="28" height="28" />
           <span
             class="font-semibold text-white group-hover:text-violet-400 transition-colors text-sm"
           >

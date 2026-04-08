@@ -35,7 +35,7 @@
               class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 leading-[1.1] tracking-tight"
             >
               Master the
-              <span class="megaport-gradient-text"> Megaport CLI</span>
+              <span class="megaport-gradient-text-animated"> Megaport CLI</span>
             </h1>
 
             <p
@@ -49,7 +49,7 @@
             <div class="flex flex-wrap gap-4">
               <NuxtLink
                 to="/getting-started/introduction"
-                class="px-7 py-3.5 rounded-xl font-semibold text-white transition-all hover:opacity-90 active:scale-95"
+                class="btn-shimmer px-7 py-3.5 rounded-xl font-semibold text-white transition-all hover:opacity-90 active:scale-95"
                 style="background-color: #6b2d8b"
               >
                 Get Started →
@@ -118,7 +118,9 @@
 
           <!-- Right: animated terminal (desktop) -->
           <div class="hidden lg:block">
-            <TerminalMockup />
+            <div class="glow-border">
+              <TerminalMockup />
+            </div>
           </div>
 
           <!-- Right: simplified terminal (mobile) -->
@@ -209,7 +211,7 @@
           </p>
           <NuxtLink
             to="/getting-started"
-            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium text-white transition-colors"
+            class="btn-shimmer inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium text-white transition-colors"
             style="background-color: #6b2d8b"
           >
             Get started →
@@ -232,7 +234,7 @@
             v-for="feature in features"
             :key="feature.title"
             :to="feature.href"
-            class="group p-6 rounded-2xl border border-gray-800 bg-gray-900/50 hover:border-gray-700 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-violet-900/10 transition-all duration-200"
+            class="group card-glow p-6 rounded-2xl border border-gray-800 bg-gray-900/50 hover:border-gray-700 hover:-translate-y-0.5 transition-all duration-200"
           >
             <div
               class="w-10 h-10 rounded-lg flex items-center justify-center mb-3 border border-gray-700 bg-gray-800 group-hover:border-violet-600 transition-colors"
@@ -532,10 +534,24 @@
               marker-end="url(#arrow)"
             />
             <path
+              d="M120 105 C160 105, 180 88, 225 88"
+              class="data-flow"
+              stroke="#9b5dbb"
+              stroke-width="1.5"
+              fill="none"
+            />
+            <path
               d="M120 135 C160 135, 180 152, 225 152"
               stroke="#4b5563"
               stroke-width="1.5"
               marker-end="url(#arrow)"
+            />
+            <path
+              d="M120 135 C160 135, 180 152, 225 152"
+              class="data-flow"
+              stroke="#9b5dbb"
+              stroke-width="1.5"
+              fill="none"
             />
             <text
               x="170"
@@ -672,10 +688,24 @@
               marker-end="url(#arrow)"
             />
             <path
+              d="M372 88 C420 88, 430 120, 478 120"
+              class="data-flow"
+              stroke="#00bcd4"
+              stroke-width="1.5"
+              fill="none"
+            />
+            <path
               d="M372 160 C420 160, 430 128, 478 128"
               stroke="#4b5563"
               stroke-width="1.5"
               marker-end="url(#arrow)"
+            />
+            <path
+              d="M372 160 C420 160, 430 128, 478 128"
+              class="data-flow"
+              stroke="#00bcd4"
+              stroke-width="1.5"
+              fill="none"
             />
             <text
               x="425"
@@ -728,6 +758,13 @@
               stroke="#4b5563"
               stroke-width="1.5"
               marker-end="url(#arrow)"
+            />
+            <path
+              d="M654 120 L708 120"
+              class="data-flow"
+              stroke="#5eead4"
+              stroke-width="1.5"
+              fill="none"
             />
             <text
               x="682"
@@ -1053,7 +1090,7 @@
         <div class="text-center mt-8">
           <NuxtLink
             to="/getting-started/learning-paths"
-            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium text-white transition-colors"
+            class="btn-shimmer inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium text-white transition-colors"
             style="background-color: #6b2d8b"
           >
             Choose your learning path →
