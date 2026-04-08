@@ -7,7 +7,7 @@ const summaryPath = `${outDir}/summary.txt`;
 
 const pages = [
   ['home', '/'],
-  ['getting-started-intro', '/getting-started/introduction'],
+  ['getting-started', '/getting-started'],
   ['first-commands', '/getting-started/first-commands'],
   ['tutorials-index', '/tutorials'],
   ['tutorials-multi-cloud', '/tutorials/multi-cloud'],

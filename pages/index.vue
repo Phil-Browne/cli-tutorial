@@ -48,7 +48,7 @@
 
             <div class="flex flex-wrap gap-4">
               <NuxtLink
-                to="/getting-started/introduction"
+                to="/getting-started"
                 class="btn-shimmer px-7 py-3.5 rounded-xl font-semibold text-white transition-all hover:opacity-90 active:scale-95"
                 style="background-color: #6b2d8b"
               >

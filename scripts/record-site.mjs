@@ -27,7 +27,7 @@ mkdirSync(OUT_DIR, { recursive: true })
 // Pages to visit in order — (path, label, scroll behaviour)
 const PAGES = [
   { path: '/',                                    label: '01-home',           scrollPause: 800 },
-  { path: '/getting-started/introduction',        label: '02-introduction',   scrollPause: 600 },
+  { path: '/getting-started',                      label: '02-getting-started', scrollPause: 600 },
   { path: '/getting-started/authentication',      label: '03-authentication', scrollPause: 600 },
   { path: '/core-concepts/resource-types',        label: '04-resource-types', scrollPause: 600 },
   { path: '/tutorials',                           label: '05-tutorials-index',scrollPause: 500 },
