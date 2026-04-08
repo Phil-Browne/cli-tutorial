@@ -45,6 +45,11 @@ html {
     monospace;
 }
 
+/* Let code blocks break out of the narrow prose max-width (65ch) */
+.prose .prose-code-wrapper {
+  @apply max-w-none;
+}
+
 /* Reset pre styles when inside ProseCode wrapper (copy-enabled code blocks) */
 .prose .prose-code-wrapper pre {
   @apply m-0 border-none bg-transparent p-4 overflow-x-auto;
