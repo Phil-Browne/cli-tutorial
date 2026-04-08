@@ -1,7 +1,25 @@
 <template>
   <div>
+    <!-- Loading skeleton -->
+    <div v-if="pending" class="max-w-5xl animate-pulse" aria-label="Loading page content">
+      <div class="mb-8">
+        <div class="skeleton h-9 w-2/3 mb-4" />
+        <div class="skeleton h-4 w-full mb-2" />
+        <div class="skeleton h-4 w-5/6" />
+      </div>
+      <div class="space-y-4">
+        <div class="skeleton h-4 w-full" />
+        <div class="skeleton h-4 w-11/12" />
+        <div class="skeleton h-4 w-4/5" />
+        <div class="skeleton h-32 w-full rounded-xl mt-6" />
+        <div class="skeleton h-4 w-full mt-6" />
+        <div class="skeleton h-4 w-3/4" />
+        <div class="skeleton h-4 w-5/6" />
+      </div>
+    </div>
+
     <!-- Error state (query failed, distinct from not found) -->
-    <div v-if="queryError" class="py-12 text-center max-w-xl mx-auto">
+    <div v-else-if="queryError" class="py-12 text-center max-w-xl mx-auto">
       <p class="text-6xl mb-6" aria-hidden="true">⚠️</p>
       <h1 class="text-3xl font-bold text-white mb-4">Something went wrong</h1>
       <p class="text-gray-400 mb-8">Unable to load this page. Try refreshing.</p>
@@ -76,7 +94,8 @@ const route = useRoute()
 const queryError = ref(false)
 
 // Fetch the current page content — exact path, skip partials (_dir.yml etc.)
-const { data: page } = await useAsyncData(`content-${route.path}`, () =>
+// useLazyAsyncData allows the skeleton to render while content loads on client nav
+const { data: page, pending } = await useAsyncData(`content-${route.path}`, () =>
   queryContent()
     .where({ _path: route.path, _partial: { $ne: true } })
     .findOne()
@@ -86,7 +105,8 @@ const { data: page } = await useAsyncData(`content-${route.path}`, () =>
         queryError.value = true
       }
       return null
-    })
+    }),
+  { lazy: true }
 )
 
 // Set page-specific title, description, and canonical URL for SEO
