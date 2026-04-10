@@ -1091,15 +1091,6 @@
             <p class="text-xs text-gray-500">Query live availability, filter by metro, and connect to any cloud provider — all via API.</p>
           </div>
         </div>
-        <div class="text-center mt-8">
-          <NuxtLink
-            to="/getting-started/learning-paths"
-            class="btn-shimmer inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium text-white transition-colors"
-            style="background-color: #6b2d8b"
-          >
-            Choose your learning path →
-          </NuxtLink>
-        </div>
       </section>
     </div>
   </div>
