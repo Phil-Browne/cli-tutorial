@@ -14,7 +14,7 @@ Full documentation for all Megaport CLI commands.
 | [`megaport-cli ports`](/reference/command-reference#ports) | Manage physical ports |
 | [`megaport-cli vxc`](/reference/command-reference#vxc) | Manage Virtual Cross Connects |
 | [`megaport-cli mcr`](/reference/command-reference#mcr) | Manage Megaport Cloud Routers |
-| [`megaport-cli mve`](/reference/command-reference#mve) | Manage Managed Virtual Edges |
+| [`megaport-cli mve`](/reference/command-reference#mve) | Manage Megaport Virtual Edges |
 | [`megaport-cli locations`](/reference/command-reference#locations) | Browse available locations |
 | [`megaport-cli partners`](/reference/command-reference#partners) | Browse partner configurations |
 | [`megaport-cli servicekeys`](/reference/command-reference#service-keys) | Manage service keys |

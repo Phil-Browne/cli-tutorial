@@ -24,8 +24,8 @@ The CLI covers the full Megaport platform across 9 resource types:
 | **Port**        | A physical connection into the Megaport fabric at a data centre                |
 | **VXC**         | A Virtual Cross Connect — a layer 2 connection between two endpoints           |
 | **MCR**         | Megaport Cloud Router — layer 3 routing between clouds and sites               |
-| **MVE**         | Managed Virtual Edge — SD-WAN virtual network functions in the Megaport fabric |
-| **IX**          | Internet Exchange — access to public internet peering                          |
+| **MVE**         | Megaport Virtual Edge — SD-WAN virtual network functions in the Megaport fabric |
+| **IX**          | MegaIX Internet Exchange — access to public internet peering                   |
 | **Location**    | A data centre on the Megaport fabric where you can deploy resources            |
 | **Partner**     | A cloud provider or network partner with a presence on Megaport                |
 | **Service Key** | A one-time-use key for provisioning a VXC via a partner                        |
