@@ -94,6 +94,18 @@ const { data: page, pending } = await useAsyncData(`content-${route.path}`, () =
   { lazy: true }
 )
 
+// Scroll to hash anchor after lazy content finishes loading
+watch(pending, (isPending, wasPending) => {
+  if (wasPending && !isPending && route.hash) {
+    nextTick(() => {
+      const el = document.getElementById(route.hash.slice(1))
+      if (el) {
+        window.scrollTo({ top: el.offsetTop - 72, behavior: 'instant' })
+      }
+    })
+  }
+})
+
 // Set page-specific title, description, and canonical URL for SEO
 const siteUrl = 'https://cli-tutorial.megaport.com'
 useHead(computed(() => ({
