@@ -95,21 +95,49 @@ const { data: page, pending } = await useAsyncData(`content-${route.path}`, () =
 )
 
 // Scroll to hash anchor after lazy content finishes loading.
-// Custom Vue components (InfoCard, ProseCode, etc.) continue mounting and
-// expanding the layout after ContentRenderer's first paint, shifting anchors
-// down. We do an immediate scroll then a corrective one after layout settles.
+// Components (InfoCard, ProseCode, etc.) keep expanding the layout after
+// ContentRenderer's first paint. We use a ResizeObserver to re-scroll on
+// every layout shift and stop once the user interacts or 1.5s elapses.
 watch(pending, (isPending, wasPending) => {
   if (wasPending && !isPending && route.hash) {
     const hash = route.hash.slice(1)
+    let userInteracted = false
+
     const scrollToHash = () => {
+      if (userInteracted) return
       const el = document.getElementById(hash)
       if (el) el.scrollIntoView({ behavior: 'instant', block: 'start' })
     }
+
     nextTick(() => {
-      requestAnimationFrame(scrollToHash)
-      // Corrective scroll after async components finish mounting (~300ms is
-      // enough for Vue to flush all pending component renders)
-      setTimeout(scrollToHash, 300)
+      requestAnimationFrame(() => {
+        scrollToHash()
+
+        // Listen for genuine user input after the initial programmatic scroll
+        // (use wheel/touch/key rather than 'scroll' which our own scroll fires)
+        const onInteraction = () => { userInteracted = true }
+        setTimeout(() => {
+          window.addEventListener('wheel', onInteraction, { once: true, passive: true })
+          window.addEventListener('touchstart', onInteraction, { once: true, passive: true })
+          window.addEventListener('keydown', onInteraction, { once: true, passive: true })
+        }, 50)
+
+        // Re-scroll whenever the article height changes (async components mounting)
+        const article = document.querySelector('article')
+        if (!article) return
+
+        const observer = new ResizeObserver(scrollToHash)
+        observer.observe(article)
+
+        // Stop after 1.5s — layout should be fully settled by then
+        setTimeout(() => {
+          observer.disconnect()
+          window.removeEventListener('wheel', onInteraction)
+          window.removeEventListener('touchstart', onInteraction)
+          window.removeEventListener('keydown', onInteraction)
+          scrollToHash()
+        }, 1500)
+      })
     })
   }
 })
