@@ -94,14 +94,19 @@ const { data: page, pending } = await useAsyncData(`content-${route.path}`, () =
   { lazy: true }
 )
 
-// Scroll to hash anchor after lazy content finishes loading
+// Scroll to hash anchor after lazy content finishes loading.
+// Uses rAF inside nextTick so the browser has completed at least one paint
+// cycle after ContentRenderer mounts — otherwise offsetTop is wrong because
+// code blocks and other components above the target haven't expanded yet.
 watch(pending, (isPending, wasPending) => {
   if (wasPending && !isPending && route.hash) {
     nextTick(() => {
-      const el = document.getElementById(route.hash.slice(1))
-      if (el) {
-        window.scrollTo({ top: el.offsetTop - 72, behavior: 'instant' })
-      }
+      requestAnimationFrame(() => {
+        const el = document.getElementById(route.hash.slice(1))
+        if (el) {
+          el.scrollIntoView({ behavior: 'instant', block: 'start' })
+        }
+      })
     })
   }
 })
