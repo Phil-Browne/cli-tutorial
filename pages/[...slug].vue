@@ -95,18 +95,21 @@ const { data: page, pending } = await useAsyncData(`content-${route.path}`, () =
 )
 
 // Scroll to hash anchor after lazy content finishes loading.
-// Uses rAF inside nextTick so the browser has completed at least one paint
-// cycle after ContentRenderer mounts — otherwise offsetTop is wrong because
-// code blocks and other components above the target haven't expanded yet.
+// Custom Vue components (InfoCard, ProseCode, etc.) continue mounting and
+// expanding the layout after ContentRenderer's first paint, shifting anchors
+// down. We do an immediate scroll then a corrective one after layout settles.
 watch(pending, (isPending, wasPending) => {
   if (wasPending && !isPending && route.hash) {
+    const hash = route.hash.slice(1)
+    const scrollToHash = () => {
+      const el = document.getElementById(hash)
+      if (el) el.scrollIntoView({ behavior: 'instant', block: 'start' })
+    }
     nextTick(() => {
-      requestAnimationFrame(() => {
-        const el = document.getElementById(route.hash.slice(1))
-        if (el) {
-          el.scrollIntoView({ behavior: 'instant', block: 'start' })
-        }
-      })
+      requestAnimationFrame(scrollToHash)
+      // Corrective scroll after async components finish mounting (~300ms is
+      // enough for Vue to flush all pending component renders)
+      setTimeout(scrollToHash, 300)
     })
   }
 })
