@@ -1,0 +1,12 @@
+node_modules
+.nuxt
+.output
+.vercel
+dist
+.env
+*.local
+.claude
+
+# Site recordings and Gemini review output
+scripts/recordings/
+scripts/gemini-report.md
