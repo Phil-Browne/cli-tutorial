@@ -17,7 +17,7 @@ The Megaport CLI is a command-line tool that gives you complete programmatic con
 
 ## Resource types
 
-The CLI covers the full Megaport platform across 9 resource types:
+The CLI covers the full Megaport platform across nine resource types:
 
 | Resource        | What it is                                                                     |
 | --------------- | ------------------------------------------------------------------------------ |
@@ -26,10 +26,12 @@ The CLI covers the full Megaport platform across 9 resource types:
 | **MCR**         | Megaport Cloud Router — layer 3 routing between clouds and sites               |
 | **MVE**         | Megaport Virtual Edge — SD-WAN virtual network functions in the Megaport fabric |
 | **IX**          | MegaIX Internet Exchange — access to public internet peering                   |
+| **NAT Gateway** | Network address translation service inside the Megaport fabric                 |
 | **Location**    | A data centre on the Megaport fabric where you can deploy resources            |
 | **Partner**     | A cloud provider or network partner with a presence on Megaport                |
 | **Service Key** | A one-time-use key for provisioning a VXC via a partner                        |
-| **User**        | Megaport account user management                                               |
+
+The CLI also manages account-level resources: **Users**, **Managed Accounts** (for partner-managed customer accounts), and **Billing Markets**.
 
 ## Architecture
 

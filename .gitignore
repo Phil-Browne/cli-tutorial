@@ -10,3 +10,6 @@ dist
 # Site recordings and Gemini review output
 scripts/recordings/
 scripts/gemini-report.md
+
+# QA reports
+QA-REPORT.md
