@@ -15,3 +15,7 @@ Learn about the fundamental resources you'll manage with the Megaport CLI.
 - [**MVE**](/core-concepts/resource-types#mve) — Megaport Virtual Edge for SD-WAN connectivity
 - [**IX**](/core-concepts/resource-types#ix) — MegaIX Internet Exchange peering
 - [**NAT Gateway**](/core-concepts/resource-types#nat-gateway) — NAT-as-a-service inside the fabric
+
+## Working with VXCs
+
+- [**Partner Configurations**](/core-concepts/partner-configurations) — when to configure A-End vs B-End partner blocks for cloud and transit destinations
