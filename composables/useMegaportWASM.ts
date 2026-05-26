@@ -34,8 +34,8 @@ interface MegaportWASMConfig {
 
 export function useMegaportWASM(config: MegaportWASMConfig = {}) {
   const {
-    wasmPath = '/megaport.wasm',
-    wasmExecPath = '/wasm_exec.js',
+    wasmPath = withBaseUrl('/megaport.wasm'),
+    wasmExecPath = withBaseUrl('/wasm_exec.js'),
     debug = false,
     initTimeout = WASM_CONFIG.INIT_TIMEOUT,
     maxRetries = WASM_CONFIG.MAX_RETRIES,

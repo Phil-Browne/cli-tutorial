@@ -39,7 +39,7 @@
           </button>
 
           <NuxtLink to="/" class="flex items-center gap-2.5 group">
-            <img src="/images/megaport-icon-red.svg" alt="Megaport" class="w-7 h-7 shrink-0 rocket-hover" width="28" height="28" />
+            <img :src="withBaseUrl('/images/megaport-icon-red.svg')" alt="Megaport" class="w-7 h-7 shrink-0 rocket-hover" width="28" height="28" />
             <span
               class="font-semibold text-white group-hover:text-violet-400 transition-colors text-sm"
             >
@@ -192,7 +192,7 @@
               class="flex items-center gap-2.5 mb-4 group w-fit"
               aria-label="Go to Megaport CLI landing page"
             >
-              <img src="/images/megaport-logo-color-white.svg" alt="Megaport" class="h-6" height="24" />
+              <img :src="withBaseUrl('/images/megaport-logo-color-white.svg')" alt="Megaport" class="h-6" height="24" />
             </NuxtLink>
             <p class="text-sm text-gray-500 leading-relaxed">
               The complete guide to managing network infrastructure from your
@@ -308,7 +308,7 @@
             >© {{ new Date().getFullYear() }} Megaport. All rights
             reserved.</span
           >
-          <img src="/images/powered-by-megaport-white.svg" alt="Powered by Megaport" class="h-4 opacity-60" height="16" />
+          <img :src="withBaseUrl('/images/powered-by-megaport-white.svg')" alt="Powered by Megaport" class="h-4 opacity-60" height="16" />
         </div>
       </div>
     </footer>

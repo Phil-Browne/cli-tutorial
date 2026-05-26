@@ -116,8 +116,8 @@ const {
   retry,
   activeSpinners,
 } = useMegaportWASM({
-  wasmPath: props.wasmPath,
-  wasmExecPath: props.wasmExecPath,
+  wasmPath: withBaseUrl(props.wasmPath),
+  wasmExecPath: withBaseUrl(props.wasmExecPath),
   debug: import.meta.dev,
 });
 

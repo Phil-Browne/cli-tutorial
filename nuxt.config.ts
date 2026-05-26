@@ -1,4 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
+// Served under /cli so it can be proxied at tutorials.megaport.com/cli
+const baseURL = '/cli/'
+
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
@@ -7,6 +11,15 @@ export default defineNuxtConfig({
   ssr: true,
 
   modules: ['@nuxt/content', '@nuxt/ui'],
+
+  runtimeConfig: {
+    public: {
+      // @nuxt/content's client builds its fetch URL from this without applying
+      // app.baseURL, so prefix it here or doc navigation 404s behind the /cli proxy.
+      // The server handler keeps registering at the default /api/_content.
+      content: { api: { baseURL: `${baseURL}api/_content` } },
+    },
+  },
 
   // Register components by filename only — no directory prefix (e.g. SidebarNav, not UiSidebarNav)
   components: [
@@ -64,6 +77,7 @@ export default defineNuxtConfig({
   // Extend Tailwind theme with Megaport brand colors
   // @nuxt/ui uses app.config.ts for theme colors
   app: {
+    baseURL,
     head: {
       title: 'Megaport CLI — Tutorials, Live Demo & Reference',
       meta: [
@@ -84,8 +98,8 @@ export default defineNuxtConfig({
         { name: 'twitter:image', content: 'https://cli-tutorial.megaport.com/images/megaport-og.png' },
       ],
       link: [
-        { rel: 'icon', type: 'image/png', href: '/images/megaport-icon-red.png' },
-        { rel: 'apple-touch-icon', href: '/images/megaport-icon-red.png' },
+        { rel: 'icon', type: 'image/png', href: `${baseURL}images/megaport-icon-red.png` },
+        { rel: 'apple-touch-icon', href: `${baseURL}images/megaport-icon-red.png` },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap' },
