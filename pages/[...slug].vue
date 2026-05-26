@@ -143,7 +143,7 @@ watch(pending, (isPending, wasPending) => {
 })
 
 // Set page-specific title, description, and canonical URL for SEO
-const siteUrl = 'https://cli-tutorial.megaport.com'
+const siteUrl = 'https://tutorials.megaport.com/cli'
 useHead(computed(() => ({
   title: page.value?.title
     ? `${page.value.title} — Megaport CLI`

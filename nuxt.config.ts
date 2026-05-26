@@ -3,6 +3,9 @@
 // Served under /cli so it can be proxied at tutorials.megaport.com/cli
 const baseURL = '/cli/'
 
+// Canonical public URL (used for OG tags, canonical links, sitemap)
+const siteUrl = 'https://tutorials.megaport.com/cli'
+
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
@@ -86,8 +89,8 @@ export default defineNuxtConfig({
         { property: 'og:title', content: 'Megaport CLI — Tutorials, Live Demo & Reference' },
         { property: 'og:description', content: 'Learn to manage Megaport network infrastructure with the CLI — tutorials, live demos, and reference docs for Solutions Architects and Sales teams.' },
         { property: 'og:type', content: 'website' },
-        { property: 'og:url', content: 'https://cli-tutorial.megaport.com' },
-        { property: 'og:image', content: 'https://cli-tutorial.megaport.com/images/megaport-og.png' },
+        { property: 'og:url', content: siteUrl },
+        { property: 'og:image', content: `${siteUrl}/images/megaport-og.png` },
         { property: 'og:image:width', content: '1200' },
         { property: 'og:image:height', content: '630' },
         { property: 'og:image:type', content: 'image/png' },
@@ -95,7 +98,7 @@ export default defineNuxtConfig({
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: 'Megaport CLI — Tutorials, Live Demo & Reference' },
         { name: 'twitter:description', content: 'Learn to manage Megaport network infrastructure with the CLI — tutorials, live demos, and reference docs for Solutions Architects and Sales teams.' },
-        { name: 'twitter:image', content: 'https://cli-tutorial.megaport.com/images/megaport-og.png' },
+        { name: 'twitter:image', content: `${siteUrl}/images/megaport-og.png` },
       ],
       link: [
         { rel: 'icon', type: 'image/png', href: `${baseURL}images/megaport-icon-red.png` },
