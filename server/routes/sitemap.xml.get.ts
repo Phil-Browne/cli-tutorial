@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
   try {
     const docs = await serverQueryContent(event).only(['_path', 'title']).find()
 
-    const rawBaseUrl = process.env.NUXT_PUBLIC_SITE_URL || 'https://cli-tutorial.megaport.com'
+    const rawBaseUrl = process.env.NUXT_PUBLIC_SITE_URL || 'https://tutorials.megaport.com/cli'
     const baseUrl = escapeXml(rawBaseUrl.replace(/\/+$/, ''))
     const lastmod = new Date().toISOString().split('T')[0]
 
