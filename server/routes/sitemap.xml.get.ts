@@ -21,7 +21,8 @@ export default defineEventHandler(async (event) => {
     const lastmod = new Date().toISOString().split('T')[0]
 
     const urls = docs
-      .filter(d => d._path && d._path !== '/')
+      // Drop the root and underscore-prefixed paths (_dir.yml section configs, partials)
+      .filter(d => d._path && d._path !== '/' && !d._path.includes('/_'))
       .map(d => `  <url><loc>${baseUrl}${escapeXml(d._path!)}</loc><lastmod>${lastmod}</lastmod><changefreq>weekly</changefreq></url>`)
       .join('\n')
 
