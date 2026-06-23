@@ -32,7 +32,7 @@ export interface MegaportBufferDump {
 export interface MegaportPromptRequest {
   id: string;
   message: string;
-  type: string; // "text", "confirm", "resource"
+  type: string; // "text", "confirm", "resource", "password"
   resourceType?: string; // for resource prompts
 }
 
