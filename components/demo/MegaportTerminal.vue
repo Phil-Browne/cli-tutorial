@@ -132,6 +132,7 @@ const displayError = computed(() => componentError.value || error.value);
 let activePrompt: { id: string; resolve: (value: string) => void } | null =
   null;
 let promptInputBuffer = '';
+let activePromptIsPassword = false; // Mask echoed input for password prompts
 let isInInteractiveCommand = false; // Track if we're in an interactive command session
 let resizeTimeoutId: NodeJS.Timeout | null = null; // For debouncing resize
 let resizeObserver: ResizeObserver | null = null;
@@ -190,6 +191,8 @@ const setupPromptHandler = () => {
       .replace(/\x1b[NOcDEHMZ78>=>]/g, '')       // Other 7-bit escape sequences
       .replace(/[\x00-\x08\x0b\x0c\x0e-\x1f]/g, ''); // Control characters except \t \n \r
     terminal.write(`\r\n\x1b[36m${safeMessage}\x1b[0m `);
+
+    activePromptIsPassword = promptRequest.type === 'password';
 
     // Track this prompt
     activePrompt = {
@@ -314,6 +317,7 @@ const handlePromptInput = (data: string, code: number): boolean => {
     // Clear the prompt buffer but DON'T clear activePrompt yet
     // The next prompt will overwrite it, or command completion will clear it
     promptInputBuffer = '';
+    activePromptIsPassword = false;
     return true;
   }
 
@@ -334,6 +338,7 @@ const handlePromptInput = (data: string, code: number): boolean => {
     }
     activePrompt = null;
     promptInputBuffer = '';
+    activePromptIsPassword = false;
     writePrompt();
     return true;
   }
@@ -341,7 +346,7 @@ const handlePromptInput = (data: string, code: number): boolean => {
   // Regular character for prompt
   if (code >= 32 && code <= 126) {
     promptInputBuffer += data;
-    terminal.write(data);
+    terminal.write(activePromptIsPassword ? '*'.repeat(data.length) : data);
     return true;
   }
 
@@ -550,13 +555,17 @@ const executeCommand = async (command: string) => {
 
     if (command === 'help') {
       terminal.write('Available commands:\r\n');
-      terminal.write('  port list           - List all ports\r\n');
+      terminal.write('  ports list          - List all ports\r\n');
       terminal.write('  vxc list            - List all VXCs\r\n');
       terminal.write('  mcr list            - List all MCRs\r\n');
       terminal.write('  mve list            - List all MVEs\r\n');
-      terminal.write('  location list       - List all locations\r\n');
-      terminal.write('  servicekey list     - List all service keys\r\n');
-      terminal.write('  partner list        - List partner configurations\r\n');
+      terminal.write('  nat-gateway list    - List all NAT gateways\r\n');
+      terminal.write('  locations list      - List all locations\r\n');
+      terminal.write('  servicekeys list    - List all service keys\r\n');
+      terminal.write('  partners list       - List partner configurations\r\n');
+      terminal.write('  product list        - List all products\r\n');
+      terminal.write('  status              - Combined status dashboard\r\n');
+      terminal.write('  topology            - Resource relationship tree\r\n');
       terminal.write('  clear               - Clear the terminal\r\n');
       writePrompt();
       return;
@@ -652,6 +661,7 @@ const executeCommand = async (command: string) => {
   // Clear any lingering prompt state
   activePrompt = null;
   promptInputBuffer = '';
+  activePromptIsPassword = false;
 
   writePrompt();
 };
@@ -690,6 +700,7 @@ onBeforeUnmount(() => {
   // Clear prompt state to prevent stale data on remount
   activePrompt = null;
   promptInputBuffer = '';
+  activePromptIsPassword = false;
   isInInteractiveCommand = false;
 
   // Clear resize timeout if pending
